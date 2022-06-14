@@ -1,0 +1,130 @@
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 6px 0 6px 0;
+}
+
+header .logo{
+    position: absolute;
+    left: 0px;
+    top: 30px;
+}
+
+/* SELECT TOWN */
+
+.header-top .toggle-town {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.header-top .toggle-town span {
+    margin-left: 5px;
+    font-weight: bold;
+    color: var(--black);
+}
+
+.header-top .toggle-town:hover span {
+    transition: 0.3s;
+    color: var(--link);
+}
+
+.header-top .toggle-town span:after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f107";
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+    font-weight: 900;
+    margin-left: 5px;
+}
+
+.header-top .toggle-town:hover span:after {
+    transition: 0.3s;
+    transform: rotate(180deg);
+}
+
+.header-top .toggle-town:not(hover) span:after {
+    transition: 0.3s;
+    transform: rotate(0deg);
+}
+
+/* SELECT TOWN END */
+
+/* LINKS */
+
+.header-top .links{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.header-top .links a{
+    color: var(--black);
+    position: relative;
+}
+
+.header-top .links a:not(:last-child){
+    margin-right: 15px;
+}
+
+.header-top .links a:hover{
+    transition: 0.3s;
+    color: var(--link);
+}
+
+.header-top .links a:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background-color: var(--black);
+    transition: width 0.3s;
+}
+
+.header-top .links a:hover:after {
+    content: "";
+    width: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 2px;
+    background-color: var(--black);
+    transition: width 0.3s;
+}
+
+/* LINKS END */
+
+/* WHATS APP */
+
+.header-top .phone {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--black);
+}
+
+.header-top .phone span {
+    margin: 2px 0 0 5px;
+}
+
+.header-top .phone:hover{
+    transition: 0.3s;
+    color: var(--link);
+}
+
+.header-top .work-time{
+    color: var(--black);
+    margin-top: 2px;
+}
+
+
+/* WHATS APP END */
