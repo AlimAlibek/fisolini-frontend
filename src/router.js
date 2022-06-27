@@ -23,6 +23,14 @@ let router = new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/product',
+            name: 'Product',
+            component: () => import('./views/Product.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
     ]
 })
 

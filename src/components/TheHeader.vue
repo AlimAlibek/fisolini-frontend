@@ -127,7 +127,8 @@
 
               <v-badge
                 color="teal"
-                content="3"
+                :content="getAmountOfGoodsInTheCart"
+                :value="getAmountOfGoodsInTheCart"
                 overlap
               >
                 <v-btn
@@ -135,6 +136,7 @@
                   color="white"
                   depressed
                   large
+                  @click="cart = true"
                 >
                   <v-img
                     :src="require('../assets/icons/cart.svg')"
@@ -209,11 +211,28 @@
       </v-row>
       <v-divider></v-divider>
       <v-row>
-
         <TheAccount
           authStage="welcome"
         />
       </v-row>
+    </v-navigation-drawer>
+    <v-navigation-drawer
+      v-model="cart"
+      app
+      width="650"
+      right
+      absolute
+      temporary
+    >
+      <v-row
+        class="pa-7"
+        justify="space-between"
+        align="center"
+      >
+        <h1>Корзина</h1>
+      </v-row>
+      <v-divider></v-divider>
+      <TheCart />
     </v-navigation-drawer>
   </v-app-bar>
 </v-card>
@@ -222,12 +241,15 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     import MobileHeader from '@/components/MobileHeader.vue';
     import FeedbackInfo from '@/components/FeedbackInfo.vue'
     import TheLocation from  '@/components/TheLocation.vue';
     import TheNavigation from '@/components/TheNavigation.vue';
 
     import TheAccount from '@/components/TheAccount.vue';
+    import TheCart from '@/components/TheCart.vue';
 
     export default {
         name: 'TheHeader',
@@ -238,12 +260,14 @@
           TheLocation,
           TheNavigation,
 
-          TheAccount
+          TheAccount,
+          TheCart
         },
 
         data() {
           return {
             signin: false,
+            cart: false,
             currentPage: {},
             pages: [
                 {
@@ -295,6 +319,8 @@
         },
 
         computed: {
+          ...mapGetters(['getAmountOfGoodsInTheCart']),
+
           screenWidth() {
             return (
               this.$vuetify.breakpoint.sm ? 'small'

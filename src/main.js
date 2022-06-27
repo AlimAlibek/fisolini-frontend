@@ -18,8 +18,9 @@ if(Vue.config.productionTip){
   axios.defaults.baseURL = 'https://api.halalfoods.ru/admin/';
 }else{
   // axios.defaults.baseURL = 'http://season-market-api/admin/';
-  axios.defaults.baseURL = 'http://localhost:8080/';
+  // axios.defaults.baseURL = 'http://localhost:8080/';
   // axios.defaults.baseURL = 'https://dev.fisolini.ru/';
+  axios.defaults.baseURL = 'https://api.fisolini.ru/';
 }
 
 // token for auth

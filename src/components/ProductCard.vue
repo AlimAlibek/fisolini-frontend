@@ -4,15 +4,19 @@
     :class="cardClass"
     :width="cardWidth"
     :height="cardHeight"
+    :to="{
+      path: 'product',
+      query: {id: product.id}
+    }"
   >
-
     <v-img
       :height="cardWidth"
-      :src="goodImage"
+      :src="image"
     ></v-img>
 
     <v-card-title
-      :class="titleClass">
+      :class="titleClass"
+    >
       {{productTitle}}
     </v-card-title>
 
@@ -33,7 +37,7 @@
         class="mx-0"
       >
         <v-rating
-          :value="4.5"
+          :value="rating"
           color="amber"
           dense
           half-increments
@@ -66,37 +70,49 @@
     </v-card-text>
     <v-card-title
       :class="titleClass">
-      {{price}}
+      {{price}} &#8381;
     </v-card-title>
   </v-card>
 </template>
 
-
 <script>
-  import goodImage from '@/assets/images/good.png'
 
   export default {
     props: {
-      small: Boolean
+      small: Boolean,
+      product: Object
     },
 
-    data: () => ({
-      loading: false,
-      selection: 1,
-
-      title: 'Ковер Fisolini Tp-512312332423423423424',
-      country: 'Турция',
-      rating: 4.5,
-      reviews: 5,
-      sizes: 2,
-      price: 'от 2 234 до 192 918 р'
-
-    }),
-
     computed: {
+
         productTitle() {
-            return this.small ?  this.title.length > 21 ? this.title.slice(0, 21) + '...' : this.title
-              : this.title.length > 25 ? this.title.slice(0, 25) + '...' : this.title
+            return this.small
+              ? this.product.title.length > 17 ? this.product.title.slice(0, 17) + '...' : this.product.title
+              : this.product.title.length > 23 ? this.product.title.slice(0, 23) + '...' : this.product.title
+        },
+        image() {
+          return this.product.images[0]?.path
+        },
+        country() {
+          return this.product.specifications[7].value
+        },
+        rating() {
+          return this.product.score
+        },
+        reviews() {
+          return this.product.count_score
+        },
+        sizes() {
+          return this.product.stocks.length;
+        },
+        price() {
+          let max = 0;
+          let min = 10000000000;
+          this.product.stocks.forEach(stock => {
+            if (max < stock.price) max = stock.price;
+            if (min > stock.price) min = stock.price;
+          })
+          return max === min ? `${min}` : `от ${min} до ${max} `
         },
 
         cardClass() {
@@ -131,7 +147,6 @@
           return this.small ? 'pl-1 pr-2' : ''
         },
 
-        goodImage: () => goodImage
     },
 
     methods: {

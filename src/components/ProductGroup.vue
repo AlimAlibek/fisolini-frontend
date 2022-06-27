@@ -13,6 +13,7 @@
             >
                 <ProductCard
                     :small="smallWidth"
+                    :product="item"
                 />
             </v-col>
         </v-row>
@@ -60,7 +61,7 @@ import ProductCard from './ProductCard.vue'
         },
         methods: {
             loadMore() {
-                this.$emit('loadMore', this.products.length, 4)
+                this.$emit('loadMore')
             }
         }
     }
