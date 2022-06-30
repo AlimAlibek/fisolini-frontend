@@ -19,7 +19,8 @@ if(Vue.config.productionTip){
 }else{
   // axios.defaults.baseURL = 'http://season-market-api/admin/';
   // axios.defaults.baseURL = 'http://localhost:8080/';
-  axios.defaults.baseURL = 'https://dev.fisolini.ru/';
+  axios.defaults.baseURL = 'https://api.fisolini.ru/';
+  
   // axios.defaults.baseURL = 'http://192.168.0.13:8080/';
 }
 
@@ -27,9 +28,11 @@ if(Vue.config.productionTip){
 const token = localStorage.getItem('token');
 
 if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
+  
+  axios.defaults.headers = {Authorization: 'Bearer ' + token}
+  // Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
 }
-Vue.prototype.$http.defaults.mode = 'no-cors';
+// Vue.prototype.$http.defaults.mode = 'no-cors';
 
 new Vue({
   router,
