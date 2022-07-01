@@ -123,7 +123,7 @@
         return this.smallWidth ? 200 : 350
       },
       cardHeight() {
-        return this.smallWidth ? 75 : 150
+        return this.smallWidth ? 85 : 150
       },
 
       imageWidth(size) {
