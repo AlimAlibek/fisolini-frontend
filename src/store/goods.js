@@ -51,10 +51,7 @@ export const goods = {
     actions: {
         async loadGoods(ctx) {
             const catalog = await axios.get('/catalog');
-            ctx.commit('setGoods', catalog.data.data.products)
-            ctx.dispatch('sortGoods')
-            if (catalog.statusText === "OK") {
-
+            if (catalog) {
                 ctx.commit('setGoods', catalog.data.data.products)
                 ctx.dispatch('sortGoods')
             }
