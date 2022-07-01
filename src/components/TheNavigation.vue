@@ -46,7 +46,7 @@
 
         watch: {
             currentTab(value) {
-                console.log(value)
+                this.$router.push(this.tabs[value].path)
             }
         }
     }

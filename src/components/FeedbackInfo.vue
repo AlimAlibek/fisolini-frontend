@@ -16,12 +16,14 @@
             :x-small="!mobile"
             :x-large="mobile"
           >
-            <v-icon
+             <a v-bind:href="'https://wa.me/79964183776'" target="_blank" style="color: #000000;text-decoration: none;">
+             <v-icon
                 color="#277A0E"
                 :size="mobile ? 50 : 24"
             >
                 mdi-whatsapp
             </v-icon>
+            </a>
           </v-btn>
 
           <template v-if="mobile">
@@ -34,7 +36,8 @@
           </template>
 
           <span v-else>
-             +7(996)-418-37-76
+            <a v-bind:href="'https://wa.me/79964183776'" target="_blank" style="color: #000000;text-decoration: none;">+7(996)-418-37-76 </a>
+             
           </span>
         </div>
 
@@ -104,12 +107,12 @@ export default {
                 path: this.TelegramUrl || '#'
             },
             {
-                title: 'Ютуб',
+                title: 'Youtube',
                 icon: () => youtubeIcon,
                 path: this.YoutubeUrl || '#'
             },
             {
-                title: 'Однаклассники',
+                title: 'Одноклассники',
                 icon: () => odnoklassnikiIcon,
                 path: this.OdnoklassnikiUrl || '#'
             },

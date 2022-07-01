@@ -30,7 +30,7 @@
             },
 
             wrapClass() {
-                return this.smallWidth ? 'pt-10 pb-6' : 'pt-14 pb-9'
+                return this.smallWidth ? 'pt-6 pb-6' : 'pt-14 pb-9'
             },
 
             titleClass() {

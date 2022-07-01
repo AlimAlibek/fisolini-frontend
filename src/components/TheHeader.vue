@@ -23,10 +23,12 @@
     >
       <div>
           <div class="main-logo">
+            <a v-bind:href="'/'" >
             <v-img
                :src="require('../assets/Fisolini_Logo.svg')"
                contain
             />
+            </a>
           </div>
       </div>
 
@@ -64,9 +66,9 @@
             <v-text-field
                 filled
                 dense
-                solo-inverted
+                solo
                 flat
-                label="Поиск по таварам"
+                label="Поиск по товарам"
                 type="text"
                 hide-details
                 color="#EBEBEB"

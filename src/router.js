@@ -31,6 +31,30 @@ let router = new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/about',
+            name: 'about',
+            component: () => import('./views/About.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/payment',
+            name: 'payment',
+            component: () => import('./views/Payment.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/reviews',
+            name: 'reviews',
+            component: () => import('./views/Reviews.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
     ]
 })
 
