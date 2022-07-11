@@ -1,57 +1,48 @@
 <template>
     <v-container>
-        <h1>
-            {{getChosenGood.title}}
-        </h1>
-        <v-img
-            width="320"
-            height="450"
-            :src="getChosenGood.images[0].path"
-        />
-        <v-btn
-            v-for="stock in getChosenGood.stocks"
-            :key="stock.id"
-            class="pa-1 ma-1"
-            @click="addGood(stock)"
-        >
-            <div>Добавить - </div>
-            <div>{{stock.size}}</div>
-        </v-btn>
+        <div v-if="isChoosenGoodLoading" class="pt-10">
+            <v-progress-linear
+              color="rgb(31 175 170)"
+              indeterminate
+              rounded
+              height="8"
+            ></v-progress-linear>
+        </div>
+        <div v-else>
+            <TheProduct />
+        </div>
     </v-container>
 </template>
 
 <script>
     import {mapGetters, mapActions} from 'vuex'
+    import TheProduct from '@/components/TheProduct.vue';
+
     export default {
-        data() {
-            return {
-                product: ''
-            }
-        },
+        components: { TheProduct },
         computed: {
-            ...mapGetters(['getChosenGood'])
+            ...mapGetters([
+                'isChoosenGoodLoading'
+            ])
         },
 
         methods: {
             ...mapActions([
-                'loadChosenGood',
-                'addGoodToTheCart'
+                'loadSelectedGood',
             ]),
             laodProduct() {
-                this.loadChosenGood({id: this.$route.query.id})
+                this.loadSelectedGood({id: this.$route.query.id})
             },
-
-            addGood(stock) {
-                this.addGoodToTheCart({
-                    good: this.getChosenGood,
-                    stock
-                })
-            }
         },
 
+        watch: {
+            '$route.query.id'() {
+                this.laodProduct();
+                window.scrollTo(0, 0)
+            }
+        },
         mounted() {
             this.laodProduct();
         }
-
     }
 </script>

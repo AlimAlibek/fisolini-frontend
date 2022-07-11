@@ -1,24 +1,27 @@
 <template>
-    <!-- <v-container
-        :fluid="!largeWidth"
-    > -->
-    <v-container
-
-    >
+    <v-container>
         <TheBanners />
         <TheServices />
+
         <SectionHeader
             title="Категории"
             subtitle=""
         />
-
         <TheCategories />
 
         <SectionHeader
             title="Популярные товары"
             subtitle="Ковры которые покупают чаще всего"
         />
+        <v-progress-linear
+          v-if="isPopularLoading"
+          color="rgb(31 175 170)"
+          indeterminate
+          rounded
+          height="4"
+        ></v-progress-linear>
         <ProductGroup
+            v-else
             :products="getPopular"
             :canLoadMore="canShowMorePopular"
             @loadMore="loadMorePopular"
@@ -28,12 +31,19 @@
             title="Новинки"
             subtitle="Самые новые предложения"
         />
+        <v-progress-linear
+          v-if="isPopularLoading"
+          color="rgb(31 175 170)"
+          indeterminate
+          rounded
+          height="4"
+        ></v-progress-linear>
         <ProductGroup
+            v-else
             :products="getNovelties"
             :canLoadMore="canShowMoreNovelties"
             @loadMore="loadMoreNovelties"
         />
-
 
         <SectionHeader
             title="Советы по размещению"
@@ -52,7 +62,6 @@ import TheCategories from '@/components/TheCategories.vue';
 import ProductGroup from '@/components/ProductGroup.vue';
 import SectionHeader from '@/components/SectionHeader.vue';
 import PlacementTips from '@/components/PlacementTips.vue';
-// import CartList from '../components/CartList.vue';
 
  export default {
     components: {
@@ -62,7 +71,6 @@ import PlacementTips from '@/components/PlacementTips.vue';
         ProductGroup,
         SectionHeader,
         PlacementTips,
-        // CartList
     },
 
     computed: {
@@ -72,6 +80,8 @@ import PlacementTips from '@/components/PlacementTips.vue';
 
             'getNovelties',
             'canShowMoreNovelties',
+
+            'isPopularLoading'
         ]),
 
         defaultAmount() {
@@ -82,9 +92,9 @@ import PlacementTips from '@/components/PlacementTips.vue';
 
     methods: {
         ...mapActions([
-            'loadGoods',
+            'loadPopularGoods',
             'showMorePopular',
-            'showMoreNovelties'
+            'showMoreNovelties',
         ]),
 
         loadMorePopular() {
@@ -96,7 +106,7 @@ import PlacementTips from '@/components/PlacementTips.vue';
     },
 
     async mounted() {
-        await this.loadGoods();
+        await this.loadPopularGoods();
         this.loadMorePopular();
         this.loadMoreNovelties()
     }

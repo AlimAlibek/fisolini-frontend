@@ -19,10 +19,12 @@
           <TheLocation />
         </div>
         <div class="main-logo">
-          <v-img
-            :src="require('../assets/Fisolini_Logo.svg')"
-            contain
-          />
+          <a v-bind:href="'/'">
+            <v-img
+              :src="require('../assets/Fisolini_Logo.svg')"
+              contain
+            />
+          </a>
         </div>
       </v-app-bar-title>
 
@@ -144,12 +146,6 @@
     computed: {
       isHeaderScrolled() {
         return this.$vuetify.application.top < 60;
-      }
-    },
-
-    watch: {
-      '$vuetify.application.top'(value) {
-        console.log(value);
       }
     },
   }

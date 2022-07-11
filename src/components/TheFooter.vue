@@ -27,10 +27,12 @@
             :class="{'mb-6': !smallWidth, 'mb-3': smallWidth}"
           >
             <div class="footer-logo">
-              <v-img
-                :src="require('../assets/Fisolini_Logo.svg')"
-                contain
-              />
+              <a v-bind:href="'/'" >
+                <v-img
+                  :src="require('../assets/Fisolini_Logo.svg')"
+                  contain
+                />
+              </a>
             </div>
           </v-row>
           <v-row
