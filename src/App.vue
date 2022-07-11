@@ -2,7 +2,7 @@
   <v-app>
     <TheHeader />
 
-    <v-main>
+    <v-main :style="mainPadding">
       <router-view></router-view>
     </v-main>
 
@@ -49,38 +49,10 @@ export default {
         },
 
         computed: {
-          screenWidth() {
-            return (
-              this.$vuetify.breakpoint.sm ? 'small'
-              : this.$vuetify.breakpoint.md ? 'middle'
-              : this.$vuetify.breakpoint.lg ? 'large'
-              : this.$vuetify.breakpoint.xl ? 'x-large' : 'xs'
-            )
-          },
+          mainPadding() {
+            return this.$vuetify.breakpoint.width < 1195 ? 'padding-top: 90px' : 'padding-top: 175px'
+          }
         }
 };
 </script>
 
-
-<style scoped>
-  .nav-tabs {
-    display: flex;
-  }
-  .nav-tab {
-    display: inline-block;
-    margin-right: 20px;
-    box-sizing: border-box;
-    transition: all 0.7s;
-  }
-  .nav-tab:hover {
-    border-bottom: 1px solid #1FAFAA;
-    transition: all 1s;
-  }
-
-  .tab-title {
-    text-transform: none;
-    font-weight: 400;
-    font-size: 16px;
-    margin: -8px;
-  }
-</style>

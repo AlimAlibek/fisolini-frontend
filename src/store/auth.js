@@ -49,7 +49,6 @@ export const auth = {
         },
 
         async postSMSCode(ctx, payload) {
-            console.log('postSMSCode', payload)
             const response = await axios.post('auth/checkCode', {
                 token: localStorage.getItem('token'),
                 code: payload.otpCode,

@@ -4,12 +4,14 @@ import axios from "axios"
 export const goods = {
     state: () => ({
         goods: [],
-        chosenGood: {},
+        selectedGood: {},
+        isSelectedGoodLoading: false,
 
         novelties: [],
         shownNovelties: [],
         popular: [],
         shownPopular: [],
+        isPopularLoading: false,
 
         goodsInTheCart: {},
     }),
@@ -18,9 +20,8 @@ export const goods = {
         setGoods(state, data) {
             state.goods = data
         },
-        setChosenGood(state, data) {
-            console.log('setChosenGood', data)
-            state.chosenGood = data;
+        setSelectedGood(state, data) {
+            state.selectedGood = data;
         },
 
         setPopular(state, data) {
@@ -28,6 +29,12 @@ export const goods = {
         },
         setNovelties(state, data) {
             state.novelties = data
+        },
+        setLoadingPopularFlag(state, boolean) {
+            state.isPopularLoading = boolean
+        },
+        setLoadingSelectedGoodFlag(state, boolean) {
+            state.isSelectedGoodLoading = boolean
         },
 
         setShownPopular(state, data) {
@@ -53,24 +60,19 @@ export const goods = {
             const catalog = await axios.get('/catalog');
             if (catalog) {
                 ctx.commit('setGoods', catalog.data.data.products)
-                ctx.dispatch('sortGoods')
             }
         },
-
-        sortGoods(ctx) {
-            let novelties = [];
-            let popular = [];
-            ctx.getters.getGoods.forEach(good => {
-                if(good.new) novelties.push(good);
-                if (good.popular) popular.push(good);
-            });
-
-            ctx.commit('setPopular', popular);
-            ctx.commit('setNovelties', novelties);
+        async loadPopularGoods(ctx) {
+            ctx.commit('setLoadingPopularFlag', true);
+            const goods = await axios.get('/popular');
+            if (goods) {
+                ctx.commit('setPopular', goods.data.data.popular);
+                ctx.commit('setNovelties', goods.data.data.new);
+            }
+            ctx.commit('setLoadingPopularFlag', false);
         },
 
         showMorePopular(ctx, loadingAmount) {
-            console.log('show more popular', ctx.state.popular)
             ctx.commit(
                 'setShownPopular',
                 ctx.state.popular.slice(
@@ -80,7 +82,6 @@ export const goods = {
             )
         },
         showMoreNovelties(ctx, loadingAmount) {
-            console.log('state show more novelties', ctx.state.novelties)
             ctx.commit(
                 'setShownNovelties',
                 ctx.state.novelties.slice(
@@ -90,10 +91,13 @@ export const goods = {
             )
         },
 
-        loadChosenGood(ctx, payload) {
-            console.log('loadChosenGood', payload, ctx.state)
-            const chosenGood = ctx.state.goods.find(g => g.id.toString() === payload.id);
-            ctx.commit('setChosenGood', chosenGood)
+        async loadSelectedGood(ctx, payload) {
+            ctx.commit('setLoadingSelectedGoodFlag', true);
+
+            const good = await axios.get('/product/' + payload.id);
+            ctx.commit('setSelectedGood', good.data.data);
+
+            ctx.commit('setLoadingSelectedGoodFlag', false);
         },
 
         addGoodToTheCart(ctx, payload) {
@@ -120,7 +124,7 @@ export const goods = {
 
     getters: {
         getGoods: state => state.goods,
-        getChosenGood: state => state.chosenGood,
+        getSelectedGood: state => state.selectedGood,
 
         getPopular: state => state.shownPopular,
         canShowMorePopular: state => state.popular.length - state.shownPopular.length,
@@ -129,6 +133,9 @@ export const goods = {
         canShowMoreNovelties: state => state.novelties.length - state.shownNovelties.length,
 
         getGoodsInTheCart: state => state.goodsInTheCart,
-        getAmountOfGoodsInTheCart: state => Object.values(state.goodsInTheCart).reduce((count, item) => count + item.count, 0)
+        getAmountOfGoodsInTheCart: state => Object.values(state.goodsInTheCart).reduce((count, item) => count + item.count, 0),
+
+        isPopularLoading: state => state.isPopularLoading,
+        isSelectedGoodLoading: state => state.isSelectedGoodLoading,
     }
 }
