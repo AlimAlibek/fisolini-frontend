@@ -18,12 +18,14 @@
         <div class="mobile-location"  >
           <TheLocation />
         </div>
+        <a v-bind:href="'/'" >
         <div class="main-logo">
           <v-img
             :src="require('../assets/Fisolini_Logo.svg')"
             contain
           />
         </div>
+        </a>
       </v-app-bar-title>
 
       <v-spacer></v-spacer>

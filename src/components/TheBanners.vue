@@ -3,6 +3,7 @@
   <v-carousel
     cycle
     :height="bannerHeight"
+    :interval="3000"
     hide-delimiter-background
     show-arrows-on-hover
   >
