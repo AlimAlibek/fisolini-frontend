@@ -147,18 +147,3 @@
     }
 </script>
 
-<style scoped>
-    .wrapper {
-        display: grid;
-        grid-gap: 20px;
-        padding: 20px 0;
-        justify-content: center;
-        /* grid-template-columns: 20px repeat(6, 1fr) 20px; */
-    }
-    .images {
-
-    }
-    .details {
-
-    }
-</style>

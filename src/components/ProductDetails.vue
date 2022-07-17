@@ -136,7 +136,7 @@
                                 :class="xSmallWidth ? 'text-subtitle-2 pt-1'
                                     : smallWidth ? 'text-subtitle pt-1' : 'text-h5 pt-2'"
                             >
-                                {{stock.price}} &#8381;
+                                {{stock.price}}&#8381;
                             </v-row>
                             <v-row
                                 no-gutters

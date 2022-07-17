@@ -9,7 +9,7 @@
         label="Номер телефона"
         required
         outlined
-        :dense="dence"
+        :dense="dense"
         color="black"
         validate-on-blur
     ></v-text-field>
@@ -21,7 +21,7 @@ export default {
     props: {
         value: String,
         rules: Array,
-        dence: Boolean
+        dense: Boolean
     },
 
     mounted() {
