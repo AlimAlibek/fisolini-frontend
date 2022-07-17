@@ -10,8 +10,8 @@ module.exports = {
     }
   },
 
-  // devServer: {
-  //   proxy: 'https://api.fisolini.ru/'
-  // },
+  devServer: {
+    proxy: 'https://api.fisolini.ru/'
+  },
 
 }

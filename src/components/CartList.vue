@@ -1,5 +1,6 @@
 <template>
     <v-virtual-scroll
+        bench="3"
         :items="items"
         :min-height="smallWidth ? '320' : '450'"
         :max-height="smallWidth ? '470' : '600'"
@@ -10,7 +11,6 @@
                 :key="item.good.id"
                 :product="item"
             />
-            <v-divider :key="item.good.id"></v-divider>
         </template>
     </v-virtual-scroll>
 </template>

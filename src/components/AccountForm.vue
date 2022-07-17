@@ -64,7 +64,7 @@
         <InputPhoneNumber
           v-model="userPhoneNumber"
           :rules="phoneRules"
-          :dence="mobile"
+          :dense="mobile"
         />
         <v-text-field
           v-model="userEmail"

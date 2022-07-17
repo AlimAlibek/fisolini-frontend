@@ -1,4 +1,5 @@
 <template>
+  <div>
     <v-list-item
         three-line
     >
@@ -9,11 +10,16 @@
             <v-img :src="image"></v-img>
         </v-list-item-avatar>
         <v-list-item-content>
+            <a
+                style="color: black"
+                :href="`product?id=${product.good.id}`"
+            >
             <div
                 :class="titleClass"
             >
                 {{title}}
             </div>
+            </a>
           <div :class="sizeClass">
             <span class="gray--text">Размер: </span>
             <span class="font-weight-medium">{{size}} м</span>
@@ -39,7 +45,7 @@
             <div
                 :class="smallWidth ? 'text-subtitle-2' : 'text-h6'"
             >
-                1145 &#8381;
+                {{price}} &#8381;
             </div>
             <div
                 class="pt-1"
@@ -75,6 +81,8 @@
             </div>
         </v-list-item-action>
     </v-list-item>
+    <v-divider></v-divider>
+  </div>
 </template>
 
 <script>
@@ -94,6 +102,9 @@
             },
             size() {
                 return this.product.stock.size
+            },
+            price() {
+                return this.product.price
             },
 
             smallWidth() {
