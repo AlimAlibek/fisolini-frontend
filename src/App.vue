@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
 import TheHeader from '@/components/TheHeader';
 import TheFooter from '@/components/TheFooter';
 
@@ -52,6 +54,14 @@ export default {
           mainPadding() {
             return this.$vuetify.breakpoint.width < 1195 ? 'padding-top: 90px' : 'padding-top: 175px'
           }
+        },
+
+        methods: {
+          ...mapActions(['checkLocalStorage'])
+        },
+
+        mounted() {
+          this.checkLocalStorage();
         }
 };
 </script>

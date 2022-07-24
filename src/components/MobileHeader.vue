@@ -197,7 +197,12 @@
             КОРЗИНА
           </div>
         </v-row>
+        <div
+          style="overflow: auto"
+          :style="`height: ${this.bottomDrawerHeight - 100}px`"
+        >
           <TheCart />
+        </div>
 
       </v-sheet>
     </v-bottom-sheet>
@@ -344,7 +349,7 @@
         return this.$route.path === '/' || this.$route.path === '/product'
       },
       bottomDrawerHeight() {
-        return this.$vuetify.breakpoint.height - 170;
+        return this.$vuetify.breakpoint.height - 100;
       }
     },
 

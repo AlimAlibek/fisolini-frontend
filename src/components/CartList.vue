@@ -3,8 +3,8 @@
         bench="3"
         :items="items"
         :min-height="smallWidth ? '320' : '450'"
-        :max-height="smallWidth ? '470' : '600'"
-        :item-height="smallWidth ? '150' : '200'"
+        :max-height="smallWidth ? '470' : '500'"
+        :item-height="smallWidth ? '110' : '200'"
     >
         <template v-slot:default="{ item }">
             <CartItem
