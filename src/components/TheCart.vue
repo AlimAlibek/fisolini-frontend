@@ -3,7 +3,6 @@
         <CartList
             :products="getGoodsInTheCart"
         />
-        <v-divider></v-divider>
         <v-row
             no-gutters
         >

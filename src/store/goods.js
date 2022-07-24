@@ -46,11 +46,18 @@ export const goods = {
 
         setGoodToTheCart(state, data) {
             state.goodsInTheCart = {...state.goodsInTheCart, [data.id]: data}
+            localStorage.setItem('goodsInTheCart', JSON.stringify({...state.goodsInTheCart, [data.id]: data}))
         },
         removeGoodFromTheCart(state, data) {
             const goods = {...state.goodsInTheCart};
             delete goods[data.id]
             state.goodsInTheCart = {...goods};
+            localStorage.setItem('goodsInTheCart', JSON.stringify({...goods}))
+        },
+
+        setGoodsToTheCart(state, data) {
+            console.log('from local storage', {data})
+            state.goodsInTheCart = {...data}
         }
 
     },
@@ -128,6 +135,14 @@ export const goods = {
                 })
             } else {
                 ctx.commit('removeGoodFromCart', payload)
+            }
+        },
+
+        async checkLocalStorage(ctx) {
+            const goods = await JSON.parse(localStorage.getItem('goodsInTheCart'));
+
+            if (goods) {
+                ctx.commit('setGoodsToTheCart', goods)
             }
         }
     },

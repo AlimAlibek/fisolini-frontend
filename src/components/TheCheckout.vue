@@ -2,15 +2,17 @@
     <div>
         <v-row
             no-gutters
-            class="pa-3"
+            class="pa-3 pb-1"
         >
-            <div class="text-h6">
+            <div
+
+               :class="`text-${dense ? 'subtitle font-weight-bold' : 'h6'}`"
+            >
                 Контактные данные
             </div>
         </v-row>
         <div
             class="fields pa-3"
-
         >
         <v-text-field
           v-model="userName"
@@ -18,9 +20,11 @@
           required
           outlined
           color="black"
-          counter="20"
+          hide-details
           :rules="nameRules"
           :dense="dense"
+
+          class="pb-3"
         ></v-text-field>
         <InputPhoneNumber
           v-model="userPhoneNumber"
@@ -33,8 +37,12 @@
             :rules="[v => !!v || 'Обязательное поле']"
             label="Я прочитал и согласен с правилами покупки"
             required
+            :class="`text-${dense ? 'caption' : 'body'}`"
         ></v-checkbox>
-        <div class="gray--text pa-0 ma-0">
+        <div
+            class="gray--text pa-0 ma-0"
+            :class="`text-${dense ? 'caption' : 'body'}`"
+        >
             После оформления заказа, менеджер свяжется с Вами и уточнит детали доставки
         </div>
         <v-row
@@ -53,20 +61,17 @@
         </v-row>
 
         </div>
-        <!-- <AccountForm /> -->
     </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex';
 
-
 import InputPhoneNumber from '@/components/InputPhoneNumber.vue';
 
 export default {
     components: {
         InputPhoneNumber,
-        // AccountForm
     },
     data() {
         return {

@@ -11,10 +11,11 @@
         </v-list-item-avatar>
         <v-list-item-content>
             <a
-                style="color: black"
+                style="color: black;"
                 :href="`product?id=${product.good.id}`"
             >
             <div
+                :style="`line-height: ${smallWidth ? '15px' : '22px'}`"
                 :class="titleClass"
             >
                 {{title}}
@@ -81,7 +82,6 @@
             </div>
         </v-list-item-action>
     </v-list-item>
-    <v-divider></v-divider>
   </div>
 </template>
 
@@ -111,10 +111,10 @@
                 return this.$vuetify.breakpoint.xs
             },
             imageSize() {
-                return this.smallWidth ? 100 : 170
+                return this.smallWidth ? 90 : 170
             },
             titleClass() {
-                return this.smallWidth ? 'text-subtitle-2' : 'text-h6'
+                return this.smallWidth ? 'text-caption' : 'text-h6'
             },
             sizeClass() {
                 return this.smallWidth ? 'text-caption' : ''
