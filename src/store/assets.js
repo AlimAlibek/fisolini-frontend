@@ -1,4 +1,4 @@
-// import axios from "axios"
+import axios from "axios"
 
 export const assets = {
     state: () => ({
@@ -23,11 +23,11 @@ export const assets = {
                 'https://images.wallpaperscraft.ru/image/single/lava_tekstura_kamni_140277_1920x1080.jpg',
                 'https://images.wallpaperscraft.ru/image/single/treugolnik_forma_temnyy_figurka_88540_1920x1080.jpg',
             ])
-            // axios.get('catalog/banners')
-            //     .then(res => {
-            //         console.log('banners', res);
-            //         ctx.commit('setBanners', res.data.data.banners)
-            //     })
+             axios.get('catalog/banners')
+                 .then(res => {
+                     console.log('banners', res);
+                     ctx.commit('setBanners', res.data.data.banners)
+                 })
         }
 
 
