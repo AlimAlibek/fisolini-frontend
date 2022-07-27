@@ -46,7 +46,9 @@
 
         watch: {
             currentTab(value) {
+              window.scrollTo(0, top);
                 this.$router.push(this.tabs[value].path)
+                
             }
         }
     }
