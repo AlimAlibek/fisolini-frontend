@@ -18,6 +18,7 @@
         <div class="mobile-location"  >
           <TheLocation />
         </div>
+        <a v-bind:href="'/'" >
         <div class="main-logo">
           <a v-bind:href="'/'">
             <v-img
@@ -26,6 +27,7 @@
             />
           </a>
         </div>
+        </a>
       </v-app-bar-title>
 
       <v-spacer></v-spacer>
