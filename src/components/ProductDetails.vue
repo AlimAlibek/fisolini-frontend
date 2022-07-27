@@ -5,7 +5,6 @@
         :height="cardHeight"
     >
         <v-tabs
-            v-model="currentSide"
             fixed-tabs
             :height="xSmallWidth ? '30' : '40'"
             slider-color="#E81616"

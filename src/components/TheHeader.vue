@@ -238,6 +238,7 @@
     </v-navigation-drawer>
   </v-app-bar>
 </v-card>
+<OrderConfirm />
 </div>
 
 </template>
@@ -252,6 +253,7 @@
 
     import TheAccount from '@/components/TheAccount.vue';
     import TheCart from '@/components/TheCart.vue';
+    import OrderConfirm from '@/components/OrderConfirm.vue';
 
     export default {
         name: 'TheHeader',
@@ -263,7 +265,8 @@
           TheNavigation,
 
           TheAccount,
-          TheCart
+          TheCart,
+          OrderConfirm
         },
 
         data() {

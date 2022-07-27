@@ -4,6 +4,7 @@
         @input="handleInput"
         :rules="rules"
         type="tel" data-tel-input
+        :id="id"
         placeholder="Телефон"
         maxlength="18"
         label="Номер телефона"
@@ -24,6 +25,9 @@ export default {
         dense: Boolean
     },
 
+    computed: {
+        id: () => `tel-input-${Math.random()}`
+    },
     mounted() {
        this.inputLogic();
     },
@@ -42,7 +46,7 @@ export default {
         },
 
         inputLogic() {
-            var phoneInput = document.querySelector('input[data-tel-input]');
+            var phoneInput = document.getElementById(this.id);
 
             var getInputNumbersValue = function (input) {
                 // Return stripped input value — just numbers

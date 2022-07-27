@@ -14,58 +14,62 @@
         <div
             class="fields pa-3"
         >
-        <v-text-field
-          v-model="userName"
-          label="Имя"
-          required
-          outlined
-          color="black"
-          hide-details
-          :rules="nameRules"
-          :dense="dense"
+         <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+         >
+            <v-text-field
+              v-model="userName"
+              label="Имя"
+              required
+              outlined
+              color="black"
+              hide-details
+              :rules="nameRules"
+              :dense="dense"
 
-          class="pb-3"
-        ></v-text-field>
-        <InputPhoneNumber
-          v-model="userPhoneNumber"
-          :rules="phoneRules"
-          :dense="dense"
-        />
-        <v-checkbox
-            class="ma-0 pa-0"
-            v-model="checkbox"
-            :rules="[v => !!v || 'Обязательное поле']"
-            label="Я прочитал и согласен с правилами покупки"
-            required
-            :class="`text-${dense ? 'caption' : 'body'}`"
-        ></v-checkbox>
-        <div
-            class="gray--text pa-0 ma-0"
-            :class="`text-${dense ? 'caption' : 'body'}`"
-        >
-            После оформления заказа, менеджер свяжется с Вами и уточнит детали доставки
-        </div>
-        <v-row
-            no-gutters
-            justify="center"
-            :class="{'pt-1': dense, 'pt-3': !dense}"
-        >
-            <v-btn
-                class="white--text rounded-xl"
-                color="#1FAFAA"
-                :large="!dense"
-                :disabled="selectedStockIndex === null"
+              class="pb-3"
+            ></v-text-field>
+            <InputPhoneNumber
+              v-model="userPhoneNumber"
+              :rules="phoneRules"
+              :dense="dense"
+            />
+            <v-checkbox
+                class="ma-0 pa-0"
+                :rules="[v => !!v || 'Обязательное поле']"
+                label="Я прочитал и согласен с правилами покупки"
+                required
+                :class="`text-${dense ? 'caption' : 'body'}`"
+            ></v-checkbox>
+            <div
+                class="gray--text pa-0 ma-0"
+                :class="`text-${dense ? 'caption' : 'body'}`"
             >
-                Оформить {{getTotalPrice}}&#8381;
-            </v-btn>
-        </v-row>
-
+                После оформления заказа, менеджер свяжется с Вами и уточнит детали доставки
+            </div>
+            <v-row
+                no-gutters
+                justify="center"
+                :class="{'pt-1': dense, 'pt-3': !dense}"
+            >
+                <v-btn
+                    class="white--text rounded-xl"
+                    color="#1FAFAA"
+                    :large="!dense"
+                    @click="submit"
+                >
+                    Оформить {{getTotalPrice}}&#8381;
+                </v-btn>
+            </v-row>
+         </v-form>
         </div>
     </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 
 import InputPhoneNumber from '@/components/InputPhoneNumber.vue';
 
@@ -75,6 +79,8 @@ export default {
     },
     data() {
         return {
+            valid: true,
+
             userName: '',
             userPhoneNumber: '',
 
@@ -92,6 +98,24 @@ export default {
         ...mapGetters(['getTotalPrice']),
         dense() {
             return this.$vuetify.breakpoint.width < 1200;
+        }
+    },
+
+    methods: {
+        ...mapActions([
+            'createOrder'
+        ]),
+
+        async submit() {
+            await this.$refs.form.validate()
+            if (!this.valid) {
+                return;
+            }
+            this.createOrder({
+                name: this.userName,
+                phone: this.userPhoneNumber
+            })
+
         }
     }
 }

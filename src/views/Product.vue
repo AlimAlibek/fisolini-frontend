@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div v-if="isChoosenGoodLoading" class="pt-10">
+        <div v-if="isSelectedGoodLoading" class="pt-10">
             <v-progress-linear
               color="rgb(31 175 170)"
               indeterminate
@@ -8,7 +8,7 @@
               height="8"
             ></v-progress-linear>
         </div>
-        <div v-else>
+        <div v-else-if="getSelectedGood">
             <TheProduct />
         </div>
     </v-container>
@@ -22,7 +22,8 @@
         components: { TheProduct },
         computed: {
             ...mapGetters([
-                'isChoosenGoodLoading'
+                'isSelectedGoodLoading',
+                'getSelectedGood'
             ])
         },
 
@@ -41,7 +42,7 @@
                 window.scrollTo(0, 0)
             }
         },
-        mounted() {
+        created() {
             this.laodProduct();
         }
     }

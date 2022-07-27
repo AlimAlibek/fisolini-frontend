@@ -4,7 +4,7 @@ import axios from "axios"
 export const goods = {
     state: () => ({
         goods: [],
-        selectedGood: {},
+        selectedGood: null,
         isSelectedGoodLoading: false,
 
         novelties: [],
@@ -14,6 +14,10 @@ export const goods = {
         isPopularLoading: false,
 
         goodsInTheCart: {},
+
+        orders: {},
+        currentOrder: null
+
     }),
 
     mutations: {
@@ -56,8 +60,25 @@ export const goods = {
         },
 
         setGoodsToTheCart(state, data) {
-            console.log('from local storage', {data})
             state.goodsInTheCart = {...data}
+        },
+
+        clearCart(state) {
+            state.goodsInTheCart = {}
+            localStorage.removeItem('goodsInTheCart')
+        },
+
+        addOrder(state, data) {
+            const orders = {...state.orders, [data.number]: data.goods}
+            state.orders = orders;
+            localStorage.setItem('orders', JSON.stringify(orders));
+        },
+
+        setCurrentOrder(state, number) {
+            state.currentOrder = number
+        },
+        confirmOrder(state) {
+            state.currentOrder = null
         }
 
     },
@@ -144,6 +165,31 @@ export const goods = {
             if (goods) {
                 ctx.commit('setGoodsToTheCart', goods)
             }
+        },
+
+        async createOrder(ctx, payload) {
+            const products = {}
+            Object.values(ctx.getters.getGoodsInTheCart).forEach(good => {
+                products[good.stock.id] = good.count;
+            })
+
+            try {
+                const res = await axios.post('order/create', {
+                    name: payload.name,
+                    phone: payload.phone,
+                    products
+                });
+                await ctx.commit('addOrder', {
+                    number: res.data.data.id,
+                    goods: ctx.getters.getGoodsInTheCart
+                });
+                ctx.commit('setCurrentOrder', res.data.data.id)
+                await ctx.commit('clearCart');
+
+            } catch(err) {
+                console.log({err})
+            }
+
         }
     },
 
@@ -163,5 +209,7 @@ export const goods = {
 
         isPopularLoading: state => state.isPopularLoading,
         isSelectedGoodLoading: state => state.isSelectedGoodLoading,
+
+        currentOrder: state => state.currentOrder
     }
 }
