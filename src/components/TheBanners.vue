@@ -56,7 +56,7 @@
         bannerHeight() {
             return this.bannerWidth <=960 ? this.bannerWidth*0.39
                 :  (this.bannerWidth >960 && this.bannerWidth <=1700 ) ? this.bannerWidth*0.2
-                :  (this.bannerWidth >1700 && this.bannerWidth <=1900 ) ? this.bannerWidth*0.18 : 450 
+                :  (this.bannerWidth >1700 && this.bannerWidth <=1900 ) ? this.bannerWidth*0.18 : 450
         }
     },
 
@@ -66,8 +66,6 @@
 
     mounted() {
         this.loadBanners();
-
-        console.log(this.getBanners)
     }
   }
 </script>

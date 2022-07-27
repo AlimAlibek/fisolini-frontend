@@ -25,7 +25,6 @@ export const assets = {
             ])
              axios.get('catalog/banners')
                  .then(res => {
-                     console.log('banners', res);
                      ctx.commit('setBanners', res.data.data.banners)
                  })
         }
