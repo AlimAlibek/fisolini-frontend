@@ -95,6 +95,7 @@
         </v-btn>
 
         <v-badge
+          v-if="showCart"
           color="teal"
           :content="getAmountOfGoodsInTheCart"
           :value="getAmountOfGoodsInTheCart"
@@ -103,7 +104,6 @@
           offset-y="12"
         >
         <v-btn
-          v-if="showCart"
           icon
           @click.stop="cart = !cart"
         >
@@ -224,6 +224,7 @@
           no-gutters
           justify="space-between"
           align="center"
+          class="pb-4"
         >
           <v-col></v-col>
           <v-col>
@@ -256,6 +257,9 @@
           </v-col>
 
         </v-row>
+        <TheFilters
+          mobile
+        />
 
       <v-bottom-navigation
         absolute
@@ -303,6 +307,7 @@
   import TheAccount from '@/components/TheAccount.vue';
   import TheCart from '@/components/TheCart.vue';
   import SwipeLine from '@/components/SwipeLine.vue';
+import TheFilters from '@/components/TheFilters.vue';
 
 
   export default {
@@ -312,7 +317,8 @@
       FeedbackInfo,
       TheAccount,
       TheCart,
-      SwipeLine
+      SwipeLine,
+      TheFilters
     },
     data: () => ({
       navigation: false,
@@ -322,7 +328,7 @@
       pages: [
           {
               name: 'Каталог',
-              path: '/Catalog'
+              path: '/catalog'
           },
           {
               name: 'О компании',
@@ -345,10 +351,10 @@
         return this.$vuetify.application.top < 60;
       },
       showFilters() {
-        return this.$route.path === '/'
+        return this.$route.path === '/' || this.$route.path === '/catalog'
       },
       showCart() {
-        return this.$route.path === '/' || this.$route.path === '/product'
+        return this.$route.path === '/' || this.$route.path === '/product' || this.$route.path === '/catalog'
       },
       bottomDrawerHeight() {
         return this.$vuetify.breakpoint.height - 100;

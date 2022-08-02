@@ -55,6 +55,14 @@ let router = new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/catalog',
+            name: 'catalog',
+            component: () => import('./views/Catalog.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
     ]
 })
 

@@ -4,6 +4,9 @@ import axios from "axios"
 export const goods = {
     state: () => ({
         goods: [],
+        shownGoods: [],
+        areGoodsLoading: true,
+
         selectedGood: null,
         isSelectedGoodLoading: false,
 
@@ -34,6 +37,9 @@ export const goods = {
         setNovelties(state, data) {
             state.novelties = data
         },
+        setLoadingGoodsFlag(state, boolean) {
+            state.areGoodsLoading = boolean
+        },
         setLoadingPopularFlag(state, boolean) {
             state.isPopularLoading = boolean
         },
@@ -41,6 +47,9 @@ export const goods = {
             state.isSelectedGoodLoading = boolean
         },
 
+        setShownGoods(state, data) {
+            state.shownGoods = [...state.shownGoods, ...data]
+        },
         setShownPopular(state, data) {
             state.shownPopular = [...state.shownPopular, ...data]
         },
@@ -85,10 +94,22 @@ export const goods = {
 
     actions: {
         async loadGoods(ctx) {
+            ctx.commit('setLoadingGoodsFlag', true);
             const catalog = await axios.get('/catalog');
             if (catalog) {
-                ctx.commit('setGoods', catalog.data.data.products)
+                ctx.commit('setGoods', catalog.data.data.products);
+                ctx.commit('setShownGoods', catalog.data.data.products.slice(0, 20));
             }
+            ctx.commit('setLoadingGoodsFlag', false);
+        },
+        showMoreGoods(ctx, loadingAmount) {
+            ctx.commit(
+                'setShownGoods',
+                ctx.state.goods.slice(
+                    ctx.state.shownGoods.length,
+                    (ctx.state.shownGoods.length) + loadingAmount,
+                )
+            )
         },
         async loadPopularGoods(ctx) {
             ctx.commit('setLoadingPopularFlag', true);
@@ -194,7 +215,7 @@ export const goods = {
     },
 
     getters: {
-        getGoods: state => state.goods,
+        getGoods: state => state.shownGoods,
         getSelectedGood: state => state.selectedGood,
 
         getPopular: state => state.shownPopular,
@@ -207,6 +228,7 @@ export const goods = {
         getAmountOfGoodsInTheCart: state => Object.values(state.goodsInTheCart).reduce((count, item) => count + item.count, 0),
         getTotalPrice: state => Object.values(state.goodsInTheCart).reduce((count, item) => count + +item.price, 0),
 
+        areGoodsLoading: state => state.areGoodsLoading,
         isPopularLoading: state => state.isPopularLoading,
         isSelectedGoodLoading: state => state.isSelectedGoodLoading,
 

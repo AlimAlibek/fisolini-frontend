@@ -88,19 +88,19 @@
         productTitle() {
             return this.small
               ? this.product.title.length > 17 ? this.product.title.slice(0, 17) + '...' : this.product.title
-              : this.product.title.length > 23 ? this.product.title.slice(0, 23) + '...' : this.product.title
+              : this.product.title.length > 21 ? this.product.title.slice(0, 21) + '...' : this.product.title
         },
         image() {
           return this.product.images[0]?.path
         },
         country() {
-          return this.product.specifications[7].value
+          return this.product.specifications[0]?.country_of_manufacture || '-'
         },
         rating() {
           return this.product.score
         },
         reviews() {
-          return this.product.count_score
+          return this.product.reviews.length
         },
         sizes() {
           return this.product.stocks.length;
@@ -112,7 +112,7 @@
             if (max < stock.price) max = stock.price;
             if (min > stock.price) min = stock.price;
           })
-          return max === min ? `${min}` : `от ${min} до ${max} `
+          return !this.product.stocks.length ? '-' : max === min ? `${min}` : `от ${min} до ${max} `
         },
 
         cardClass() {

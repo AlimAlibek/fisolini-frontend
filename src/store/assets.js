@@ -2,31 +2,45 @@ import axios from "axios"
 
 export const assets = {
     state: () => ({
-        banners: []
+        banners: [],
+        categories: [],
+        filterEntities: []
     }),
 
     mutations: {
         setBanners(state, banners) {
             state.banners = banners
-        }
+        },
+        setCategories(state, categories) {
+            state.categories = categories
+        },
+        setFilterEntities(state, filterEntities) {
+            state.filterEntities = filterEntities
+        },
     },
 
     actions: {
 
         loadBanners(ctx) {
-            ctx.commit('setBanners', [
-                'https://images.wallpaperscraft.ru/image/single/cvety_frukty_stol_gostinaya_kovr_80770_1920x1080.jpg',
-                'https://images.wallpaperscraft.ru/image/single/komnata_kovr_stolik_divan_podushki_kartiny_knigi_okno_76963_1600x900.jpg',
-                'https://images.wallpaperscraft.ru/image/single/stolik_knigi_divan_kovr_77029_1600x900.jpg',
-                'https://images.wallpaperscraft.ru/image/single/derevyannyj_tekstura_bruski_119635_1920x1080.jpg',
-                'https://images.wallpaperscraft.ru/image/single/kraska_holst_piatna_127260_1920x1080.jpg',
-                'https://images.wallpaperscraft.ru/image/single/lava_tekstura_kamni_140277_1920x1080.jpg',
-                'https://images.wallpaperscraft.ru/image/single/treugolnik_forma_temnyy_figurka_88540_1920x1080.jpg',
-            ])
              axios.get('catalog/banners')
                  .then(res => {
                      ctx.commit('setBanners', res.data.data.banners)
                  })
+        },
+
+        loadCategories(ctx) {
+            axios.get('catalog/categories')
+                .then(res => {
+                    console.log('categories', res, {ctx})
+                    ctx.commit('setCategories', res.data.data.categories)
+                })
+        },
+        loadFilterEntities(ctx) {
+            axios.get('catalog/filters')
+                .then(res => {
+                    console.log('filterEntities', res, {ctx})
+                    ctx.commit('setFilterEntities', res.data.data[0])
+                })
         }
 
 
@@ -35,6 +49,8 @@ export const assets = {
     getters: {
         getBanners(state) {
             return state.banners
-        }
+        },
+        getCategories: state => state.categories,
+        getFilterEntities: state => state.filterEntities,
     }
 }

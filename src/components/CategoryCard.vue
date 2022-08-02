@@ -5,15 +5,11 @@
     >
         <v-img
           :src="image"
-          class="white--text align-end"
+          class="white--text align-start"
           height="100%"
+          position="left bottom"
         >
-          <v-card-title>
-            <div
-                :style="cardTitleStyle"
-                :class="cardTitleClass"
-            >{{title}}</div>
-        </v-card-title>
+
         </v-img>
     </v-card>
 </template>
@@ -22,10 +18,6 @@
     export default {
         props: {
             title: String,
-            titleColor: {
-                type: String,
-                default: '#1FAFAB'
-            },
             image: String
         },
 

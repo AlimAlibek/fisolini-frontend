@@ -69,16 +69,16 @@
                         cols="10"
                     >
                         <div
-                            v-for="spec in specifications"
-                            :key="spec.id"
+                            v-for="([key, value]) in Object.entries(specificationsValues)"
+                            :key="key"
                             :style="xSmallWidth ? 'font-size: 11px'
                                 : smallWidth ? 'font-size: 12px' : 'font-size: 16px'"
                         >
                             <span class="font-weight-bold">
-                                {{spec.name}}:
+                                {{value}}:
                             </span>
                             <span>
-                                {{spec.value}}
+                                {{specifications[0][key] || ''}}
                             </span>
                         </div>
                     </v-col>
@@ -195,7 +195,24 @@
                     'Проверенное качество (ГОСТ)',
                     'Гарантия 1 год',
                     'Обмен/возврат 14 дней'
-                ]
+                ],
+                specificationsValues: {
+                    'manufacturing_method': 'Способ изготовления',
+                    'quality': 'Качество1',
+                    'material': 'Материал',
+                    'collection': 'Коллекция',
+                    'form': 'Форма',
+                    'color_code': 'Код цвета',
+                    'design_code': 'Код дизайна',
+                    'country_of_manufacture': 'Страна производства',
+                    'quality2': 'Качество',
+                    'composition_code': 'Код состава',
+                    'density': 'Плотность',
+                    'weight': 'Вес',
+                    'pile_height': 'Высота ворса',
+                    'colour': 'Цвет',
+                    'style': 'Стиль'
+                }
             }
         },
 

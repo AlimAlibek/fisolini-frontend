@@ -1,13 +1,20 @@
 <template>
     <v-container>
-        <div v-if="isSelectedGoodLoading" class="pt-10">
+        <v-snackbar
+            v-if="isSelectedGoodLoading"
+            color="white"
+            elevation="0"
+            centered
+            :timeout="-1"
+            :value="true"
+        >
             <v-progress-linear
               color="rgb(31 175 170)"
               indeterminate
               rounded
-              height="8"
+              height="4"
             ></v-progress-linear>
-        </div>
+        </v-snackbar>
         <div v-else-if="getSelectedGood">
             <TheProduct />
         </div>

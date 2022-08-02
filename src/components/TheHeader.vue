@@ -172,22 +172,7 @@
       </div>
 
     </div>
-
-    <div
-      class="filters"
-    >
-      <span
-        v-for="filter in filters"
-        :key="filter.value"
-        class="filter"
-      >
-        <v-select
-          :label="filter.title"
-          :items="filter.items"
-          color="black"
-        ></v-select>
-      </span>
-    </div>
+    <TheFilters />
   </div>
     <v-navigation-drawer
       v-model="signin"
@@ -255,6 +240,8 @@
     import TheCart from '@/components/TheCart.vue';
     import OrderConfirm from '@/components/OrderConfirm.vue';
 
+import TheFilters from '@/components/TheFilters.vue';
+
     export default {
         name: 'TheHeader',
 
@@ -266,7 +253,9 @@
 
           TheAccount,
           TheCart,
-          OrderConfirm
+          OrderConfirm,
+
+          TheFilters
         },
 
         data() {
@@ -277,7 +266,7 @@
             pages: [
                 {
                     name: 'Каталог',
-                    path: '/Catalog'
+                    path: '/catalog'
                 },
                 {
                     name: 'О компании',

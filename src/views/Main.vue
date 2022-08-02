@@ -85,8 +85,8 @@ import PlacementTips from '@/components/PlacementTips.vue';
         ]),
 
         defaultAmount() {
-            return (this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm) ? 4
-                : (this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg) ? 6 : 8
+            return (this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm) ? 2
+                : (this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg) ? 3 : 4
         }
     },
 
@@ -108,7 +108,7 @@ import PlacementTips from '@/components/PlacementTips.vue';
     async mounted() {
         await this.loadPopularGoods();
         this.loadMorePopular();
-        this.loadMoreNovelties()
+        this.loadMoreNovelties();
     }
  }
 </script>

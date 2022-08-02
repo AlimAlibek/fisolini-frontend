@@ -1,6 +1,6 @@
 <template>
     <v-tabs
-      v-model="currentTab"
+      :value="currentTab"
       :height="height"
       style="width:490px"
       background-color="#ffffff00"
@@ -9,8 +9,9 @@
       :vertical="mobile"
     >
       <v-tab
-        v-for="page in tabs"
+        v-for="(page, i) in tabs"
         :key="page.name"
+        @click="toPage(i)"
       >
         <span
             :class="{
@@ -40,17 +41,25 @@
 
         data() {
             return {
-                currentTab: 0
+                currentTab: null
             }
         },
 
-        watch: {
-            currentTab(value) {
-              window.scrollTo(0, top);
-                this.$router.push(this.tabs[value].path)
-                
-            }
-        }
+        methods: {
+          toPage(index) {
+            this.currentTab = index;
+            this.$router.push(this.tabs[index].path);
+            window.scrollTo(0, top);
+          }
+        },
+
+        // watch: {
+        //     currentTab(value) {
+
+
+
+        //     }
+        // }
     }
 </script>
 

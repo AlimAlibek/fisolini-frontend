@@ -3,7 +3,7 @@
         justify="center"
     >
         <v-col
-            v-for="category in Categories"
+            v-for="category in getCategories"
             :key="category.id"
             :cols="cols"
             :class="paddings"
@@ -13,8 +13,7 @@
             justify="center"
           >
             <CategoryCard
-                :title="category.title"
-                :titleColor="category.titleColor"
+                :title="category.name"
                 :image="category.image"
             />
           </v-row>
@@ -25,57 +24,18 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
 
-import CategoryImage from '@/assets/images/category.png';
 import CategoryCard from '@/components/CategoryCard.vue';
 
 export default {
-  components: { CategoryCard },
-    data() {
-        return {
-            Categories: [
-                {
-                    title: 'Классика',
-                    titleColor: '#1FAFAB',
-                    image: CategoryImage,
-                    id: '1'
-                },
-                {
-                    title: 'Классика',
-                    titleColor: '#1FAFAB',
-                    image: CategoryImage,
-                    id: '2'
-                },
-                {
-                    title: 'Классика',
-                    titleColor: '#1FAFAB',
-                    image: CategoryImage,
-                    id: '3'
-                },
-                {
-                    title: 'Классика',
-                    titleColor: '#1FAFAB',
-                    image: CategoryImage,
-                    id: '4'
-                },
-                {
-                    title: 'Классика',
-                    titleColor: '#1FAFAB',
-                    image: CategoryImage,
-                    id: '5'
-                },
-                {
-                    title: 'Классика',
-                    titleColor: '#1FAFAB',
-                    image: CategoryImage,
-                    id: '6'
-                },
-            ]
-        }
-    },
+    components: { CategoryCard },
 
     computed: {
-        CategoryImage: () => CategoryImage,
+        ...mapGetters([
+            'getCategories'
+        ]),
+
         cols() {
             return (this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl) ? 4 : 6
         },
@@ -84,7 +44,16 @@ export default {
             return this.$vuetify.breakpoint.xs ? 'pa-1'
                 : this.$vuetify.breakpoint.sm ? 'pa-2' : ''
         }
+    },
 
+    methods: {
+        ...mapActions([
+            'loadCategories'
+        ])
+    },
+
+    created() {
+        this.loadCategories();
     }
 }
 </script>
