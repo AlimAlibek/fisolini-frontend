@@ -52,14 +52,6 @@
             window.scrollTo(0, top);
           }
         },
-
-        // watch: {
-        //     currentTab(value) {
-
-
-
-        //     }
-        // }
     }
 </script>
 

@@ -3,9 +3,7 @@
     <v-app-bar
       app
       clipped-left
-      shrink-on-scroll
       min-height="70"
-      :class="{'pt-2': isHeaderScrolled}"
     >
       <v-app-bar-nav-icon
         x-large
@@ -15,9 +13,9 @@
 
       <v-spacer></v-spacer>
       <v-app-bar-title>
-        <div class="mobile-location"  >
+        <!-- <div class="mobile-location"  >
           <TheLocation />
-        </div>
+        </div> -->
         <a v-bind:href="'/'" >
         <div class="main-logo">
           <a v-bind:href="'/'">
@@ -301,18 +299,18 @@
 <script>
   import {mapGetters} from 'vuex';
 
-  import TheLocation from '@/components/TheLocation.vue';
+  // import TheLocation from '@/components/TheLocation.vue';
   import TheNavigation from '@/components/TheNavigation.vue';
   import FeedbackInfo from '@/components/FeedbackInfo.vue';
   import TheAccount from '@/components/TheAccount.vue';
   import TheCart from '@/components/TheCart.vue';
   import SwipeLine from '@/components/SwipeLine.vue';
-import TheFilters from '@/components/TheFilters.vue';
+  import TheFilters from '@/components/TheFilters.vue';
 
 
   export default {
     components: {
-      TheLocation,
+      // TheLocation,
       TheNavigation,
       FeedbackInfo,
       TheAccount,

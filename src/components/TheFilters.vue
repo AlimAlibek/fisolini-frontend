@@ -157,7 +157,4 @@
     min-width: 100px;
     margin-right: 12px;
   }
-  .active-class {
-    background: white;
-  }
 </style>
