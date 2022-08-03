@@ -5,6 +5,7 @@ export const goods = {
     state: () => ({
         goods: [],
         shownGoods: [],
+        filteredGoods: [],
         areGoodsLoading: true,
 
         selectedGood: null,
@@ -19,14 +20,34 @@ export const goods = {
         goodsInTheCart: {},
 
         orders: {},
-        currentOrder: null
+        currentOrder: null,
 
+        filters: {
+            style: [],
+            colour: [],
+            manufacturing_method: [],
+            material: [],
+            collection: [],
+            form: [],
+            country_of_manufacture: [],
+            density: [],
+            weight: [],
+            pile_height: []
+        }
     }),
 
     mutations: {
         setGoods(state, data) {
             state.goods = data
         },
+        setFilteredGoods(state, data) {
+            state.filteredGoods = data
+        },
+        showFilteredGoods(state) {
+            state.goods = state.filteredGoods;
+            state.shownGoods = state.goods.slice(0, 20)
+        },
+
         setSelectedGood(state, data) {
             state.selectedGood = data;
         },
@@ -88,17 +109,40 @@ export const goods = {
         },
         confirmOrder(state) {
             state.currentOrder = null
+        },
+
+        setFilters(state, {category, value}) {
+            state.filters[category] = value;
+            this.dispatch('loadGoods');
         }
 
     },
 
     actions: {
         async loadGoods(ctx) {
-            ctx.commit('setLoadingGoodsFlag', true);
-            const catalog = await axios.get('/catalog');
-            if (catalog) {
-                ctx.commit('setGoods', catalog.data.data.products);
-                ctx.commit('setShownGoods', catalog.data.data.products.slice(0, 20));
+            if (ctx.getters.numberOfAppliedFilters > 0) {
+                try {
+                    const goodsWithFilters = await axios.post('/catalog/filter', {
+                        ...ctx.state.filters
+                    });
+
+                    if (goodsWithFilters) {
+                        ctx.commit('setFilteredGoods', goodsWithFilters.data.data.products);
+                    }
+                } catch(err) {
+                    console.log(err)
+                }
+            } else {
+                ctx.commit('setLoadingGoodsFlag', true);
+                try {
+                    const catalog = await axios.get('/catalog');
+                    if (catalog) {
+                        ctx.commit('setGoods', catalog.data.data.products);
+                        ctx.commit('setShownGoods', catalog.data.data.products.slice(0, 20));
+                    }
+                } catch(err) {
+                    console.log(err)
+                }
             }
             ctx.commit('setLoadingGoodsFlag', false);
         },
@@ -216,6 +260,8 @@ export const goods = {
 
     getters: {
         getGoods: state => state.shownGoods,
+        getAmountOfGoods: state => state.goods.length,
+        getAmountOfFilteredGoods: state => state.filteredGoods.length,
         getSelectedGood: state => state.selectedGood,
 
         getPopular: state => state.shownPopular,
@@ -232,6 +278,12 @@ export const goods = {
         isPopularLoading: state => state.isPopularLoading,
         isSelectedGoodLoading: state => state.isSelectedGoodLoading,
 
-        currentOrder: state => state.currentOrder
+        currentOrder: state => state.currentOrder,
+
+
+        getFilters: state => state.filters,
+        numberOfAppliedFilters: state => Object.values(state.filters).reduce((number, item) => {
+           return number + item.length;
+        }, 0)
     }
 }

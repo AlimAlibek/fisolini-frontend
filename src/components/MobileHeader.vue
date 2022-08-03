@@ -58,7 +58,7 @@
         <v-btn
           v-if="showFilters"
           icon
-          @click="filters = true"
+          @click="scrollUp"
         >
           <v-icon
             large
@@ -74,6 +74,7 @@
           class="rounded-pill white--text"
           color="#1FAFAA"
           height="42"
+          @click="filters = true"
         >
           <v-row align="center">
             <v-col cols="3">
@@ -83,10 +84,10 @@
             </v-col>
             <v-col style="text-align: start" class="white--text text-subtitle">
               <div class="pb-1">
-                Фильтры: 0
+                Фильтры: {{numberOfAppliedFilters}}
               </div>
               <div>
-                Товаров: 2357
+                Товаров: {{getAmountOfGoods}}
               </div>
             </v-col>
           </v-row>
@@ -272,6 +273,7 @@
           class="rounded-pill white--text"
           color="#1FAFAA"
           height="42"
+          @click="toFilteredGoods"
         >
           <v-row align="center">
             <v-col cols="3">
@@ -284,7 +286,7 @@
                 Просмотреть
               </div>
               <div>
-                Товаров: 1256
+                Товаров: {{getAmountOfFilteredGoods}}
               </div>
             </v-col>
           </v-row>
@@ -297,7 +299,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapMutations} from 'vuex';
 
   // import TheLocation from '@/components/TheLocation.vue';
   import TheNavigation from '@/components/TheNavigation.vue';
@@ -344,7 +346,12 @@
     }),
 
     computed: {
-      ...mapGetters(['getAmountOfGoodsInTheCart']),
+      ...mapGetters([
+        'getAmountOfGoodsInTheCart',
+        'numberOfAppliedFilters',
+        'getAmountOfGoods',
+        'getAmountOfFilteredGoods',
+      ]),
       isHeaderScrolled() {
         return this.$vuetify.application.top < 60;
       },
@@ -360,6 +367,17 @@
     },
 
     methods: {
+      ...mapMutations([
+        'showFilteredGoods'
+      ]),
+      scrollUp() {
+        window.scrollTo(0, 0);
+      },
+      toFilteredGoods() {
+        this.filters = false
+        this.$router.push('/catalog')
+        this.showFilteredGoods();
+      }
     }
   }
 </script>
