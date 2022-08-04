@@ -122,12 +122,19 @@ export const goods = {
         async loadGoods(ctx) {
             if (ctx.getters.numberOfAppliedFilters > 0) {
                 try {
+                    const headers = {
+                        'Content-Type': 'text/plain',
+                      }
                     const goodsWithFilters = await axios.post('/catalog/filter', {
                         ...ctx.state.filters
-                    });
+                    },{
+                        headers: headers
+                      });
 
                     if (goodsWithFilters) {
-                        ctx.commit('setFilteredGoods', goodsWithFilters.data.data.products);
+                        ctx.commit('setFilteredGoods', goodsWithFilters.data.data.products,{
+                            headers: headers
+                          });
                     }
                 } catch(err) {
                     console.log(err)
@@ -237,13 +244,18 @@ export const goods = {
             Object.values(ctx.getters.getGoodsInTheCart).forEach(good => {
                 products[good.stock.id] = good.count;
             })
-
+            
             try {
+                const headers = {
+                    'Content-Type': 'text/plain',
+                  }
                 const res = await axios.post('order/create', {
                     name: payload.name,
                     phone: payload.phone,
                     products
-                });
+                },{
+                    headers: headers
+                  });
                 await ctx.commit('addOrder', {
                     number: res.data.data.id,
                     goods: ctx.getters.getGoodsInTheCart
