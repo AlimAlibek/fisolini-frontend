@@ -229,7 +229,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapActions} from 'vuex';
 
     import MobileHeader from '@/components/MobileHeader.vue';
     import FeedbackInfo from '@/components/FeedbackInfo.vue'
@@ -240,7 +240,7 @@
     import TheCart from '@/components/TheCart.vue';
     import OrderConfirm from '@/components/OrderConfirm.vue';
 
-import TheFilters from '@/components/TheFilters.vue';
+    import TheFilters from '@/components/TheFilters.vue';
 
     export default {
         name: 'TheHeader',
@@ -360,6 +360,14 @@ import TheFilters from '@/components/TheFilters.vue';
           userOrder() {
             return this.largeScreen ? '1' : '2'
           },
+        },
+
+        methods: {
+          ...mapActions(['loadFilterEntities'])
+        },
+
+        mounted() {
+          this.loadFilterEntities();
         }
     }
 </script>

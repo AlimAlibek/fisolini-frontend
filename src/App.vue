@@ -52,7 +52,7 @@ export default {
 
         computed: {
           mainPadding() {
-            return this.$vuetify.breakpoint.width < 1195 ? 'padding-top: 90px' : 'padding-top: 175px'
+            return this.$vuetify.breakpoint.width < 1195 ? 'padding-top: 40px' : 'padding-top: 175px'
           }
         },
 

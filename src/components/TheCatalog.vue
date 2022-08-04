@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 import ProductGroup from '@/components/ProductGroup.vue'
 
@@ -64,10 +64,8 @@ export default {
     },
 
     methods: {
-        ...mapActions([
-            'loadGoods',
-            'showMoreGoods'
-        ]),
+        ...mapActions(['loadGoods']),
+        ...mapMutations(['showMoreGoods']),
 
         lazyLoad() {
             this.showMoreGoods(this.defaultAmount);

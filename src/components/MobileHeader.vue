@@ -216,7 +216,7 @@
         :height="bottomDrawerHeight"
       >
         <SwipeLine
-          @swipeDown="filters=false"
+          @swipeDown="toFilteredGoods"
         />
 
         <v-row
@@ -375,7 +375,9 @@
       },
       toFilteredGoods() {
         this.filters = false
-        this.$router.push('/catalog')
+        if (this.$route.name !== 'catalog') {
+          this.$router.push('/catalog')
+        }
         this.showFilteredGoods();
       }
     }

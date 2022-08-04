@@ -69,7 +69,14 @@ export const goods = {
         },
 
         setShownGoods(state, data) {
-            state.shownGoods = [...state.shownGoods, ...data]
+            state.shownGoods = data;
+        },
+        showMoreGoods(state, loadingAmount) {
+
+            state.shownGoods = [...state.shownGoods, ...state.goods.slice(
+                state.shownGoods.length,
+                (state.shownGoods.length) + loadingAmount,
+            )]
         },
         setShownPopular(state, data) {
             state.shownPopular = [...state.shownPopular, ...data]
@@ -145,15 +152,6 @@ export const goods = {
                 }
             }
             ctx.commit('setLoadingGoodsFlag', false);
-        },
-        showMoreGoods(ctx, loadingAmount) {
-            ctx.commit(
-                'setShownGoods',
-                ctx.state.goods.slice(
-                    ctx.state.shownGoods.length,
-                    (ctx.state.shownGoods.length) + loadingAmount,
-                )
-            )
         },
         async loadPopularGoods(ctx) {
             ctx.commit('setLoadingPopularFlag', true);
