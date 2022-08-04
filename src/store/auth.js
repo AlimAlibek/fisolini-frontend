@@ -32,10 +32,15 @@ export const auth = {
         // },
 
         async postUserPhoneNumber(ctx, payload) {
-
-            const response = await axios.post('auth/login', {
-                phone: payload.userPhoneNumber
-            })
+            var data = {
+                'phone': payload.userPhoneNumber
+            }
+            const headers = {
+                'Content-Type': 'text/plain',
+              }
+            const response = await axios.post('auth/login', data, {
+                headers: headers
+              })
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.data.token)
                 ctx.commit('updateUserPhoneNumber', payload.userPhoneNumber)
@@ -49,10 +54,17 @@ export const auth = {
         },
 
         async postSMSCode(ctx, payload) {
-            const response = await axios.post('auth/checkCode', {
-                token: localStorage.getItem('token'),
-                code: payload.otpCode,
-            })
+            var data = {
+                'token': localStorage.getItem('token'),
+                'code': payload.otpCode
+            }
+            const headers = {
+                'Content-Type': 'text/plain',
+              }
+            const response = await axios.post('auth/checkCode', data, {
+                headers: headers
+              })
+            
             if (response.status === 200) {
                 // localStorage.setItem('token', response.data.data.token)
                 ctx.commit('updateAuthStatus', 'edit_credentials')
