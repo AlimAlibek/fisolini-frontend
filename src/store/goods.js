@@ -244,13 +244,18 @@ export const goods = {
             Object.values(ctx.getters.getGoodsInTheCart).forEach(good => {
                 products[good.stock.id] = good.count;
             })
-
+            
             try {
+                const headers = {
+                    'Content-Type': 'text/plain',
+                  }
                 const res = await axios.post('order/create', {
                     name: payload.name,
                     phone: payload.phone,
                     products
-                });
+                },{
+                    headers: headers
+                  });
                 await ctx.commit('addOrder', {
                     number: res.data.data.id,
                     goods: ctx.getters.getGoodsInTheCart
