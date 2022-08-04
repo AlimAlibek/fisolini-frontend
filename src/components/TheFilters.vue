@@ -20,7 +20,6 @@
           >
             <v-list-item-group
               v-model="selectedCategory"
-
             >
               <v-list-item
                 v-for="([category]) in Object.entries(getFilterEntities)"
@@ -34,6 +33,7 @@
         </v-col>
         <v-col>
           <v-virtual-scroll
+            v-if="selectedCategory !== undefined"
             :items="Object.values(getFilterEntities[Object.keys(getFilters)[selectedCategory]])"
             :height="height"
             item-height="36"
@@ -75,7 +75,6 @@
           v-for="([category, values], i) in Object.entries(getFilterEntities)"
           :key="category"
           class="filter"
-
         >
           <v-select
             v-model="getFilters[category]"
@@ -83,6 +82,7 @@
             :items="values.map(v => v[category])"
             multiple
             color="black"
+            item-color="#1FAFAB"
             hide-details
             class="mt-3 mb-1"
             @focus="selectCategory(i)"
@@ -108,7 +108,7 @@
 </template>
 
 <script>
-    import {mapActions, mapMutations, mapGetters} from 'vuex'
+    import {mapMutations, mapGetters} from 'vuex'
 
     export default {
         props: {
@@ -129,14 +129,15 @@
                     density: 'Плотность',
                     weight: 'Вес',
                     pile_height: 'Высота ворса'
-                }
+                },
             }
         },
         computed: {
             ...mapGetters([
                 'getFilterEntities',
                 'getFilters',
-                'numberOfAppliedFilters'
+                'numberOfAppliedFilters',
+                'getAmountOfFilteredGoods'
             ]),
 
             height() {
@@ -148,10 +149,6 @@
         },
 
         methods: {
-            ...mapActions([
-                'loadFilterEntities',
-                'setFilters'
-            ]),
             ...mapMutations([
               'setFilters',
               'showFilteredGoods'
@@ -164,28 +161,14 @@
             },
 
             selectCategory(value) {
-              console.log('category', value)
               this.selectedCategory = value
             },
 
             selectValue(value) {
-              this.setFilters({category: Object.keys(this.getFilters)[this.selectedCategory], value})
+              this.setFilters({category: Object.keys(this.getFilters)[this.selectedCategory], value});
             }
         },
 
-        // watch: {
-        //   filters: {
-        //     handler(newValue){
-        //       console.log(newValue);
-        //       console.log('store filters', this.getFilters);
-        //     },
-        //     deep: true
-        //   }
-        // },
-
-        created() {
-            this.loadFilterEntities();
-        }
     }
 </script>
 

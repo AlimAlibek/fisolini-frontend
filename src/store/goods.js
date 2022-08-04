@@ -1,6 +1,19 @@
 
 import axios from "axios"
 
+const initialFilters = {
+    style: [],
+    colour: [],
+    manufacturing_method: [],
+    material: [],
+    collection: [],
+    form: [],
+    country_of_manufacture: [],
+    density: [],
+    weight: [],
+    pile_height: []
+}
+
 export const goods = {
     state: () => ({
         goods: [],
@@ -22,18 +35,7 @@ export const goods = {
         orders: {},
         currentOrder: null,
 
-        filters: {
-            style: [],
-            colour: [],
-            manufacturing_method: [],
-            material: [],
-            collection: [],
-            form: [],
-            country_of_manufacture: [],
-            density: [],
-            weight: [],
-            pile_height: []
-        }
+        filters: {...initialFilters}
     }),
 
     mutations: {
@@ -69,7 +71,14 @@ export const goods = {
         },
 
         setShownGoods(state, data) {
-            state.shownGoods = [...state.shownGoods, ...data]
+            state.shownGoods = data;
+        },
+        showMoreGoods(state, loadingAmount) {
+
+            state.shownGoods = [...state.shownGoods, ...state.goods.slice(
+                state.shownGoods.length,
+                (state.shownGoods.length) + loadingAmount,
+            )]
         },
         setShownPopular(state, data) {
             state.shownPopular = [...state.shownPopular, ...data]
@@ -114,6 +123,10 @@ export const goods = {
         setFilters(state, {category, value}) {
             state.filters[category] = value;
             this.dispatch('loadGoods');
+        },
+
+        resetFilters(state) {
+            state.filters = {...initialFilters};
         }
 
     },
@@ -142,7 +155,11 @@ export const goods = {
             } else {
                 ctx.commit('setLoadingGoodsFlag', true);
                 try {
-                    const catalog = await axios.get('/catalog');
+                    const catalog = await axios.get('/catalog', {
+                        headers: {
+                            'Content-Type': 'text/plain',
+                        }
+                    });
                     if (catalog) {
                         ctx.commit('setGoods', catalog.data.data.products);
                         ctx.commit('setShownGoods', catalog.data.data.products.slice(0, 20));
@@ -152,15 +169,6 @@ export const goods = {
                 }
             }
             ctx.commit('setLoadingGoodsFlag', false);
-        },
-        showMoreGoods(ctx, loadingAmount) {
-            ctx.commit(
-                'setShownGoods',
-                ctx.state.goods.slice(
-                    ctx.state.shownGoods.length,
-                    (ctx.state.shownGoods.length) + loadingAmount,
-                )
-            )
         },
         async loadPopularGoods(ctx) {
             ctx.commit('setLoadingPopularFlag', true);
@@ -244,7 +252,6 @@ export const goods = {
             Object.values(ctx.getters.getGoodsInTheCart).forEach(good => {
                 products[good.stock.id] = good.count;
             })
-            
             try {
                 const headers = {
                     'Content-Type': 'text/plain',
@@ -267,7 +274,14 @@ export const goods = {
                 console.log({err})
             }
 
-        }
+        },
+
+        async resetFilters(ctx) {
+            ctx.commit('resetFilters');
+            await ctx.dispatch('loadGoods');
+            ctx.commit('setFilteredGoods', [])
+        },
+
     },
 
     getters: {

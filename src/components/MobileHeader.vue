@@ -216,7 +216,7 @@
         :height="bottomDrawerHeight"
       >
         <SwipeLine
-          @swipeDown="filters=false"
+          @swipeDown="toFilteredGoods"
         />
 
         <v-row
@@ -248,6 +248,7 @@
                   depressed
                   color="white"
                   class="font-weight-bold"
+                  @click="resetFilters"
                 >
                   СБРОСИТЬ
                 </v-btn>
@@ -286,7 +287,7 @@
                 Просмотреть
               </div>
               <div>
-                Товаров: {{getAmountOfFilteredGoods}}
+                Товаров: {{getAmountOfFilteredGoods || getAmountOfGoods}}
               </div>
             </v-col>
           </v-row>
@@ -299,7 +300,7 @@
 </template>
 
 <script>
-  import {mapGetters, mapMutations} from 'vuex';
+  import {mapActions, mapGetters, mapMutations} from 'vuex';
 
   // import TheLocation from '@/components/TheLocation.vue';
   import TheNavigation from '@/components/TheNavigation.vue';
@@ -367,6 +368,9 @@
     },
 
     methods: {
+      ...mapActions([
+        'resetFilters'
+      ]),
       ...mapMutations([
         'showFilteredGoods'
       ]),
@@ -375,8 +379,12 @@
       },
       toFilteredGoods() {
         this.filters = false
-        this.$router.push('/catalog')
-        this.showFilteredGoods();
+        if (this.$route.name !== 'catalog') {
+          this.$router.push('/catalog')
+        }
+        if (this.numberOfAppliedFilters > 0) {
+          this.showFilteredGoods();
+        }
       }
     }
   }
