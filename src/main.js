@@ -6,8 +6,16 @@ import router from './router';
 import store from '@/store';
 import axios from 'axios';
 import vuetify from './plugins/vuetify'
+import VueYandexMetrika from 'vue-yandex-metrika'                               
 
 Vue.use(vueNotification);
+
+Vue.use(VueYandexMetrika, {
+  id: 88691177,
+  router: router,
+  env: 'production'
+  // other options
+})
 
 Vue.prototype.$http = axios;
 
@@ -18,8 +26,8 @@ if(Vue.config.productionTip){
   axios.defaults.baseURL = 'https://api.fisolini.ru/admin/';
 }else{
   // axios.defaults.baseURL = 'http://season-market-api/admin/';
-  axios.defaults.baseURL = 'http://localhost:8080/';
-  // axios.defaults.baseURL = 'https://api.fisolini.ru/';
+  // axios.defaults.baseURL = 'http://localhost:8080/';
+  axios.defaults.baseURL = 'https://api.fisolini.ru/';
 
   // axios.defaults.baseURL = 'http://192.168.0.13:8080/';
 }
@@ -29,7 +37,7 @@ const token = localStorage.getItem('token');
 
 if (token) {
 
-  axios.defaults.headers = {Authorization: 'Bearer ' + token}
+  // axios.defaults.headers = {Authorization: 'Bearer ' + token}
   // Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
 }
 // Vue.prototype.$http.defaults.mode = 'no-cors';

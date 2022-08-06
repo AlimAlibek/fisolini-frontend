@@ -115,6 +115,7 @@ export default {
                 name: this.userName,
                 phone: this.userPhoneNumber
             })
+            this.$emit('purcash', this.stocks[this.selectedStockIndex])
 
         }
     }

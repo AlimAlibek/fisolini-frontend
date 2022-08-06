@@ -242,6 +242,7 @@
 
         methods: {
             addToCart() {
+                this.$metrika.reachGoal('add_to_cart')
                 this.$emit('addToCart', this.stocks[this.selectedStockIndex])
             }
         }
