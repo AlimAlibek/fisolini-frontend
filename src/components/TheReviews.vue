@@ -17,6 +17,7 @@
         color="#1FAFAA"
         :large="largeWidth"
         :small="!largeWidth"
+        @click="reviewDialog = true"
       >
         Оставить отзыв
       </v-btn>
@@ -70,13 +71,31 @@
           </v-list-item-content>
         </v-list-item>
     </v-list>
+
+    <ReviewDialog
+      v-model="reviewDialog"
+    />
 </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
+import ReviewDialog from './ReviewDialog.vue'
  export default {
+  components: { ReviewDialog },
+
+    data() {
+      return {
+        reviewDialog: false
+      }
+    },
 
     computed: {
+      ...mapGetters([
+        'getSelectedGood'
+      ]),
+
       largeWidth() {
         return this.$vuetify.breakpoint.width > 1479
       },

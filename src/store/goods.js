@@ -14,12 +14,16 @@ const initialFilters = {
     pile_height: []
 }
 
+const requestHeaders = {
+    'Content-Type': 'text/plain',
+}
+
 export const goods = {
     state: () => ({
         goods: [],
         shownGoods: [],
         filteredGoods: [],
-        areGoodsLoading: true,
+        areGoodsLoading: false,
 
         selectedGood: null,
         isSelectedGoodLoading: false,
@@ -46,8 +50,11 @@ export const goods = {
             state.filteredGoods = data
         },
         showFilteredGoods(state) {
+            this.commit('setLoadingGoodsFlag', true);
             state.goods = state.filteredGoods;
-            state.shownGoods = state.goods.slice(0, 20)
+            state.shownGoods = state.goods.slice(0, 20);
+            state.filteredGoods = [];
+            this.commit('setLoadingGoodsFlag', false);
         },
 
         setSelectedGood(state, data) {
@@ -120,9 +127,9 @@ export const goods = {
             state.currentOrder = null
         },
 
-        setFilters(state, {category, value}) {
+        setFilters(state, {category, value, show}) {
             state.filters[category] = value;
-            this.dispatch('loadGoods');
+            this.dispatch('loadGoods', show);
         },
 
         resetFilters(state) {
@@ -132,33 +139,30 @@ export const goods = {
     },
 
     actions: {
-        async loadGoods(ctx) {
+        async loadGoods(ctx, show) {
+            ctx.commit('setLoadingGoodsFlag', true);
             if (ctx.getters.numberOfAppliedFilters > 0) {
                 try {
-                    const headers = {
-                        'Content-Type': 'text/plain',
-                      }
                     const goodsWithFilters = await axios.post('/catalog/filter', {
                         ...ctx.state.filters
                     },{
-                        headers: headers
-                      });
+                        headers: requestHeaders
+                    });
 
                     if (goodsWithFilters) {
-                        ctx.commit('setFilteredGoods', goodsWithFilters.data.data.products,{
-                            headers: headers
-                          });
+                        ctx.commit('setFilteredGoods', goodsWithFilters.data.data.products);
+                    }
+                    if (show) {
+                        ctx.commit('showFilteredGoods');
                     }
                 } catch(err) {
                     console.log(err)
                 }
             } else {
-                ctx.commit('setLoadingGoodsFlag', true);
+                ctx.commit('setFilteredGoods', []);
                 try {
                     const catalog = await axios.get('/catalog', {
-                        headers: {
-                            'Content-Type': 'text/plain',
-                        }
+                        headers: requestHeaders
                     });
                     if (catalog) {
                         ctx.commit('setGoods', catalog.data.data.products);
@@ -253,16 +257,13 @@ export const goods = {
                 products[good.stock.id] = good.count;
             })
             try {
-                const headers = {
-                    'Content-Type': 'text/plain',
-                  }
                 const res = await axios.post('order/create', {
                     name: payload.name,
                     phone: payload.phone,
                     products
                 },{
-                    headers: headers
-                  });
+                    headers: requestHeaders
+                });
                 await ctx.commit('addOrder', {
                     number: res.data.data.id,
                     goods: ctx.getters.getGoodsInTheCart
@@ -273,7 +274,6 @@ export const goods = {
             } catch(err) {
                 console.log({err})
             }
-
         },
 
         async resetFilters(ctx) {
@@ -281,6 +281,33 @@ export const goods = {
             await ctx.dispatch('loadGoods');
             ctx.commit('setFilteredGoods', [])
         },
+
+        async createReview(ctx, payload) {
+
+            try{
+                const formData = new FormData();
+
+                formData.append('data', JSON.stringify({
+                    products_id: ctx.getters.getSelectedGood.product.id,
+                    text: payload.text,
+                    score: payload.score
+                }))
+
+                if (payload.files.length) {
+                    console.log(payload.files);
+
+                    formData.append('file', payload.files[0])
+                }
+
+                const res = await axios.post('catalog/createreview', formData,{
+                    headers: requestHeaders
+                });
+
+                if (res) console.log(res)
+            } catch(err) {
+                console.log(err)
+            }
+        }
 
     },
 

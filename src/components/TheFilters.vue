@@ -58,52 +58,74 @@
           </v-virtual-scroll>
         </v-col>
       </v-row>
-
     </div>
-    <v-sheet
+    <v-row
       v-else
-      max-width="1600"
-      :width="width"
-      height="50"
-      class="mt-6"
-      color="#f8f8f8"
+      align="end"
     >
-      <v-slide-group
-        show-arrows
+      <v-sheet
+        max-width="1480"
+        :width="width"
+        height="50"
+        class="mt-6"
+        color="#f8f8f8"
       >
-        <v-slide-item
-          v-for="([category, values], i) in Object.entries(getFilterEntities)"
-          :key="category"
-          class="filter"
+        <v-slide-group
+          show-arrows
+          center-active
         >
-          <v-select
-            v-model="getFilters[category]"
-            :label="filterValues[category]"
-            :items="values.map(v => v[category])"
-            multiple
-            color="black"
-            item-color="#1FAFAB"
-            hide-details
-            class="mt-3 mb-1"
-            @focus="selectCategory(i)"
-            @change="selectValue"
-            @blur="showFiltered"
+          <v-slide-item
+            v-for="([category, values], i) in Object.entries(getFilterEntities)"
+            :key="category"
+            class="filter"
           >
-            <template v-slot:selection="{item, index}">
-              <v-badge
-                :value="index === 1"
-                :content="`+${getFilters[category].length - 1}`"
-                color="#009688"
-              >
-                <v-chip v-if="index === 0">
-                  <span>{{ item }}</span>
-                </v-chip>
-              </v-badge>
-            </template>
-          </v-select>
-        </v-slide-item>
-      </v-slide-group>
-    </v-sheet>
+            <v-select
+              v-model="getFilters[category]"
+              :label="filterValues[category]"
+              :items="values.map(v => v[category])"
+              multiple
+              color="black"
+              item-color="#1FAFAB"
+              hide-details
+              class="mt-3 mb-1"
+              @focus="selectCategory(i)"
+              @change="selectValue"
+            >
+              <template v-slot:selection="{item, index}">
+                <v-badge
+                  :value="index === 1"
+                  :content="`+${getFilters[category].length - 1}`"
+                  color="#009688"
+                >
+                  <v-chip v-if="index === 0">
+                    <span>{{ item }}</span>
+                  </v-chip>
+                </v-badge>
+              </template>
+            </v-select>
+          </v-slide-item>
+        </v-slide-group>
+
+      </v-sheet>
+      <v-btn
+          v-if="getAmountOfFilteredGoods > 0"
+          class="rounded-pill white--text mt-2"
+          color="#1FAFAA"
+          height="42"
+          @click="showFiltered"
+        >
+          <v-row align="center">
+            <v-col style="text-align: start" class="white--text text-subtitle pr-4 pl-4">
+              <div class="pb-1">
+                Просмотреть
+              </div>
+              <div>
+                Товаров: {{getAmountOfFilteredGoods || getAmountOfGoods}}
+              </div>
+            </v-col>
+          </v-row>
+        </v-btn>
+    </v-row>
 </div>
 </template>
 
@@ -137,14 +159,15 @@
                 'getFilterEntities',
                 'getFilters',
                 'numberOfAppliedFilters',
-                'getAmountOfFilteredGoods'
+                'getAmountOfFilteredGoods',
+                'getAmountOfGoods'
             ]),
 
             height() {
               return this.$vuetify.breakpoint.height - 260;
             },
             width() {
-              return this.$vuetify.breakpoint.width - 100;
+              return this.$vuetify.breakpoint.width - 190;
             }
         },
 
@@ -158,6 +181,10 @@
               if (this.numberOfAppliedFilters > 0) {
                 this.showFilteredGoods();
               }
+              if (this.$route.name !== 'catalog') {
+                this.$router.push('/catalog')
+              }
+              window.scrollTo(0, 0);
             },
 
             selectCategory(value) {

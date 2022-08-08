@@ -33,7 +33,14 @@
         </div>
 
     </div>
-    <h1 v-else >Товаров нет</h1>
+    <v-row
+        v-else
+        no-gutters
+        justify="center"
+        class="pa-8"
+    >
+        <h1>Товаров нет</h1>
+    </v-row>
 </template>
 
 <script>

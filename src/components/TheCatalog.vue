@@ -48,7 +48,9 @@ export default {
     computed: {
         ...mapGetters([
             'getGoods',
-            'areGoodsLoading'
+            'areGoodsLoading',
+            'getAmountOfGoods',
+            'getAmountOfFilteredGoods'
         ]),
 
         height() {
@@ -84,7 +86,11 @@ export default {
     },
 
     mounted() {
-        this.loadGoods();
+        if (!this.getAmountOfGoods && !this.getAmountOfFilteredGoods && !this.areGoodsLoading) {
+            console.log('mounted catalog');
+            this.loadGoods();
+        }
+        window.scrollTo(0, 0);
     }
 }
 </script>

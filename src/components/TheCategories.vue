@@ -13,8 +13,7 @@
             justify="center"
           >
             <CategoryCard
-                :title="category.name"
-                :image="category.image"
+                :category="category"
             />
           </v-row>
         </v-col>

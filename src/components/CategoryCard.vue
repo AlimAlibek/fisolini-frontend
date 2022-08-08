@@ -2,9 +2,10 @@
     <v-card
         :width="'100%'"
         :height="cardHeight"
+        @click="toCategory"
     >
         <v-img
-          :src="image"
+          :src="category.image"
           class="white--text align-start"
           height="100%"
           position="left bottom"
@@ -15,10 +16,11 @@
 </template>
 
 <script>
+    import { mapMutations } from 'vuex';
+
     export default {
         props: {
-            title: String,
-            image: String
+            category: Object
         },
 
 
@@ -55,6 +57,18 @@
                     : this.smallWidth ? 120
                     : this.middleWidth ? 200 : 300
             },
+        },
+
+        methods: {
+            ...mapMutations([
+                'setFilters',
+            ]),
+
+            toCategory() {
+                console.log(this.category);
+                this.setFilters({category: 'style', value: [this.category.style], show: true});
+                this.$router.push('/catalog');
+            }
         }
     }
 </script>
