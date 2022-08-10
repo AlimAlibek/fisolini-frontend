@@ -145,7 +145,7 @@
                     }
                 });
                 window.ym(88691177,'reachGoal','remove',window.dataLayer)
-                this.addGoodToTheCart(product)
+                this.removeGoodFromTheCart(product)
             }
         }
     }
