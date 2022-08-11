@@ -31,7 +31,7 @@
                 class="pa-1 text-capitalize text--secondary"
                 color="white"
                 :x-small="smallWidth"
-                @click="removeGoodFromTheCart(product)"
+                @click="removeGoodFromTheCartfun(product)"
             >
                 <v-icon
                     :small="smallWidth"
@@ -71,7 +71,7 @@
                     icon
                     :small="!smallWidth"
                     :x-small="smallWidth"
-                    @click="addGoodToTheCart(product)"
+                    @click="removeGoodFromTheCartfun(product)"
                 >
                     <v-icon
                         color="green"
@@ -129,7 +129,24 @@
             ...mapActions([
                 'addGoodToTheCart',
                 'decreasNumberOfGoodsInCart'
-            ])
+            ]),
+            removeGoodFromTheCartfun(product)
+            {
+                 window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    "ecommerce": {
+                        "currencyCode": "RUB",
+                        "remove": {
+                            "actionField": {
+                                "id": '235732847'
+                            },
+                            "products": ''//product['good'] // тут нужно указать id товара (размера), имя, и quantity:1
+                        }
+                    }
+                });
+                window.ym(88691177,'reachGoal','remove',window.dataLayer)
+                this.removeGoodFromTheCart(product)
+            }
         }
     }
 </script>

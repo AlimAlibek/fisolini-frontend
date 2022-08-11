@@ -114,6 +114,19 @@ export default {
             if (!this.valid) {
                 return;
             }
+             window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    "ecommerce": {
+                        "currencyCode": "RUB",
+                        "purchase": {
+                            "actionField": {
+                                "id": '235732855'
+                            },
+                            "products": "" //тут нужно передать в массиве (id Товара, имя, цену и количество)
+                        }
+                    }
+                });
+            window.ym(88691177,'reachGoal','purcash', window.dataLayer)
             this.createOrder({
                 name: this.userName,
                 phone: this.userPhoneNumber

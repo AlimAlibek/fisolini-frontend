@@ -251,6 +251,19 @@
             ...mapMutations(['setCartFlag']),
 
             addToCart() {
+                 window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    "ecommerce": {
+                        "currencyCode": "RUB",
+                        "add": {
+                            "actionField": {
+                                "id": '235732847'
+                            },
+                            "products": this.stocks[this.selectedStockIndex]
+                        }
+                    }
+                });
+                window.ym(88691177,'reachGoal','add_to_cart',window.dataLayer)
                 this.$emit('addToCart', this.stocks[this.selectedStockIndex])
             },
             addAndOrder() {
