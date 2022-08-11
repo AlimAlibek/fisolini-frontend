@@ -1,19 +1,45 @@
 <template>
+<v-hover
+  v-slot="{ hover }"
+>
   <v-card
+    :elevation="hover ? 10 : 0"
     class="mx-auto"
     :class="cardClass"
     :width="cardWidth"
     :height="cardHeight"
-    :to="{
-      path: 'product',
-      query: {id: product.id}
-    }"
+    link
+    @click="toProduct"
   >
-    <v-img
+    <v-carousel
+      show-arrows-on-hover
+      hide-delimiters
       :height="cardWidth"
-      :src="image"
-    ></v-img>
-
+    >
+        <template v-slot:prev="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon large>mdi-chevron-left</v-icon>
+          </v-btn>
+        </template>
+        <template v-slot:next="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on.stop="on"
+          >
+            <v-icon large>mdi-chevron-right</v-icon>
+          </v-btn>
+        </template>
+      <v-carousel-item
+        v-for="(item,i) in images"
+        :key="i"
+        :src="item.path"
+      ></v-carousel-item>
+    </v-carousel>
     <v-card-title
       :class="titleClass"
     >
@@ -54,7 +80,6 @@
           >
             {{reviews}} отзывов
           </div>
-
         </div>
       </v-row>
 
@@ -65,7 +90,6 @@
         <div :style="small ? 'font-size: 10px;' : ''">
           Размеры - {{sizes}}
         </div>
-
       </v-card-subtitle>
     </v-card-text>
     <v-card-title
@@ -73,6 +97,7 @@
       {{price}} &#8381;
     </v-card-title>
   </v-card>
+</v-hover>
 </template>
 
 <script>
@@ -91,7 +116,11 @@
               : this.product.title.length > 21 ? this.product.title.slice(0, 21) + '...' : this.product.title
         },
         image() {
-          return this.product.images[0]?.path
+          return this.product.images[0]?.path || require('../assets/images/replace.png')
+        },
+        images() {
+          const images = this.product.images;
+          return  images?.length ? images : [{path: require('../assets/images/replace.png')}]
         },
         country() {
           return this.product.specifications[0]?.country_of_manufacture || '-'
@@ -106,13 +135,16 @@
           return this.product.stocks.length;
         },
         price() {
-          let max = 0;
-          let min = 10000000000;
-          this.product.stocks.forEach(stock => {
-            if (max < stock.price) max = stock.price;
-            if (min > stock.price) min = stock.price;
+          if (!this.product.stocks?.length) {
+            return '-'
+          }
+          const prices = this.product.stocks.map(stock => stock.price).sort((a, b) => {
+            return +a - +b
           })
-          return !this.product.stocks.length ? '-' : max === min ? `${min}` : `от ${min} до ${max} `
+          const min = prices[0];
+          const max = prices[prices.length - 1];
+
+          return !min ? '-' : max === min ? `${min}` : `от ${min} до ${max} `
         },
 
         cardClass() {
@@ -150,6 +182,18 @@
     },
 
     methods: {
+      toProduct() {
+        this.$router.push({
+          path: 'product',
+          query: {id: this.product.id}
+        })
+      }
     },
   }
 </script>
+
+<style scoped>
+  .v-card {
+    transition: all 0.2s;
+  }
+</style>

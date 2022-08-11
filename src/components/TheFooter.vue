@@ -3,7 +3,7 @@
     <v-container
       fluid
       style="max-width: 1800px"
-      class="pl-5 pr-5"
+      class="pl-5 pr-5 pb-12 mb-6"
     >
       <v-row
         class="pt-6"
@@ -94,9 +94,12 @@
               <div
                 class="font-weight-medium text-h6 pb-2 link"
               > Публичная оферта</div>
-              <div
-                class="font-weight-medium text-h6 pb-2 link"
-              > Доставка и оплата</div>
+
+              <a v-bind:href="'/payment'">
+                <div
+                  class="font-weight-medium text-h6 pb-2 link"
+                > Доставка и оплата</div>
+              </a>
               <div
                 class="font-weight-medium text-h6 pb-2 link"
               > Гарантия и возврат</div>
@@ -117,9 +120,11 @@
                 class="flex-column"
               >
 
-                <div
-                  class="font-weight-medium text-h6 pb-2 link"
-                > О нас</div>
+                <a v-bind:href="'/about'" >
+                  <div
+                    class="font-weight-medium text-h6 pb-2 link"
+                  > О нас</div>
+                </a>
                 <div
                   class="font-weight-medium text-h6 pb-2 link"
                 > Отзывы</div>
@@ -251,10 +256,14 @@
     height: 110px;
   }
   .link {
+    color: black;
     cursor: pointer;
     transition: all 0.2s;
   }
   .link:hover {
     color: rgb(31, 175, 170);
+  }
+  a {
+    text-decoration: none;
   }
 </style>

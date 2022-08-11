@@ -138,7 +138,7 @@
                   color="white"
                   depressed
                   large
-                  @click="cart = true"
+                  @click="setCartFlag(true)"
                 >
                   <v-img
                     :src="require('../assets/icons/cart.svg')"
@@ -204,12 +204,13 @@
       </v-row>
     </v-navigation-drawer>
     <v-navigation-drawer
-      v-model="cart"
+      v-model="isCartShown"
       app
       width="650"
       right
       absolute
       temporary
+      @input="cartMenuChange"
     >
       <v-row
         class="pa-7"
@@ -229,7 +230,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapGetters, mapActions, mapMutations} from 'vuex';
 
     import MobileHeader from '@/components/MobileHeader.vue';
     import FeedbackInfo from '@/components/FeedbackInfo.vue'
@@ -261,7 +262,6 @@
         data() {
           return {
             signin: false,
-            cart: false,
             currentPage: {},
             pages: [
                 {
@@ -313,7 +313,10 @@
         },
 
         computed: {
-          ...mapGetters(['getAmountOfGoodsInTheCart']),
+          ...mapGetters([
+            'getAmountOfGoodsInTheCart',
+            'isCartShown'
+          ]),
 
           screenWidth() {
             return (
@@ -363,7 +366,12 @@
         },
 
         methods: {
-          ...mapActions(['loadFilterEntities'])
+          ...mapActions(['loadFilterEntities']),
+          ...mapMutations(['setCartFlag']),
+
+          cartMenuChange(boolean) {
+            this.setCartFlag(boolean)
+          }
         },
 
         mounted() {

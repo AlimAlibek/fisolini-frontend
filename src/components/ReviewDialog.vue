@@ -71,20 +71,21 @@
           no-gutters
           class="pt-4"
         >
-          <v-btn
-            class="rounded-lg font-weight-bold"
-            color="#FED42B"
-            @click="fileUpload"
-          >
-            Выбрать фотографию
-          </v-btn>
-          <v-file-input
-            v-model="images"
-            id="review_image_uploads"
-            multiple
-            hide-input
-            prepend-icon=""
-          ></v-file-input>
+            <v-btn
+              class="rounded-lg font-weight-bold"
+              color="#FED42B"
+              @click="fileUpload"
+            >
+              Выбрать фотографию
+            </v-btn>
+            <input
+              type="file"
+              id="review_image_uploads"
+              multiple
+              @change="uploadHandler"
+              hidden
+              accept=".jpg, .png"
+            />
         </v-row>
         <v-row
           no-gutters
@@ -170,6 +171,10 @@ export default {
 
       fileUpload() {
         document.getElementById('review_image_uploads').click();
+      },
+
+      uploadHandler(e) {
+        this.images = Array.from(e.target.files)
       },
 
       submit() {

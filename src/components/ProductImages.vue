@@ -12,8 +12,8 @@
             slider-color="#1FAFAA"
         >
             <v-tab
-                v-for="image in images"
-                :key="image.id"
+                v-for="(image, i) in innerImages"
+                :key="i"
                 style="height: 170px; width: 170px"
             >
                 <v-card
@@ -38,14 +38,15 @@
     </div>
     <div v-else>
         <v-card
-            :max-width="xSmallWidth ? '250' : '400'"
+            :max-width="400"
+            :width="$vuetify.breakpoint.width - 50"
         >
             <v-carousel
                 :show-arrows="false"
                 :height="xSmallWidth ? '400' : '519'"
             >
                 <v-carousel-item
-                  v-for="(image, i) in images"
+                  v-for="(image, i) in innerImages"
                   :key="i"
                   :src="image.path"
                 ></v-carousel-item>
@@ -67,8 +68,11 @@
         },
 
         computed: {
+            innerImages() {
+                return this.images.length ? this.images : [{path: require('../assets/images/replace.png')}]
+            },
             currentImage(){
-                return this.images[this.currentImageIndex]
+                return this.innerImages[this.currentImageIndex]
             },
 
             middleWidth() {

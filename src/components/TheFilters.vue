@@ -14,48 +14,68 @@
             color="#EEEEEE"
             :height="height"
             style="overflow: auto"
-            class="pr-0"
-            tile
-            light
+            class="pa-0 pr-1 pl-1"
           >
             <v-list-item-group
-              v-model="selectedCategory"
+              v-model="categoryIndex"
             >
               <v-list-item
                 v-for="([category]) in Object.entries(getFilterEntities)"
                 :key="category"
                 dense
               >
-                {{filterValues[category]}}
+                <v-list-item-content>
+                  {{filterValues[category]}}
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-badge
+                    v-if="getFilters[category].length"
+                    :content="getFilters[category].length"
+                    color="#1FAFAB"
+                  ></v-badge>
+                </v-list-item-action>
               </v-list-item>
             </v-list-item-group>
           </v-list>
         </v-col>
-        <v-col>
-          <v-virtual-scroll
-            v-if="selectedCategory !== undefined"
-            :items="Object.values(getFilterEntities[Object.keys(getFilters)[selectedCategory]])"
-            :height="height"
-            item-height="36"
+        <v-col
+          cols="7"
+        >
+          <div
+            :style="`height: ${height}px; overflow: auto`"
           >
-            <template v-slot:default="{ item }">
-              <v-list-item :key="item[Object.keys(getFilters)[selectedCategory]]">
-                <v-list-item-action class="mr-2">
-                  <v-checkbox
-                    v-model="getFilters[Object.keys(item)[0]]"
-                    :value="item[Object.keys(getFilters)[selectedCategory]]"
-                    @change="selectValue"
-                    color="#1FAFAB"></v-checkbox>
-                </v-list-item-action>
+            <v-list
+              v-if="categoryIndex !== undefined"
+              flat
+            >
+              <v-list-item-group
+                v-model="selectedValues"
+                multiple
+                @change="selectValue"
+              >
+                <v-list-item
+                  v-for="item in shownValues"
+                  :key="item[selectedCategory]"
+                  :value="item[selectedCategory]"
+                >
+                  <template v-slot:default="{ active }">
+                    <v-list-item-action
+                      class="mr-2"
+                    >
+                      <v-checkbox
+                        :input-value="active"
+                        color="#1FAFAB"
+                      ></v-checkbox>
+                    </v-list-item-action>
 
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ item[Object.keys(getFilters)[selectedCategory]] }}
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-          </v-virtual-scroll>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ item[selectedCategory] }}</v-list-item-title>
+                    </v-list-item-content>
+                  </template>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -105,26 +125,7 @@
             </v-select>
           </v-slide-item>
         </v-slide-group>
-
       </v-sheet>
-      <v-btn
-          v-if="getAmountOfFilteredGoods > 0"
-          class="rounded-pill white--text mt-2"
-          color="#1FAFAA"
-          height="42"
-          @click="showFiltered"
-        >
-          <v-row align="center">
-            <v-col style="text-align: start" class="white--text text-subtitle pr-4 pl-4">
-              <div class="pb-1">
-                Просмотреть
-              </div>
-              <div>
-                Товаров: {{getAmountOfFilteredGoods || getAmountOfGoods}}
-              </div>
-            </v-col>
-          </v-row>
-        </v-btn>
     </v-row>
 </div>
 </template>
@@ -139,7 +140,7 @@
 
         data() {
             return {
-                selectedCategory: 0,
+                categoryIndex: 0,
                 filterValues: {
                     style: 'Стиль',
                     colour: 'Цвет',
@@ -163,11 +164,23 @@
                 'getAmountOfGoods'
             ]),
 
+            shownValues() {
+              return Object.values(this.getFilterEntities[this.selectedCategory])
+            },
+
+            selectedCategory() {
+              return Object.keys(this.getFilters)[this.categoryIndex];
+            },
+
+            selectedValues() {
+              return this.getFilters[this.selectedCategory] || [];
+            },
+
             height() {
               return this.$vuetify.breakpoint.height - 260;
             },
             width() {
-              return this.$vuetify.breakpoint.width - 190;
+              return this.$vuetify.breakpoint.width - 50;
             }
         },
 
@@ -177,23 +190,25 @@
               'showFilteredGoods'
             ]),
 
-            showFiltered() {
-              if (this.numberOfAppliedFilters > 0) {
-                this.showFilteredGoods();
-              }
-              if (this.$route.name !== 'catalog') {
-                this.$router.push('/catalog')
-              }
-              window.scrollTo(0, 0);
-            },
-
             selectCategory(value) {
-              this.selectedCategory = value
+              this.categoryIndex = value
             },
 
             selectValue(value) {
-              this.setFilters({category: Object.keys(this.getFilters)[this.selectedCategory], value});
-            }
+              this.setFilters({
+                category: Object.keys(this.getFilters)[this.categoryIndex],
+                value,
+                show: true
+              });
+              this.toCatalog();
+              window.scrollTo(0, 0);
+            },
+
+            toCatalog() {
+              if (this.$route.name !== 'catalog') {
+                this.$router.push('/catalog')
+              }
+            },
         },
 
     }

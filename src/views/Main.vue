@@ -85,8 +85,8 @@ import PlacementTips from '@/components/PlacementTips.vue';
         ]),
 
         defaultAmount() {
-            return (this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm) ? 2
-                : (this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg) ? 3 : 4
+            return (this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm) ? 6
+                : (this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg) ? 6 : 8
         }
     },
 
