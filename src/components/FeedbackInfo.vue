@@ -28,15 +28,20 @@
 
           <template v-if="mobile">
               <v-btn icon x-large>
-                <img :src="callIcon" />
+                <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">
+                <img :src="callIcon"/>
+                </a>
               </v-btn>
               <v-btn icon x-large>
+                
+                <a v-bind:href="'mailto:info@fisolini.ru'" target="_blank" style="color: #000000;text-decoration: none;">
                   <img :src="messageIcon"/>
+                </a>
               </v-btn>
           </template>
 
           <span v-else>
-            <a v-bind:href="'https://wa.me/79964183776'" target="_blank" style="color: #000000;text-decoration: none;">+7(996)-418-37-76 </a>
+            <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">+7(495)-15-15-705 </a>
              
           </span>
         </div>
