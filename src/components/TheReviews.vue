@@ -26,70 +26,11 @@
         v-if="reviews.length"
         three-line
     >
-        <v-list-item
-          v-for="review in reviews"
-          :key="review.id"
-          class="pa-0 mb-6"
-          color="black"
-        >
-          <v-list-item-avatar
-            :size="avatarSize"
-          >
-            <v-img src="https://images.wallpaperscraft.ru/image/single/snezhnyy_bars_sneg_ohota_vnimatelnost_chb_57947_240x320.jpg"></v-img>
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-row
-              no-gutters
-              justify="space-between"
-              align="center"
-              :class="commentTitleClass"
-            >
-              <span>
-                Елена П.
-              </span>
-              <v-rating
-                :value="review.score"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                :size="ratingSize"
-              ></v-rating>
-
-            </v-row>
-
-            <v-list-item-title
-              class="font-weight-medium"
-              :class="commentTitleClass"
-            >Комментарий:</v-list-item-title>
-
-            <p
-              class="font-weight-light"
-              :class="commentTextClass"
-            >
-              {{review.text}}
-            </p>
-
-            <v-row
-              no-gutters
-              class="pt-2 pb-2"
-              justify="space-between"
-              align="end"
-            >
-              <v-img
-                max-width="70"
-                height="70"
-                :src="review.image"
-              />
-
-              <span>
-                {{review.datetime}}
-              </span>
-
-            </v-row>
-          </v-list-item-content>
-        </v-list-item>
+      <ReviewCard
+        v-for="review in reviews"
+        :key="review.id"
+        :review="review"
+      />
     </v-list>
     <v-row
       v-else
@@ -109,9 +50,14 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import ReviewCard from '@/components/ReviewCard.vue'
 import ReviewDialog from './ReviewDialog.vue'
+
  export default {
-  components: { ReviewDialog },
+  components: {
+    ReviewCard,
+    ReviewDialog
+  },
 
     data() {
       return {
@@ -135,21 +81,21 @@ import ReviewDialog from './ReviewDialog.vue'
         return this.$vuetify.breakpoint.width < 1480 && this.$vuetify.breakpoint.width > 1264
       },
 
-      avatarSize() {
-        return this.largeWidth ? '100' : this.middleWidth ? '60' : '50'
-      },
-      titleClass() {
-        return this.largeWidth ? 'text-h4' : this.middleWidth ? 'text-h6' : 'text-subtitle'
-      },
-      commentTitleClass() {
-        return this.largeWidth ? 'text-h5 pt-5' : this.middleWidth ? 'text-subtitle pt-2' : 'text-subtitle-2 pt-1'
-      },
-      commentTextClass() {
-        return this.largeWidth ? 'text-h6 pt-2' : this.middleWidth ? 'text-subtitle-2 pt-1' : 'text-body pt-0'
-      },
-      ratingSize() {
-        return this.largeWidth ? '30' : this.middleWidth ? '19' : '17'
-      }
+      // avatarSize() {
+      //   return this.largeWidth ? '100' : this.middleWidth ? '60' : '50'
+      // },
+      // titleClass() {
+      //   return this.largeWidth ? 'text-h4' : this.middleWidth ? 'text-h6' : 'text-subtitle'
+      // },
+      // commentTitleClass() {
+      //   return this.largeWidth ? 'text-h5 pt-5' : this.middleWidth ? 'text-subtitle pt-2' : 'text-subtitle-2 pt-1'
+      // },
+      // commentTextClass() {
+      //   return this.largeWidth ? 'text-h6 pt-2' : this.middleWidth ? 'text-subtitle-2 pt-1' : 'text-body pt-0'
+      // },
+      // ratingSize() {
+      //   return this.largeWidth ? '30' : this.middleWidth ? '19' : '17'
+      // }
     }
  }
 </script>

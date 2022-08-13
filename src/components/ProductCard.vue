@@ -11,91 +11,107 @@
     link
     @click="toProduct"
   >
-    <v-carousel
-      show-arrows-on-hover
-      hide-delimiters
-      :height="cardWidth"
+    <v-row
+      no-gutters
     >
-        <template v-slot:prev="{ on, attrs }">
-          <v-btn
-            icon
-            v-bind="attrs"
-            v-on="on"
-          >
-            <v-icon large>mdi-chevron-left</v-icon>
-          </v-btn>
-        </template>
-        <template v-slot:next="{ on, attrs }">
-          <v-btn
-            icon
-            v-bind="attrs"
-            v-on.stop="on"
-          >
-            <v-icon large>mdi-chevron-right</v-icon>
-          </v-btn>
-        </template>
-      <v-carousel-item
-        v-for="(item,i) in images"
-        :key="i"
-        :src="item.path"
-      ></v-carousel-item>
-    </v-carousel>
-    <v-card-title
-      :class="titleClass"
-    >
-      {{productTitle}}
-    </v-card-title>
-
-    <v-card-subtitle
-      :class="countryClass"
-    >
-      <div :style="small ? 'font-size: 10px;' : ''">
-        {{country}}
-      </div>
-    </v-card-subtitle>
-
-    <v-card-text
-      class="pb-0"
-      :class="cardTextClass"
-    >
-      <v-row
-        align="center"
-        class="mx-0"
+      <v-col
+        :cols="horizontal ? '6' : '12'"
       >
-        <v-rating
-          :value="rating"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          :size="small ? 13 : 20"
-        ></v-rating>
-
-        <div
-          class="grey--text"
-          :class="{'ms-4': !small, 'ms-1': small}"
+        <v-carousel
+          show-arrows-on-hover
+          hide-delimiters
+          :height="horizontal ? cardHeight : cardWidth"
         >
-          <div
-            :style="small ? 'font-size: 10px' : 'font-size: 14px'"
-          >
-            {{reviews}} отзывов
-          </div>
-        </div>
-      </v-row>
-
-      <v-card-subtitle
-        class="pb-0 text-decoration-underline"
-        :class="sizeClass"
+            <template v-slot:prev="{ on, attrs }">
+              <v-btn
+                icon
+                v-bind="attrs"
+                v-on="on"
+                :small="small"
+              >
+                <v-icon :large="!small">mdi-chevron-left</v-icon>
+              </v-btn>
+            </template>
+            <template v-slot:next="{ on, attrs }">
+              <v-btn
+                icon
+                v-bind="attrs"
+                v-on.stop="on"
+                :small="small"
+              >
+                <v-icon :large="!small">mdi-chevron-right</v-icon>
+              </v-btn>
+            </template>
+          <v-carousel-item
+            v-for="(item,i) in images"
+            :key="i"
+            :src="item.path"
+          ></v-carousel-item>
+        </v-carousel>
+      </v-col>
+      <v-col
+        :cols="horizontal ? '6' : '12'"
       >
-        <div :style="small ? 'font-size: 10px;' : ''">
-          Размеры - {{sizes}}
-        </div>
-      </v-card-subtitle>
-    </v-card-text>
-    <v-card-title
-      :class="titleClass">
-      {{price}} &#8381;
-    </v-card-title>
+        <v-card-title
+          :class="titleClass"
+        >
+          {{productTitle}}
+        </v-card-title>
+
+        <v-card-subtitle
+          :class="countryClass"
+        >
+          <div :style="small ? 'font-size: 10px;' : ''">
+            {{country}}
+          </div>
+        </v-card-subtitle>
+
+        <v-card-text
+          class="pb-0"
+          :class="cardTextClass"
+        >
+          <v-row
+            align="center"
+            class="mx-0"
+          >
+            <v-rating
+              :value="rating"
+              color="amber"
+              dense
+              half-increments
+              readonly
+              :size="small ? 13 : 20"
+            ></v-rating>
+
+            <div
+              class="grey--text"
+              :class="{'ms-4': !small, 'ms-1': small}"
+            >
+              <div
+                :style="small ? 'font-size: 10px' : 'font-size: 14px'"
+              >
+                {{reviews}} отзывов
+              </div>
+            </div>
+          </v-row>
+
+          <v-card-subtitle
+            class="pb-0 text-decoration-underline"
+            :class="sizeClass"
+          >
+            <div :style="small ? 'font-size: 10px;' : ''">
+              Размеры - {{sizes}}
+            </div>
+          </v-card-subtitle>
+        </v-card-text>
+        <v-card-title
+          :class="titleClass">
+          {{price}} &#8381;
+        </v-card-title>
+
+      </v-col>
+    </v-row>
+
   </v-card>
 </v-hover>
 </template>
@@ -105,6 +121,7 @@
   export default {
     props: {
       small: Boolean,
+      horizontal: Boolean,
       product: Object
     },
 
@@ -129,7 +146,7 @@
           return this.product.score
         },
         reviews() {
-          return this.product.reviews.length
+          return this.product.reviews?.length || 0
         },
         sizes() {
           return this.product.stocks.length;
@@ -152,11 +169,11 @@
         },
 
         cardWidth() {
-          return this.small ? 160 : 350
+          return this.horizontal ? this.$vuetify.breakpoint.width - 90 : this.small ? 160 : 350
         },
 
         cardHeight() {
-          return this.small ? 257 : 527
+          return this.horizontal ? ((this.$vuetify.breakpoint.width - 90) / 2) : this.small ? 257 : 527
         },
 
         titleClass() {

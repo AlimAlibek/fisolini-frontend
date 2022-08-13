@@ -4,7 +4,8 @@ export const assets = {
     state: () => ({
         banners: [],
         categories: [],
-        filterEntities: []
+        filterEntities: [],
+        reviews: []
     }),
 
     mutations: {
@@ -17,6 +18,9 @@ export const assets = {
         setFilterEntities(state, filterEntities) {
             state.filterEntities = filterEntities
         },
+        setReviews(state, reviews) {
+            state.reviews = reviews
+        }
     },
 
     actions: {
@@ -31,26 +35,30 @@ export const assets = {
         loadCategories(ctx) {
             axios.get('catalog/categories')
                 .then(res => {
-                    console.log('categories', res, {ctx})
+                    // console.log('categories', res, {ctx})
                     ctx.commit('setCategories', res.data.data.categories)
                 })
         },
         loadFilterEntities(ctx) {
             axios.get('catalog/filters')
                 .then(res => {
-                    console.log('filterEntities', res, {ctx})
                     ctx.commit('setFilterEntities', res.data.data[0])
                 })
+        },
+
+        loadReviews(ctx) {
+            axios.get('catalog/review')
+            .then(res => {
+                ctx.commit('setReviews', res.data.data.review);
+            })
         }
-
-
     },
-
     getters: {
         getBanners(state) {
             return state.banners
         },
-        getCategories: state => state.categories,
+        getCategories: state => state.categories.filter(c => c.active),
         getFilterEntities: state => state.filterEntities,
+        getReviews: state => state.reviews
     }
 }
