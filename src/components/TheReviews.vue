@@ -23,12 +23,14 @@
       </v-btn>
     </v-row>
     <v-list
+        v-if="reviews.length"
         three-line
     >
         <v-list-item
-          v-for="i in 4"
-          :key="i"
-          class="pa-0"
+          v-for="review in reviews"
+          :key="review.id"
+          class="pa-0 mb-6"
+          color="black"
         >
           <v-list-item-avatar
             :size="avatarSize"
@@ -47,7 +49,7 @@
                 Елена П.
               </span>
               <v-rating
-                :value="4"
+                :value="review.score"
                 color="amber"
                 dense
                 half-increments
@@ -66,11 +68,37 @@
               class="font-weight-light"
               :class="commentTextClass"
             >
-              Офигеть!! Это просто класс для огорода! С сорняками борется на ура!
+              {{review.text}}
             </p>
+
+            <v-row
+              no-gutters
+              class="pt-2 pb-2"
+              justify="space-between"
+              align="end"
+            >
+              <v-img
+                max-width="70"
+                height="70"
+                :src="review.image"
+              />
+
+              <span>
+                {{review.datetime}}
+              </span>
+
+            </v-row>
           </v-list-item-content>
         </v-list-item>
     </v-list>
+    <v-row
+      v-else
+      no-gutters
+      justify="center"
+      class="pt-12 pb-12 mt-12 mb-12"
+    >
+      <h2>Отзывов к этому товару ещё нет</h2>
+    </v-row>
 
     <ReviewDialog
       v-model="reviewDialog"
@@ -95,6 +123,10 @@ import ReviewDialog from './ReviewDialog.vue'
       ...mapGetters([
         'getSelectedGood'
       ]),
+
+      reviews() {
+        return this.getSelectedGood.product.reviews
+      },
 
       largeWidth() {
         return this.$vuetify.breakpoint.width > 1479

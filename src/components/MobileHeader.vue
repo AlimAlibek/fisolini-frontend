@@ -47,33 +47,30 @@
       height="52"
       background-color="rgba(0, 0, 0, 0)"
       style="box-shadow: none;"
-      :width="showFilters ? '' : '60'"
+      class="mb-2"
     >
      <v-row
       no-gutters
-      :justify="showFilters ? 'space-between' : 'end'"
+      justify="space-between"
       align="center"
-
      >
         <v-btn
-          v-if="showFilters"
           icon
           @click="scrollUp"
         >
           <v-icon
             large
             style="
-              height: 42px; width: 42px; background: rgba(241, 241, 241, 0.7); border-radius: 100%;
+              height: 42px; width: 42px; background: rgba(241, 241, 241, 0.8); border-radius: 100%;
             "
             color="black"
           >mdi-chevron-up</v-icon>
         </v-btn>
-
         <v-btn
-          v-if="showFilters"
           class="rounded-pill white--text"
           color="#1FAFAA"
           height="42"
+          :min-width="filtersButtonWidth"
           @click="filters = true"
         >
           <v-row align="center">
@@ -92,9 +89,7 @@
             </v-col>
           </v-row>
         </v-btn>
-
         <v-badge
-          v-if="showCart"
           color="teal"
           :content="getAmountOfGoodsInTheCart"
           :value="getAmountOfGoodsInTheCart"
@@ -104,7 +99,7 @@
         >
         <v-btn
           icon
-          @click.stop="cart = !cart"
+          @click.stop="setCartFlag(true)"
         >
           <v-img
             max-width="42"
@@ -179,7 +174,7 @@
     </v-navigation-drawer>
 
     <v-bottom-sheet
-      v-model="cart"
+      v-model="isCartShown"
       class="rounded-t-xl"
     >
       <v-sheet
@@ -187,7 +182,7 @@
         :height="bottomDrawerHeight"
       >
         <SwipeLine
-          @swipeDown="cart=false"
+          @swipeDown="setCartFlag(false)"
         />
 
         <v-row
@@ -324,7 +319,6 @@
     data: () => ({
       navigation: false,
       signin: false,
-      cart: false,
       filters: false,
       pages: [
           {
@@ -352,6 +346,7 @@
         'numberOfAppliedFilters',
         'getAmountOfGoods',
         'getAmountOfFilteredGoods',
+        'isCartShown'
       ]),
       isHeaderScrolled() {
         return this.$vuetify.application.top < 60;
@@ -364,6 +359,11 @@
       },
       bottomDrawerHeight() {
         return this.$vuetify.breakpoint.height - 100;
+      },
+
+      filtersButtonWidth() {
+        let width = this.$vuetify.breakpoint.width - 160;
+        return width > 300 ? 300 : width
       }
     },
 
@@ -372,7 +372,8 @@
         'resetFilters'
       ]),
       ...mapMutations([
-        'showFilteredGoods'
+        'showFilteredGoods',
+        'setCartFlag'
       ]),
       scrollUp() {
         window.scrollTo(0, 0);
@@ -381,9 +382,6 @@
         this.filters = false
         if (this.$route.name !== 'catalog') {
           this.$router.push('/catalog')
-        }
-        if (this.numberOfAppliedFilters > 0) {
-          this.showFilteredGoods();
         }
       }
     }

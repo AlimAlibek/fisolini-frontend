@@ -37,9 +37,11 @@
               :dense="dense"
             />
             <v-checkbox
+                v-model="agree"
                 class="ma-0 pa-0"
                 :rules="[v => !!v || 'Обязательное поле']"
                 label="Я прочитал и согласен с правилами покупки"
+                color="#1FAFAA"
                 required
                 :class="`text-${dense ? 'caption' : 'body'}`"
             ></v-checkbox>
@@ -81,6 +83,7 @@ export default {
         return {
             valid: true,
 
+            agree: true,
             userName: '',
             userPhoneNumber: '',
 

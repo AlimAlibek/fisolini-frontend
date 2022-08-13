@@ -102,7 +102,7 @@
                 <v-slide-group
                   v-model="selectedStockIndex"
                   mandatory
-                  :show-arrows="false"
+                  :show-arrows="!xSmallWidth && !smallWidth"
                   center-active
                 >
                   <v-slide-item
@@ -157,9 +157,9 @@
             >
                 <v-btn
                     :x-large="!smallWidth && !xSmallWidth"
-                    :small="smallWidth"
-                    :x-small="xSmallWidth"
-                    class="white--text rounded-xl"
+                    :small="smallWidth || xSmallWidth"
+                    :width="columnButtonWidth ? '250' : ''"
+                    class="white--text rounded-xl mb-2"
                     :class="!smallWidth && !xSmallWidth ? 'pl-12 pr-12' : ''"
                     color="#1FAFAA"
                     :disabled="selectedStockIndex === null"
@@ -167,12 +167,13 @@
                 >Добавить в корзину</v-btn>
                 <v-btn
                     :x-large="!smallWidth && !xSmallWidth"
-                    :small="smallWidth"
-                    :x-small="xSmallWidth"
+                    :small="smallWidth || xSmallWidth"
+                    :width="columnButtonWidth ? '250' : ''"
                     class="white--text rounded-xl"
                     :class="!smallWidth && !xSmallWidth ? 'pl-12 pr-12' : ''"
                     color="#1FAFAA"
                     :disabled="selectedStockIndex === null"
+                    @click="addAndOrder"
                 >Оформить сразу</v-btn>
             </v-row>
      </div>
@@ -180,6 +181,8 @@
 </template>
 
 <script>
+    import {mapMutations} from 'vuex';
+
     export default {
         props: {
             specifications: Array,
@@ -224,13 +227,17 @@
                 return this.$vuetify.breakpoint.width < 460;
             },
 
+            columnButtonWidth() {
+                return this.$vuetify.breakpoint.width < 390;
+            },
+
             cardWidth() {
-                return this.xSmallWidth ? '290'
+                return this.xSmallWidth ? this.$vuetify.breakpoint.width - 50
                 : this.smallWidth ? '400' : '689'
             },
 
             cardHeight() {
-                return this.xSmallWidth ? '470'
+                return this.columnButtonWidth ? '510' : this.xSmallWidth ? '480'
                 : this.smallWidth ? '570' : '770'
             },
 
@@ -241,6 +248,8 @@
         },
 
         methods: {
+            ...mapMutations(['setCartFlag']),
+
             addToCart() {
                  window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
@@ -256,6 +265,10 @@
                 });
                 window.ym(88691177,'reachGoal','add_to_cart',window.dataLayer)
                 this.$emit('addToCart', this.stocks[this.selectedStockIndex])
+            },
+            addAndOrder() {
+                this.addToCart();
+                this.setCartFlag(true);
             }
         }
     }
