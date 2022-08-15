@@ -38,6 +38,13 @@ let router = new Router({
             meta: {
                 requiresAuth: true
             }
+        },{
+            path: '/publicoffer',
+            name: 'publicoffer',
+            component: () => import('./views/PublicOffer.vue'),
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/payment',

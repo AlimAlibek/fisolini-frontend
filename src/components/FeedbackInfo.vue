@@ -41,7 +41,7 @@
           </template>
 
           <span v-else>
-            <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">+7(495)-15-15-705 </a>
+            <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">+7(495)151-57-05 </a>
              
           </span>
         </div>
