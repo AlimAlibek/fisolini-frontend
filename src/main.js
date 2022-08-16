@@ -6,8 +6,10 @@ import router from './router';
 import store from '@/store';
 import axios from 'axios';
 import vuetify from './plugins/vuetify'
+import MetaInfo from 'vue-meta-info'
 
 Vue.use(vueNotification);
+Vue.use(MetaInfo);
 
 Vue.prototype.$http = axios;
 
