@@ -15,3 +15,26 @@
 </p>
     </v-container>
 </template>
+<script>
+    
+export default {
+  metaInfo:{
+    title: 'О компании fisolini.ru',
+    meta: [
+      {
+        name: 'description',
+                 content: 'Fisolini.ru – это независимый тематический Интернет-ресурс, созданный московскими экспертами в коврах и декораторами интерьеров.',
+      },
+      {
+        name: 'keywords',
+        content: 'Ковры, fisolini, фисолини, компания фисолини, ковры fisolini.ru, ковры'
+      }
+    ]
+  },
+  data(){
+    return {
+    }
+  },
+}
+
+</script>

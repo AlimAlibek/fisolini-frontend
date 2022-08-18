@@ -91,10 +91,11 @@
               justify="center"
               no-gutters
              >
+             <a v-bind:href="'/publicoffer'" >
               <div
                 class="font-weight-medium text-h6 pb-2 link"
               > Публичная оферта</div>
-
+              </a>
               <a v-bind:href="'/payment'">
                 <div
                   class="font-weight-medium text-h6 pb-2 link"
