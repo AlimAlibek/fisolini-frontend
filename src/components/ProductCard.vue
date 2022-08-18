@@ -18,9 +18,11 @@
         :cols="horizontal ? '6' : '12'"
       >
         <v-carousel
-          show-arrows-on-hover
-          hide-delimiters
+          v-model="currentImage"
+          :show-arrows="!small"
+          :show-arrows-on-hover="!small"
           :height="horizontal ? cardHeight : cardWidth"
+          hide-delimiters
         >
             <template v-slot:prev="{ on, attrs }">
               <v-btn
@@ -46,8 +48,23 @@
             v-for="(item,i) in images"
             :key="i"
             :src="item.path"
-          ></v-carousel-item>
+          >
+          </v-carousel-item>
         </v-carousel>
+        <div
+          class="delimiter"
+        >
+          <v-icon
+            v-for="i in images.length"
+            :key="i"
+            large
+            :color="(i-1) === currentImage ? 'green' : 'gray'"
+            style="width: 15px"
+            :style="small ? 'height: 10px' : 'height: 15px'"
+          >
+            mdi-circle-small
+          </v-icon>
+        </div>
       </v-col>
       <v-col
         :cols="horizontal ? '6' : '12'"
@@ -108,10 +125,8 @@
           :class="titleClass">
           {{price}} &#8381;
         </v-card-title>
-
       </v-col>
     </v-row>
-
   </v-card>
 </v-hover>
 </template>
@@ -123,6 +138,12 @@
       small: Boolean,
       horizontal: Boolean,
       product: Object
+    },
+
+    data() {
+      return {
+        currentImage: 0
+      }
     },
 
     computed: {
@@ -146,7 +167,8 @@
           return this.product.score
         },
         reviews() {
-          return this.product.reviews?.length || 0
+          let count_score = this.product.reviews?.length || 0
+          return count_score
         },
         sizes() {
           return this.product.stocks.length;
@@ -212,5 +234,12 @@
 <style scoped>
   .v-card {
     transition: all 0.2s;
+  }
+  .delimiter {
+    width: 100%;
+    height: 5px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
   }
 </style>

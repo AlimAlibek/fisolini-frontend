@@ -100,9 +100,11 @@
                   class="font-weight-medium text-h6 pb-2 link"
                 > Доставка и оплата</div>
               </a>
-              <div
-                class="font-weight-medium text-h6 pb-2 link"
-              > Гарантия и возврат</div>
+              <a v-bind:href="'/guarantee'">
+                <div
+                  class="font-weight-medium text-h6 pb-2 link"
+                > Гарантия и возврат</div>
+              </a>
              </v-row>
             </v-col>
 
@@ -125,13 +127,17 @@
                     class="font-weight-medium text-h6 pb-2 link"
                   > О нас</div>
                 </a>
-                <div
-                  class="font-weight-medium text-h6 pb-2 link"
-                > Отзывы</div>
-                <div
-                  v-if="!smallWidth"
-                  class="font-weight-medium text-h6 link"
-                > Контакты</div>
+                <a v-bind:href="'/reviews'" >
+                  <div
+                    class="font-weight-medium text-h6 pb-2 link"
+                  > Отзывы</div>
+                </a>
+                <a v-bind:href="'/contacts'" >
+                  <div
+                    v-if="!smallWidth"
+                    class="font-weight-medium text-h6 link"
+                  > Контакты</div>
+                </a>
               </v-row>
             </v-col>
           </v-row>

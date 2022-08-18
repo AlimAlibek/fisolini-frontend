@@ -63,6 +63,22 @@ let router = new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/contacts',
+            name: 'contacts',
+            component: () => import('./views/Contacts.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/guarantee',
+            name: 'guarantee',
+            component: () => import('./views/Guarantee.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
     ]
 })
 

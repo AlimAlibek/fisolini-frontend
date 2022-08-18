@@ -5,7 +5,7 @@ export const auth = {
         token: localStorage.getItem('token') || '',
         userPhoneNumber: '',
         // modal: {},
-        authStatus: 'welcome'
+        authStatus: 'edit_credentials'
     }),
 
     mutations: {
