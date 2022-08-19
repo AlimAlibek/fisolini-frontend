@@ -2,8 +2,8 @@
     <v-virtual-scroll
         bench="3"
         :items="items"
-        :min-height="smallWidth ? '320' : '450'"
-        :max-height="smallWidth ? '470' : '500'"
+        :min-height="smallWidth ? '120' : '220'"
+        :max-height="smallWidth ? '340' : '500'"
         :item-height="smallWidth ? '110' : '200'"
     >
         <template v-slot:default="{ item }">

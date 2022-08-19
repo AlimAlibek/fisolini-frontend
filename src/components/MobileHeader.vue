@@ -211,7 +211,7 @@
         :height="bottomDrawerHeight"
       >
         <SwipeLine
-          @swipeDown="toFilteredGoods"
+          @swipeDown="filters = false"
         />
 
         <v-row

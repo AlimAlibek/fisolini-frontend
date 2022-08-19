@@ -49,10 +49,12 @@
           <v-row
             no-gutters
           >
-            <TheReviews />
+            <h3 class="pb-2">Описание</h3>
+            {{getSelectedGood.product.description}}
           </v-row>
         </v-col>
     </v-row>
+    <TheReviews />
     <v-row
         no-gutters
     >

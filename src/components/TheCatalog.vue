@@ -50,7 +50,8 @@ export default {
             'getGoods',
             'areGoodsLoading',
             'getAmountOfGoods',
-            'getAmountOfFilteredGoods'
+            'getAmountOfFilteredGoods',
+            'getFilters'
         ]),
 
         height() {
@@ -66,11 +67,49 @@ export default {
     },
 
     methods: {
-        ...mapActions(['loadGoods']),
-        ...mapMutations(['showMoreGoods']),
+        ...mapActions([
+            'loadGoods',
+            'setFilterQuery'
+        ]),
+        ...mapMutations([
+            'showMoreGoods',
+            'setFiltersFromQuery'
+        ]),
 
         lazyLoad() {
             this.showMoreGoods(this.defaultAmount);
+        },
+
+        readQuery() {
+            const query = this.$route.query;
+            let needFilter = false;
+
+            Object.entries(query).forEach(([key, value]) => {
+                if (this.getFilters[key].length !== value.length) {
+                    needFilter = true;
+                } else {
+                    for (let i = 0; i < value.lenght; i++) {
+                        if (this.getFilters[key][i] !== value[i]) {
+                            needFilter = true;
+                        }
+                    }
+                }
+            })
+
+            if (needFilter) {
+                const filters = {};
+                Object.entries(query).forEach(([key, value]) => {
+                    if (typeof value === 'string') {
+                        filters[key] = [value];
+                    } else {
+                        filters[key] = value
+                    }
+                })
+                this.setFiltersFromQuery(filters);
+            }
+            if (!Object.keys(query).length && Object.keys(this.getFilters).length) {
+                this.setFilterQuery();
+            }
         }
     },
 
@@ -82,12 +121,17 @@ export default {
                   this.lazyTrigger = false;
                 }, 100)
             }
+        },
+
+        '$route.query'() {
+            this.readQuery();
         }
     },
 
     mounted() {
+        this.readQuery();
+
         if (!this.getAmountOfGoods && !this.getAmountOfFilteredGoods && !this.areGoodsLoading) {
-            console.log('mounted catalog');
             this.loadGoods();
         }
         window.scrollTo(0, 0);

@@ -1,5 +1,6 @@
 
 import axios from "axios"
+import router from '@/router'
 
 const initialFilters = {
     style: [],
@@ -130,10 +131,16 @@ export const goods = {
         setFilters(state, {category, value, show}) {
             state.filters[category] = value;
             this.dispatch('loadGoods', show);
+            this.dispatch('setFilterQuery')
+        },
+        setFiltersFromQuery(state, filters) {
+            state.filters = {...state.filters, ...filters};
+            this.dispatch('loadGoods', true);
         },
 
         resetFilters(state) {
             state.filters = {...initialFilters};
+            this.dispatch('resetFilterQuery')
         }
 
     },
@@ -307,6 +314,22 @@ export const goods = {
             } catch(err) {
                 console.log(err)
             }
+        },
+        setFilterQuery(ctx) {
+            const query = {}
+            Object.entries(ctx.getters.getFilters).filter(arr => arr[1].length).forEach(q => {
+                query[q[0]] = q[1]
+            })
+            router.history.push({
+                path: 'catalog',
+                query: {...query}
+            })
+        },
+        resetFilterQuery() {
+            router.history.push({
+                path: router.history.current.path,
+                query: {}
+            })
         }
 
     },

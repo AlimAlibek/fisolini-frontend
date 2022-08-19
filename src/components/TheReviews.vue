@@ -8,7 +8,6 @@
     >
       <span
         class="font-weight-bold"
-        :class="titleClass"
       >
         ОТЗЫВЫ
       </span>
@@ -80,22 +79,6 @@ import ReviewDialog from './ReviewDialog.vue'
       middleWidth() {
         return this.$vuetify.breakpoint.width < 1480 && this.$vuetify.breakpoint.width > 1264
       },
-
-      // avatarSize() {
-      //   return this.largeWidth ? '100' : this.middleWidth ? '60' : '50'
-      // },
-      // titleClass() {
-      //   return this.largeWidth ? 'text-h4' : this.middleWidth ? 'text-h6' : 'text-subtitle'
-      // },
-      // commentTitleClass() {
-      //   return this.largeWidth ? 'text-h5 pt-5' : this.middleWidth ? 'text-subtitle pt-2' : 'text-subtitle-2 pt-1'
-      // },
-      // commentTextClass() {
-      //   return this.largeWidth ? 'text-h6 pt-2' : this.middleWidth ? 'text-subtitle-2 pt-1' : 'text-body pt-0'
-      // },
-      // ratingSize() {
-      //   return this.largeWidth ? '30' : this.middleWidth ? '19' : '17'
-      // }
     }
  }
 </script>

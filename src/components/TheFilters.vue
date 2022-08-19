@@ -171,9 +171,11 @@
             selectedCategory() {
               return Object.keys(this.getFilters)[this.categoryIndex];
             },
-
-            selectedValues() {
-              return this.getFilters[this.selectedCategory] || [];
+            selectedValues: {
+              get() {
+                return this.getFilters[this.selectedCategory] || [];
+              },
+              set() {}
             },
 
             height() {
@@ -200,7 +202,6 @@
                 value,
                 show: true
               });
-              this.toCatalog();
               window.scrollTo(0, 0);
             },
 
