@@ -23,7 +23,7 @@
             <ProductGroup
                 :products="getGoods"
             />
-            <v-lazy v-model="lazyTrigger" height="100"></v-lazy>
+            <LazyLoader @lazyLoad="lazyLoad"/>
         </div>
     </v-card>
 </template>
@@ -31,18 +31,13 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex';
 
-import ProductGroup from '@/components/ProductGroup.vue'
-
+import ProductGroup from '@/components/ProductGroup.vue';
+import LazyLoader from '@/components/LazyLoader.vue';
 
 export default {
     components: {
-        ProductGroup
-    },
-
-    data() {
-        return {
-            lazyTrigger: false,
-        }
+        ProductGroup,
+        LazyLoader
     },
 
     computed: {
@@ -114,15 +109,6 @@ export default {
     },
 
     watch: {
-        lazyTrigger(value) {
-            if (value) {
-                this.lazyLoad();
-                setTimeout(() => {
-                  this.lazyTrigger = false;
-                }, 100)
-            }
-        },
-
         '$route.query'() {
             this.readQuery();
         }

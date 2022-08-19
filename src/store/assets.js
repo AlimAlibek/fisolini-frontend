@@ -5,7 +5,9 @@ export const assets = {
         banners: [],
         categories: [],
         filterEntities: [],
-        reviews: []
+        reviews: [],
+        countOfShownReviews: 10,
+        areReviewsLoading: false
     }),
 
     mutations: {
@@ -20,6 +22,14 @@ export const assets = {
         },
         setReviews(state, reviews) {
             state.reviews = reviews
+        },
+
+        increaseCountOfShownReviews(state) {
+            state.countOfShownReviews = state.countOfShownReviews + 5;
+        },
+
+        setReviewsLoadingFlag(state, boolean) {
+            state.areReviewsLoading = boolean;
         }
     },
 
@@ -35,7 +45,6 @@ export const assets = {
         loadCategories(ctx) {
             axios.get('catalog/categories')
                 .then(res => {
-                    // console.log('categories', res, {ctx})
                     ctx.commit('setCategories', res.data.data.categories)
                 })
         },
@@ -47,18 +56,18 @@ export const assets = {
         },
 
         loadReviews(ctx) {
+            ctx.commit('setReviewsLoadingFlag', true);
             axios.get('catalog/review')
             .then(res => {
                 ctx.commit('setReviews', res.data.data.review);
-            })
+            }).finally(() => ctx.commit('setReviewsLoadingFlag', false));
         }
     },
     getters: {
-        getBanners(state) {
-            return state.banners
-        },
+        getBanners: state => state.banners,
         getCategories: state => state.categories.filter(c => c.active),
         getFilterEntities: state => state.filterEntities,
-        getReviews: state => state.reviews
+        getReviews: state => state.reviews.slice(0, state.countOfShownReviews),
+        getReviewsLoadingFlag: state => state.areReviewsLoading
     }
 }
