@@ -334,6 +334,10 @@
               path: '/payment'
           },
           {
+              name: 'Контакты',
+              path: '/contacts'
+          },
+          {
               name: 'Отзывы',
               path: '/reviews'
           },

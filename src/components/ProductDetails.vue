@@ -169,9 +169,9 @@
                     :x-large="!smallWidth && !xSmallWidth"
                     :small="smallWidth || xSmallWidth"
                     :width="columnButtonWidth ? '250' : ''"
-                    class="white--text rounded-xl"
+                    class="rounded-lg font-weight-bold"
                     :class="!smallWidth && !xSmallWidth ? 'pl-12 pr-12' : ''"
-                    color="#1FAFAA"
+                    color="#FED42B"
                     :disabled="selectedStockIndex === null"
                     @click="addAndOrder"
                 >Оформить сразу</v-btn>
