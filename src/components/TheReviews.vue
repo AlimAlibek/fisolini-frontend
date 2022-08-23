@@ -31,7 +31,7 @@
         :review="review"
       />
       <v-row
-        v-if="!showAllReviews"
+        v-if="showAllButtonVisible"
         no-gutters
         justify="end"
       >
@@ -85,6 +85,10 @@ import ReviewDialog from './ReviewDialog.vue'
       ...mapGetters([
         'getSelectedGood'
       ]),
+
+      showAllButtonVisible() {
+        return this.getSelectedGood.product.reviews.length > 3 && !this.showAllReviews
+      },
 
       reviews() {
         return this.showAllReviews
