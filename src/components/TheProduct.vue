@@ -54,7 +54,12 @@
           </v-row>
         </v-col>
     </v-row>
-    <TheReviews />
+    <v-row
+        no-gutters
+        class="pb-4"
+    >
+        <TheReviews />
+    </v-row>
     <v-row
         no-gutters
     >
@@ -85,6 +90,25 @@
     import ProductGroup from '@/components/ProductGroup.vue';
 
     export default {
+        metaInfo() {
+          return {
+            title: this.getSelectedGood.product.title,
+            meta: [
+              {
+                name: 'description',
+                content: this.getSelectedGood.product.description,
+              },
+              {
+                name: 'keywords',
+                content: `
+                    ${this.getSelectedGood.product.title},
+                    ${this.getSelectedGood.product.specifications[0].style} ковер,
+                    Ковры, fisolini, фисолини, компания фисолини, ковры fisolini.ru, ковры, ковры из Бельгии, ковры из Ирана
+                `
+              }
+            ]
+          }
+        },
         components: {
             ProductImages,
             ProductDetails,

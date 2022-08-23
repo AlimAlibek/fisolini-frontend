@@ -30,6 +30,22 @@
         :key="review.id"
         :review="review"
       />
+      <v-row
+        v-if="!showAllReviews"
+        no-gutters
+        justify="end"
+      >
+        <v-btn
+          class="pa-2"
+          depressed
+          color="white"
+          @click="showAllReviews = true"
+
+        >
+          Показать все
+          <v-icon>mdi-chevron-down</v-icon>
+        </v-btn>
+      </v-row>
     </v-list>
     <v-row
       v-else
@@ -60,7 +76,8 @@ import ReviewDialog from './ReviewDialog.vue'
 
     data() {
       return {
-        reviewDialog: false
+        reviewDialog: false,
+        showAllReviews: false,
       }
     },
 
@@ -70,7 +87,9 @@ import ReviewDialog from './ReviewDialog.vue'
       ]),
 
       reviews() {
-        return this.getSelectedGood.product.reviews
+        return this.showAllReviews
+          ? this.getSelectedGood.product.reviews
+          : this.getSelectedGood.product.reviews.slice(0, 3);
       },
 
       largeWidth() {
