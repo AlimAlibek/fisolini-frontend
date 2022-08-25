@@ -109,42 +109,82 @@
                     v-for="stock in stocks"
                     :key="stock.id"
                     v-slot="{ active, toggle }"
+                    :class="(xSmallWidth || smallWidth) ? '' : 'mr-4'"
                   >
                     <v-card
                         elevation="0"
-                        :rounded="true"
+                        style="position: relative"
                         :style="active ? 'border: 2px solid #1FAFAA' : 'border: 1px solid gray'"
-                        class="ma-2"
+                        class="ma-2 rounded-lg"
                         :height="sizeSize"
                         :width="sizeSize"
                         @click="toggle"
                     >
+                            <div
+                                v-if="stock.oldPrice"
+                                class="discount_badge"
+                                :style="`${xSmallWidth ? 'font-size: 10px' : smallWidth ? 'font-size: 12px' : ''}`"
+                            >
+                                -{{Math.round(stock.price / stock.oldPrice * 100)}}%
+                            </div>
                            <v-row
                                 no-gutters
                                 justify="center"
                                 class="font-weight-bold"
                                 :class="xSmallWidth ? 'text-subtitle-2 pt-1'
-                                    : smallWidth ? 'text-subtitle pt-4' : 'text-h5 pt-6'"
+                                    : smallWidth ? 'text-subtitle pt-2' : 'text-h5 pt-3'"
                             >
+                                <!-- {{stock.size.split('x').map(size => (+size + 0).toFixed(1)).join('x')}} -->
                                 {{stock.size}}
                             </v-row>
                             <v-row
                                 no-gutters
                                 justify="center"
-                                class="deep-orange--text"
-                                :class="xSmallWidth ? 'text-subtitle-2 pt-1'
-                                    : smallWidth ? 'text-subtitle pt-1' : 'text-h5 pt-2'"
+                                class="font-weight-bold"
+                                :class="xSmallWidth ? 'text-subtitle pt-1'
+                                    : smallWidth ? 'text-h6 pt-1' : 'text-h4 pt-2'"
+                                :style="`height: ${sizeSize/3.3}px`"
                             >
-                                {{stock.price}}&#8381;
+                                <span
+                                    v-if="!stock.oldPrice"
+                                    class="deep-orange--text"
+                                >
+                                    {{stock.price}}&#8381;
+                                </span>
+                                <v-row
+                                    v-else
+                                    no-gutters
+                                    align="center"
+                                >
+                                  <v-col cols="12">
+                                    <v-row
+                                        no-gutters
+                                        justify="end"
+                                        class="deep-orange--text text-decoration-line-through pr-1"
+                                        :class="xSmallWidth ? 'text-caption'
+                                        : smallWidth ? 'text-subtitle-2' : 'text-h6'"
+                                        :style="`transform: translate(0, -${sizeSize/12}px)`"
+                                    >
+                                        {{stock.oldPrice}}&#8381;
+                                    </v-row>
+                                  </v-col>
+                                    <v-row
+                                        no-gutters
+                                        justify="center"
+                                        class="green--text text--darken-3"
+                                        :style="`transform: translate(0, -${sizeSize/6}px)`"
+                                    >
+                                        {{stock.price}}&#8381;
+                                    </v-row>
+                                </v-row>
                             </v-row>
                             <v-row
                                 no-gutters
                                 justify="center"
-
-                                :class="xSmallWidth ? 'text-caption'
-                                    : smallWidth ? 'text-subtitle-2 pt-1' : 'text-h6 pt-2'"
+                                :class="xSmallWidth ? 'text-caption text-truncate pt-2'
+                                    : smallWidth ? 'text-subtitle-2 pt-3' : 'text-h6 pt-4'"
                             >
-                                Осталось: {{stock.stock}}
+                                {{stock.stock ? `Осталось: ${stock.stock}` : 'Нет в наличии'}}
                             </v-row>
                     </v-card>
                   </v-slide-item>
@@ -274,4 +314,17 @@
     }
 
 </script>
+
+<style scoped>
+    .discount_badge {
+        position: absolute;
+        top: -2%;
+        right: -12%;
+        transform: rotate(20deg);
+        padding: 0px 8px;
+        border-radius: 8px;
+        background: #FF5252;
+        color: #fff;
+    }
+</style>
 

@@ -72,7 +72,9 @@
         <v-card-title
           :class="titleClass"
         >
-          {{productTitle}}
+          <span class="pa-0 col-12 text-truncate">
+            {{productTitle}}
+          </span>
         </v-card-title>
 
         <v-card-subtitle
@@ -121,9 +123,10 @@
             </div>
           </v-card-subtitle>
         </v-card-text>
-        <v-card-title
-          :class="titleClass">
-          {{price}} &#8381;
+        <v-card-title :class="titleClass">
+          <span class="pa-0 col-12 text-truncate">
+            {{price}} &#8381;
+          </span>
         </v-card-title>
       </v-col>
     </v-row>
@@ -149,9 +152,7 @@
     computed: {
 
         productTitle() {
-            return this.small
-              ? this.product.title.length > 17 ? this.product.title.slice(0, 17) + '...' : this.product.title
-              : this.product.title.length > 21 ? this.product.title.slice(0, 21) + '...' : this.product.title
+          return this.product.title
         },
         image() {
           return this.product.images[0]?.path || require('../assets/images/replace.png')
@@ -204,7 +205,7 @@
 
         countryClass() {
           return this.small
-            ? "text--primary font-weight-medium text-caption  pa-1 "
+            ? "text--primary font-weight-medium text-caption pa-1 "
             : "text--primary font-weight-medium"
         },
 
