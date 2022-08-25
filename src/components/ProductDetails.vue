@@ -318,8 +318,8 @@
 <style scoped>
     .discount_badge {
         position: absolute;
-        top: -2%;
-        right: -12%;
+        top: -6%;
+        right: -16%;
         transform: rotate(20deg);
         padding: 0px 8px;
         border-radius: 8px;
