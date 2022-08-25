@@ -182,9 +182,7 @@
             return +a - +b
           })
           const min = prices[0];
-          const max = prices[prices.length - 1];
-
-          return !min ? '-' : max === min ? `${min}` : `от ${min} до ${max} `
+          return min ? `от ${Number(min).toLocaleString()}` : '-'
         },
 
         cardClass() {

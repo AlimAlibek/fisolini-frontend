@@ -149,7 +149,7 @@
                                     v-if="!stock.oldPrice"
                                     class="deep-orange--text"
                                 >
-                                    {{stock.price}}&#8381;
+                                    {{ Number(stock.price).toLocaleString()}}&#8381;
                                 </span>
                                 <v-row
                                     v-else
@@ -165,7 +165,7 @@
                                         : smallWidth ? 'text-subtitle-2' : 'text-h6'"
                                         :style="`transform: translate(0, -${sizeSize/12}px)`"
                                     >
-                                        {{stock.oldPrice}}&#8381;
+                                        {{ Number(stock.oldPrice).toLocaleString()}}&#8381;
                                     </v-row>
                                   </v-col>
                                     <v-row
@@ -174,7 +174,7 @@
                                         class="green--text text--darken-3"
                                         :style="`transform: translate(0, -${sizeSize/6}px)`"
                                     >
-                                        {{stock.price}}&#8381;
+                                        {{ Number(stock.price).toLocaleString()}}&#8381;
                                     </v-row>
                                 </v-row>
                             </v-row>

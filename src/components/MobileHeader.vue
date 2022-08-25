@@ -137,13 +137,15 @@
           mobile
         />
       </v-row>
-      <template v-slot:append>
+      <template
+        v-slot:append
+      >
         <v-row
-          class="pl-7 pr-5 pb-10"
+          class="pl-7 pr-5 pb-12 mb-12"
         >
-        <FeedbackInfo
-          mobile
-        />
+          <FeedbackInfo
+            mobile
+          />
         </v-row>
       </template>
     </v-navigation-drawer>
