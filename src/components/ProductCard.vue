@@ -180,10 +180,9 @@
           const prices = this.product.stocks.map(stock => stock.price).sort((a, b) => {
             return +a - +b
           })
-          const min = prices[0];
+          const min = Number(prices[0]).toLocaleString();
           const max = prices[prices.length - 1];
-
-          return !min ? '-' : max === min ? `${min}` : `от ${min} до ${max} `
+          return !min ? '-' : max === min ? `${min}` : `от ${min}`
         },
 
         cardClass() {
