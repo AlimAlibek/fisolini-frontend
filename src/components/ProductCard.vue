@@ -143,7 +143,7 @@
         </v-card-text>
         <v-card-title :class="titleClass">
           <span class="pa-0 col-12 text-truncate">
-            {{price}} &#8381; -{{discount}}%
+            {{price}} &#8381;
           </span>
         </v-card-title>
       </v-col>
