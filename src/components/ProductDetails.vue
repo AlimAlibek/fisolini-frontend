@@ -291,7 +291,7 @@
             ...mapMutations(['setCartFlag']),
 
             addToCart() {
-                 window.dataLayer = window.dataLayer || [];
+                window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     "ecommerce": {
                         "currencyCode": "RUB",

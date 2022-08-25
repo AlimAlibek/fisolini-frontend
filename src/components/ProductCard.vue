@@ -51,6 +51,24 @@
           >
           </v-carousel-item>
         </v-carousel>
+          <div class="discount-badge">
+            <v-badge
+              :value="discount"
+              color=""
+              :offset-x="small ? 65 : 80"
+              :offset-y="small ? -40 : -65"
+            >
+              <div style="height: 0px"></div>
+              <template v-slot:badge >
+                <span
+                  class="red accent-2 rounded-xl pl-2 pr-2"
+                  :class="small ? 'text-body-2' : 'text-h6'"
+                >
+                  {{`-${discount}%`}}
+                </span>
+              </template>
+            </v-badge>
+          </div>
         <div
           class="delimiter"
         >
@@ -125,7 +143,7 @@
         </v-card-text>
         <v-card-title :class="titleClass">
           <span class="pa-0 col-12 text-truncate">
-            {{price}} &#8381;
+            {{price}} &#8381; -{{discount}}%
           </span>
         </v-card-title>
       </v-col>
@@ -184,6 +202,15 @@
           const min = prices[0];
           return min ? `от ${Number(min).toLocaleString()}` : '-'
         },
+        discount() {
+          const stocksWithDiscount = this.product.stocks.filter(stock => stock.oldPrice);
+          if (!stocksWithDiscount.length) {
+            return null
+          }
+          return stocksWithDiscount.map(disc => {
+            return (100 - Math.round(disc.price / disc.oldPrice * 100))
+          }).sort((a, b) => b - a)[0]
+        },
 
         cardClass() {
           return this.small ? 'my-2' : 'my-4'
@@ -240,5 +267,11 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
+  }
+  .discount-badge {
+    height: 0px;
+    width: 100%;
+    text-align: end;
+    transform: rotate(10deg);
   }
 </style>
