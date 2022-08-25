@@ -125,7 +125,7 @@
                                 class="discount_badge"
                                 :style="`${xSmallWidth ? 'font-size: 10px' : smallWidth ? 'font-size: 12px' : ''}`"
                             >
-                                -{{Math.round(stock.price / stock.oldPrice * 100)}}%
+                                -{{100 - Math.round(stock.price / stock.oldPrice * 100)}}%
                             </div>
                            <v-row
                                 no-gutters
