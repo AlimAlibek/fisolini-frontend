@@ -323,6 +323,10 @@
       signin: false,
       filters: false,
       pages: [
+        {
+              name: 'Главная',
+              path: '/'
+          },
           {
               name: 'Каталог',
               path: '/catalog'
