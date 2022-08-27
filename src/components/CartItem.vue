@@ -71,7 +71,7 @@
                     icon
                     :small="!smallWidth"
                     :x-small="smallWidth"
-                    @click="removeGoodFromTheCartfun(product)"
+                    @click="addGoodToTheCart(product)"
                 >
                     <v-icon
                         color="green"
