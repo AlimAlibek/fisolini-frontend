@@ -33,6 +33,8 @@ export const goods = {
         shownNovelties: [],
         popular: [],
         shownPopular: [],
+        promo: [],
+        shownPromo: [],
         isPopularLoading: false,
 
         goodsInTheCart: {},
@@ -65,6 +67,9 @@ export const goods = {
         setPopular(state, data) {
             state.popular = data
         },
+        setPromo(state, data) {
+            state.promo = data
+        },
         setNovelties(state, data) {
             state.novelties = data
         },
@@ -73,6 +78,9 @@ export const goods = {
         },
         setLoadingPopularFlag(state, boolean) {
             state.isPopularLoading = boolean
+        },
+        setLoadingPromoFlag(state, boolean) {
+            state.isPromoLoading = boolean
         },
         setLoadingSelectedGoodFlag(state, boolean) {
             state.isSelectedGoodLoading = boolean
@@ -90,6 +98,9 @@ export const goods = {
         },
         setShownPopular(state, data) {
             state.shownPopular = [...state.shownPopular, ...data]
+        },
+        setShownPromo(state, data) {
+            state.shownPromo = [...state.shownPromo, ...data]
         },
         setShownNovelties(state, data) {
             state.shownNovelties = [...state.shownNovelties, ...data]
@@ -186,6 +197,7 @@ export const goods = {
             const goods = await axios.get('/popular');
             if (goods) {
                 ctx.commit('setPopular', goods.data.data.popular);
+                ctx.commit('setPromo', goods.data.data.promo);
                 ctx.commit('setNovelties', goods.data.data.new);
             }
             ctx.commit('setLoadingPopularFlag', false);
@@ -197,6 +209,14 @@ export const goods = {
                 ctx.state.popular.slice(
                     ctx.state.shownPopular.length,
                     (ctx.state.shownPopular.length) + loadingAmount,
+                )
+            )
+        },showMorePromo(ctx, loadingAmount) {
+            ctx.commit(
+                'setShownPromo',
+                ctx.state.promo.slice(
+                    ctx.state.shownPromo.length,
+                    (ctx.state.shownPromo.length) + loadingAmount,
                 )
             )
         },
@@ -341,6 +361,7 @@ export const goods = {
         getSelectedGood: state => state.selectedGood,
 
         getPopular: state => state.shownPopular,
+        getPromo: state => state.shownPromo,
         canShowMorePopular: state => state.popular.length - state.shownPopular.length,
 
         getNovelties: state => state.shownNovelties,

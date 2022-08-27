@@ -10,6 +10,24 @@
         <TheCategories />
 
         <SectionHeader
+            title="Скидки от производителей ковров"
+            subtitle="Акции от мировых брендов"
+        />
+        <v-progress-linear
+          v-if="isPopularLoading"
+          color="rgb(31 175 170)"
+          indeterminate
+          rounded
+          height="4"
+        ></v-progress-linear>
+        <ProductGroup
+            v-else
+            :products="getPromo"
+            :canLoadMore="canShowMorePopular"
+            @loadMore="loadMorePopular"
+        />
+
+        <SectionHeader
             title="Популярные товары"
             subtitle="Ковры которые покупают чаще всего"
         />
@@ -76,6 +94,7 @@ import PlacementTips from '@/components/PlacementTips.vue';
     computed: {
         ...mapGetters([
             'getPopular',
+            'getPromo',
             'canShowMorePopular',
 
             'getNovelties',
@@ -94,6 +113,7 @@ import PlacementTips from '@/components/PlacementTips.vue';
         ...mapActions([
             'loadPopularGoods',
             'showMorePopular',
+            'showMorePromo',
             'showMoreNovelties',
         ]),
 
@@ -102,12 +122,16 @@ import PlacementTips from '@/components/PlacementTips.vue';
         },
         loadMoreNovelties() {
             this.showMoreNovelties(this.defaultAmount)
+        },
+        loadMorePromo() {
+            this.showMorePromo(this.defaultAmount)
         }
     },
 
     async mounted() {
         await this.loadPopularGoods();
         this.loadMorePopular();
+        this.loadMorePromo();
         this.loadMoreNovelties();
     }
  }
