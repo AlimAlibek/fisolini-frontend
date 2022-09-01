@@ -51,24 +51,10 @@
           >
           </v-carousel-item>
         </v-carousel>
-          <div class="discount-badge">
-            <v-badge
-              :value="discount"
-              color=""
-              :offset-x="small ? 65 : 80"
-              :offset-y="small ? -40 : -65"
-            >
-              <div style="height: 0px"></div>
-              <template v-slot:badge >
-                <span
-                  class="red accent-2 rounded-xl pl-2 pr-2"
-                  :class="small ? 'text-body-2' : 'text-h6'"
-                >
-                  {{`-${discount}%`}}
-                </span>
-              </template>
-            </v-badge>
-          </div>
+          <DiscountBadge
+            :discount="discount"
+            :small="small"
+          />
         <div
           class="delimiter"
         >
@@ -153,8 +139,10 @@
 </template>
 
 <script>
+  import DiscountBadge from './DiscountBadge.vue'
 
   export default {
+    components: { DiscountBadge },
     props: {
       small: Boolean,
       horizontal: Boolean,
@@ -267,11 +255,5 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-  }
-  .discount-badge {
-    height: 0px;
-    width: 100%;
-    text-align: end;
-    transform: rotate(10deg);
   }
 </style>

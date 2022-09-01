@@ -62,7 +62,7 @@
                     :large="!dense"
                     @click="submit"
                 >
-                    Оформить {{getTotalPrice}}&#8381;
+                    Оформить {{Number(getTotalPrice).toLocaleString()}}&#8381;
                 </v-btn>
             </v-row>
          </v-form>

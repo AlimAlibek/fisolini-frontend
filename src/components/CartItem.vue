@@ -8,6 +8,15 @@
             :size="imageSize"
         >
             <v-img :src="image"></v-img>
+            <span
+                v-if="oldPrice"
+                style="z-index: 100; position: absolute; right: 0; bottom: -20px"
+            >
+                <DiscountBadge
+                    :discount="discount"
+                    :small="smallWidth"
+                />
+            </span>
         </v-list-item-avatar>
         <v-list-item-content>
             <a
@@ -22,7 +31,7 @@
             </div>
             </a>
           <div :class="sizeClass">
-            <span class="gray--text">Размер: </span>
+            <span class="gray--text" >Размер: </span>
             <span class="font-weight-medium">{{size}} м</span>
           </div>
           <div>
@@ -46,7 +55,31 @@
             <div
                 :class="smallWidth ? 'text-subtitle-2' : 'text-h6'"
             >
-                {{price}} &#8381;
+                <span v-if="oldPrice">
+
+                    <v-col>
+                        <v-row>
+                            <span
+                                class="deep-orange--text text-decoration-line-through"
+                                style="transform: translate(8px); line-height: 12px"
+                            >
+                              {{ Number(oldPrice).toLocaleString()}}&#8381;
+                            </span>
+                        </v-row>
+                    </v-col>
+                    <v-col>
+                        <v-row justify="start">
+                            <span
+                                :style="`line-height: ${smallWidth ? 0 : 9}px`"
+                            >
+                                {{Number(price).toLocaleString()}}&#8381;
+                            </span>
+                        </v-row>
+                    </v-col>
+                </span>
+                <span v-else>
+                    {{Number(price).toLocaleString()}}&#8381;
+                </span>
             </div>
             <div
                 class="pt-1"
@@ -87,8 +120,10 @@
 
 <script>
     import {mapActions, mapMutations} from 'vuex';
+    import DiscountBadge from './DiscountBadge.vue';
 
     export default {
+        components: { DiscountBadge },
         props: {
             product: Object
         },
@@ -105,6 +140,12 @@
             },
             price() {
                 return this.product.price
+            },
+            oldPrice() {
+                return this.product.stock.oldPrice ? this.product.stock.oldPrice * this.product.count : null
+            },
+            discount() {
+                return this.oldPrice ? (100 - Math.round(this.product.stock.price / this.product.stock.oldPrice * 100)) : 0
             },
 
             smallWidth() {
