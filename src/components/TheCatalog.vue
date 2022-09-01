@@ -115,12 +115,10 @@ export default {
     },
 
     mounted() {
-        this.readQuery();
-
         if (!this.getAmountOfGoods && !this.getAmountOfFilteredGoods && !this.areGoodsLoading) {
+            this.readQuery();
             this.loadGoods();
         }
-        window.scrollTo(0, 0);
     }
 }
 </script>

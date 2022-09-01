@@ -372,7 +372,7 @@
       },
 
       filtersButtonWidth() {
-        let width = this.$vuetify.breakpoint.width - 160;
+        let width = this.$vuetify.breakpoint.width*0.545 ;
         return width > 300 ? 300 : width
       }
     },

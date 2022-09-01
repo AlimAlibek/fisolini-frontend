@@ -33,6 +33,8 @@
             :max-width="currentImageWidth"
             height="770"
             :src="currentImage.path"
+            @click="fullSizeImage = true"
+            style="cursor: pointer"
         />
       </v-card>
     </div>
@@ -42,6 +44,7 @@
             :width="$vuetify.breakpoint.width - 50"
         >
             <v-carousel
+                v-model="currentImageIndex"
                 :show-arrows="false"
                 :height="xSmallWidth ? '400' : '519'"
             >
@@ -49,10 +52,40 @@
                   v-for="(image, i) in innerImages"
                   :key="i"
                   :src="image.path"
+                  @click="fullSizeImage = true"
                 ></v-carousel-item>
             </v-carousel>
         </v-card>
     </div>
+    <v-overlay
+        :value="fullSizeImage"
+        opacity="0.8"
+        @click="fullSizeImage = false"
+      >
+        <v-carousel
+            v-model="currentImageIndex"
+            :height="fullSizeImageHeight"
+            hide-delimiter-background
+        >
+            <v-carousel-item
+                v-for="(image, i) in innerImages"
+                :key="i"
+            >
+              <v-row
+                class="fill-height"
+                align="center"
+              >
+                <v-img
+                    contain
+                    :src="image.path"
+                    :max-width="fullSizeImageMaxWidth"
+                    :max-height="fullSizeImageHeight"
+                    :width="fullSizeImageMaxWidth"
+                />
+              </v-row>
+            </v-carousel-item>
+        </v-carousel>
+    </v-overlay>
 </div>
 </template>
 
@@ -63,7 +96,8 @@
         },
         data() {
             return {
-                currentImageIndex: 0
+                currentImageIndex: 0,
+                fullSizeImage: false
             }
         },
 
@@ -88,6 +122,13 @@
             currentImageWidth() {
                 return this.$vuetify.breakpoint.width < 1480 && this.$vuetify.breakpoint.width > 1000
                     ? '810' : '550'
+            },
+
+            fullSizeImageHeight() {
+                return this.$vuetify.breakpoint.height - this.$vuetify.breakpoint.height*0.07
+            },
+            fullSizeImageMaxWidth() {
+                return this.$vuetify.breakpoint.width*0.99
             }
         }
     }
