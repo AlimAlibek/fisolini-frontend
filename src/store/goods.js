@@ -260,10 +260,12 @@ export const goods = {
             })
         },
         decreasNumberOfGoodsInCart(ctx, payload) {
-            let count = ctx.state.goodsInTheCart[payload.id]?.count - 1;
+            let goodInTheCart = ctx.state.goodsInTheCart[payload.id];
+            let count = goodInTheCart.count - 1;
+            let price = +goodInTheCart.price - +goodInTheCart.stock.price;
             if (count > 0) {
                 ctx.commit('setGoodToTheCart', {
-                    ...payload, count
+                    ...payload, count, price
                 })
             } else {
                 ctx.commit('removeGoodFromCart', payload)
@@ -376,7 +378,6 @@ export const goods = {
         isSelectedGoodLoading: state => state.isSelectedGoodLoading,
 
         currentOrder: state => state.currentOrder,
-
 
         getFilters: state => state.filters,
         numberOfAppliedFilters: state => Object.values(state.filters).reduce((number, item) => {
