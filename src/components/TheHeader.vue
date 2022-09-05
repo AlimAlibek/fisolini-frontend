@@ -269,8 +269,8 @@
                     path: '/catalog'
                 },
                 {
-                    name: 'О компании',
-                    path: '/about'
+                    name: 'Контакты',
+                    path: '/contacts'
                 },
                 {
                     name: 'Доставка и оплата',
