@@ -137,7 +137,7 @@
                          {{ Number(selectedStock.price).toLocaleString()}}&#8381;
                         </span>
                         <span
-                          :class="xSmallWidth ? 'text-caption pl-2' : smallWidth ? 'text-subtitle-2 pl-2' : 'pl-4'"
+                          :class="xSmallWidth ? 'text-caption pl-2' : smallWidth ? 'text-subtitle-2 pl-2' : 'text-h6 pl-4'"
                         >за {{selectedStock.size.split('x').map(size => (+size + 0).toFixed(1)).join('x')}}</span>
                     </v-row>
                     <v-row

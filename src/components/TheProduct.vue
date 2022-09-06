@@ -28,13 +28,15 @@
           </v-row>
         </v-col>
     </v-row>
+
     <v-container
         style="max-width: 1490px"
+        class="mt-5"
     >
-
+        <v-divider></v-divider>
         <v-row
            no-gutters
-           class="mt-6"
+            class="mt-1"
            :class="descriptionClass"
         >
            <div class="pb-2">

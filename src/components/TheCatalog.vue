@@ -46,7 +46,8 @@ export default {
             'areGoodsLoading',
             'getAmountOfGoods',
             'getAmountOfFilteredGoods',
-            'getFilters'
+            'getFilters',
+            'getFilterCategories'
         ]),
 
         height() {
@@ -76,7 +77,14 @@ export default {
         },
 
         readQuery() {
-            const query = this.$route.query;
+            const query = {}
+
+            Object.entries(this.$route.query).forEach(([key, value]) => {
+                if (this.getFilterCategories[key]) {
+                    query[key] = value
+                }
+            })
+
             let needFilter = false;
 
             Object.entries(query).forEach(([key, value]) => {

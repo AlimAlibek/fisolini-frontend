@@ -382,6 +382,8 @@ export const goods = {
         getFilters: state => state.filters,
         numberOfAppliedFilters: state => Object.values(state.filters).reduce((number, item) => {
            return number + item.length;
-        }, 0)
+        }, 0),
+
+        getFilterCategories: () => initialFilters
     }
 }
