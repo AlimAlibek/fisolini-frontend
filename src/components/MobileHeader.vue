@@ -332,10 +332,6 @@
               path: '/catalog'
           },
           {
-              name: 'О компании',
-              path: '/about'
-          },
-          {
               name: 'Доставка и оплата',
               path: '/payment'
           },

@@ -11,36 +11,41 @@
         <div class="feedback-title"> ОБРАТНАЯ СВЯЗЬ </div>
 
         <div class="feedback-number" >
-          <v-btn
-            icon
-            :x-small="!mobile"
-            :x-large="mobile"
-          >
-             <a v-bind:href="'https://wa.me/79964183776'" target="_blank" style="color: #000000;text-decoration: none;">
-             <v-icon
+          
+          <template v-if="mobile">
+              <v-btn icon x-large>
+                <a v-bind:href="'https://wa.me/79964183776'" target="_blank" style="color: #000000;text-decoration: none;">
+                <v-icon
                 color="#277A0E"
                 :size="mobile ? 50 : 24"
             >
                 mdi-whatsapp
             </v-icon>
-            </a>
-          </v-btn>
-
-          <template v-if="mobile">
+                </a>
+              </v-btn> 
+              
               <v-btn icon x-large>
                 <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">
                 <img :src="callIcon"/>
                 </a>
               </v-btn>
+
               <v-btn icon x-large>
-                
-                <a v-bind:href="'mailto:info@fisolini.ru'" target="_blank" style="color: #000000;text-decoration: none;">
+                  <a v-bind:href="'mailto:info@fisolini.ru'" target="_blank" style="color: #000000;text-decoration: none;">
                   <img :src="messageIcon"/>
-                </a>
+                  </a>
               </v-btn>
           </template>
 
           <span v-else>
+            <v-btn
+            icon
+            :small="!mobile"
+          >
+             <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">
+             <img :src="phoneIcon"/>
+            </a>
+          </v-btn>
             <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">+7(495)151-57-05 </a>
              
           </span>
@@ -77,6 +82,7 @@ import youtubeIcon from '@/assets/icons/youtube.svg'
 import odnoklassnikiIcon from '@/assets/icons/odnoklassniki.svg'
 import messageIcon from '@/assets/icons/message.png'
 import callIcon from '@/assets/icons/call.png'
+import phoneIcon from '@/assets/icons/phone.png'
 
 
 export default {
@@ -127,6 +133,7 @@ export default {
 
     computed: {
         callIcon: () => callIcon,
+        phoneIcon: () => phoneIcon,
         messageIcon: () => messageIcon
     }
 

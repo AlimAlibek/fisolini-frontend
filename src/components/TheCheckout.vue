@@ -79,6 +79,8 @@ export default {
     components: {
         InputPhoneNumber,
     },
+    state: () => ({
+        getGoodsInTheCart: []}),
     data() {
         return {
             valid: true,
@@ -103,6 +105,9 @@ export default {
             return this.$vuetify.breakpoint.width < 1200;
         }
     },
+    getters: {
+        getGoodsInTheCart: state => state.goodsInTheCart,
+    },
 
     methods: {
         ...mapActions([
@@ -114,15 +119,28 @@ export default {
             if (!this.valid) {
                 return;
             }
+
+            var products = []         
+
+            Object.values(this.$store.getters['getGoodsInTheCart']).forEach(good => { 
+                var productsW = {}
+                productsW["id"] ='' + good.stock.id;
+                productsW["price"] = '' + good.stock.price;
+                productsW["variant"] = '' + good.stock.size;
+                productsW["quantity"] = '' + good.count;
+                productsW["category"] = "";
+                productsW["name"] = '' + good.good.id;
+                products.push(productsW);
+                console.log(good)
+            })
+            
              window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     "ecommerce": {
                         "currencyCode": "RUB",
                         "purchase": {
-                            "actionField": {
-                                "id": '235732855'
-                            },
-                            "products": "" //тут нужно передать в массиве (id Товара, имя, цену и количество)
+                            "_name": "purchase",
+                            "products":products //тут нужно передать в массиве (id Товара, имя, цену и количество)
                         }
                     }
                 });

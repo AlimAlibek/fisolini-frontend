@@ -311,10 +311,14 @@
                     "ecommerce": {
                         "currencyCode": "RUB",
                         "add": {
-                            "actionField": {
-                                "id": '235732847'
-                            },
-                            "products": this.stocks[this.selectedStockIndex]
+                            "_name": "add_to_cart",
+                            "products": [{
+                                "id":'' + (this.stocks[this.selectedStockIndex]['id']),
+                                "price":'' +(this.stocks[this.selectedStockIndex]['price']),
+                                "quantity":'' +1,
+                                "category":"",
+                                "name":'' + (this.stocks[this.selectedStockIndex]['product_id'])
+                            }]
                         }
                     }
                 });
