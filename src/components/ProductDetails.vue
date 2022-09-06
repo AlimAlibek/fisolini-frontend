@@ -2,90 +2,14 @@
     <v-card
         :width="cardWidth"
         :min-width="cardWidth"
-        :height="cardHeight"
+        elevation="0"
     >
-        <v-tabs
-            fixed-tabs
-            :height="xSmallWidth ? '30' : '40'"
-            slider-color="#E81616"
-            color="#E81616"
+        <div
+            class="font-weight-bold"
+            :class="`${xSmallWidth ? 'text-subtitle-2 pl-2' : smallWidth ? 'text-h6 pl-4' : 'text-h4 pl-4'}`"
         >
-
-            <v-tab
-                :style="xSmallWidth ? 'font-size: 10px; width: 30px' : ''"
-            >
-                детали
-            </v-tab>
-            <v-tab
-                :style="xSmallWidth ? 'font-size: 10px; width: 30px' : ''"
-            >
-                характеристики
-            </v-tab>
-
-            <v-tab-item>
-                <v-row
-                    no-gutters
-                    justify="center"
-                    class="pt-5"
-                >
-                    <v-col
-                        cols="9"
-                    >
-                    <v-img
-
-                        src="@/assets/images/stamps.png"
-                    />
-                    </v-col>
-                </v-row>
-                <v-row
-                    no-gutters
-                    justify="center"
-                    class="pb-5"
-                >
-                    <v-col
-                        class="pt-6"
-                        cols="10"
-                    >
-                        <ul>
-                            <li
-                                v-for="detail in details"
-                                :key="detail"
-                                :class="xSmallWidth ? 'text-body-2 pb-1' : smallWidth ? 'text-body' : 'text-h5'"
-                            >
-                                {{detail}}
-                            </li>
-                        </ul>
-                    </v-col>
-                </v-row>
-            </v-tab-item>
-
-            <v-tab-item>
-                <v-row
-                    no-gutters
-                    justify="center"
-                    :class="xSmallWidth ? 'pt-2' : smallWidth ? 'pt-3' : 'pt-7'"
-                >
-                    <v-col
-                        cols="10"
-                    >
-                        <div
-                            v-for="([key, value]) in Object.entries(specificationsValues)"
-                            :key="key"
-                            :style="xSmallWidth ? 'font-size: 11px'
-                                : smallWidth ? 'font-size: 12px' : 'font-size: 16px'"
-                        >
-                            <span class="font-weight-bold">
-                                {{value}}:
-                            </span>
-                            <span>
-                                {{specifications[0][key] || ''}}
-                            </span>
-                        </div>
-                    </v-col>
-
-                </v-row>
-            </v-tab-item>
-        </v-tabs>
+            {{getSelectedGood.product.title}}
+        </div>
 
         <div
             :class="xSmallWidth ? 'pt-1' : 'pa-2 pt-3'"
@@ -134,7 +58,6 @@
                                 :class="xSmallWidth ? 'text-subtitle-2 pt-1'
                                     : smallWidth ? 'text-subtitle pt-2' : 'text-h5 pt-3'"
                             >
-                                <!-- {{stock.size.split('x').map(size => (+size + 0).toFixed(1)).join('x')}} -->
                                 {{stock.size}}
                             </v-row>
                             <v-row
@@ -195,71 +118,161 @@
                 justify="space-around"
                 :class="xSmallWidth ? 'pa-0 pt-3' : 'pa-4'"
             >
-                <v-btn
-                    :x-large="!smallWidth && !xSmallWidth"
-                    :small="smallWidth || xSmallWidth"
-                    :width="columnButtonWidth ? '250' : ''"
-                    class="white--text rounded-xl mb-2"
-                    :class="!smallWidth && !xSmallWidth ? 'pl-12 pr-12' : ''"
-                    color="#1FAFAA"
-                    :disabled="selectedStockIndex === null"
-                    @click="addToCart"
-                >Добавить в корзину</v-btn>
-                <v-btn
-                    :x-large="!smallWidth && !xSmallWidth"
-                    :small="smallWidth || xSmallWidth"
-                    :width="columnButtonWidth ? '250' : ''"
-                    class="rounded-lg font-weight-bold"
-                    :class="!smallWidth && !xSmallWidth ? 'pl-12 pr-12' : ''"
-                    color="#FED42B"
-                    :disabled="selectedStockIndex === null"
-                    @click="addAndOrder"
-                >Оформить сразу</v-btn>
+                <v-row
+                    no-gutters
+                    justify="center"
+                >
+                 <div>
+                    <v-row
+                        v-if="!stocksInCart"
+                        no-gutters
+                        class="fill-height pr-2"
+                        align="center"
+                        justify="space-around"
+                    >
+                        <span
+                         class="font-weight-bold"
+                         :class="xSmallWidth ? 'text-body' : smallWidth ? 'text-h5' : 'text-h4'"
+                        >
+                         {{ Number(selectedStock.price).toLocaleString()}}&#8381;
+                        </span>
+                        <span
+                          :class="xSmallWidth ? 'text-caption pl-2' : smallWidth ? 'text-subtitle-2 pl-2' : 'pl-4'"
+                        >за {{selectedStock.size.split('x').map(size => (+size + 0).toFixed(1)).join('x')}}</span>
+                    </v-row>
+                    <v-row
+                        v-else
+                        no-gutters
+                        class="fill-height"
+                        :class="$vuetify.breakpoint.width < 414 ? 'pb-2' : ''"
+                        align="center"
+                    >
+                        <div
+                            :class="smallWidth ? 'text-subtitle' : 'text-h6'"
+                        >
+                            <v-btn
+                                icon
+                                tile
+                                class="rounded-lg"
+                                elevation="1"
+                                :large="!smallWidth && !xSmallWidth"
+                                :small="smallWidth || xSmallWidth"
+                                @click="decreasNumberOfGoodsInCart(productFromCart)"
+                            >
+                                <v-icon
+                                >
+                                    {{stocksInCart > 1 ? 'mdi-minus' : 'mdi-trash-can-outline'}}
+                                </v-icon>
+                            </v-btn>
+                            <span
+                                class="pa-2"
+                                :class="(smallWidth || xSmallWidth) ? 'pr-4 pl-4' : 'pr-6 pl-6'"
+                            >{{stocksInCart}}</span>
+
+                            <v-btn
+                                icon
+                                tile
+                                class="rounded-lg"
+                                elevation="1"
+                                :large="!smallWidth && !xSmallWidth"
+                                :small="smallWidth || xSmallWidth"
+
+                                @click="addToCart(product)"
+                            >
+                                <v-icon
+                                >
+                                    mdi-plus
+                                </v-icon>
+                            </v-btn>
+                        </div>
+                    </v-row>
+                 </div>
+
+                </v-row>
+                <v-col
+                    :cols="$vuetify.breakpoint.width < 414 ? 11 : 7"
+                >
+                    <v-row
+                        no-gutters
+                        align="center"
+                        justify="center"
+                        class="fill-height"
+                    >
+                        <v-btn
+                            :x-large="$vuetify.breakpoint.width > 620"
+
+                            class="rounded-xl font-weight-bold"
+                            :class="!smallWidth && !xSmallWidth ? 'pl-12 pr-12' : ''"
+                            color="#FED42B"
+                            :disabled="selectedStockIndex === null"
+                            block
+                            @click="stocksInCart ? setCartFlag(true) : addToCart()"
+                        >
+                        {{ stocksInCart ? 'Оформить заказ' : 'Добавить в корзину'}}
+                        </v-btn>
+                    </v-row>
+                </v-col>
+
+                <div v-if="!smallWidth && !xSmallWidth"></div>
             </v-row>
+            <div
+               :class="xSmallWidth ? 'text-caption pl-2' : smallWidth ? 'text-body pl-4' : 'text-h5 pl-4'"
+            >
+                <div class="pt-4 pb-3">
+                    <b>Доставка</b>
+                </div>
+                <div>
+                    <b>Москва и МО: </b>{{getSelectedGood.delivery.moscow}}
+                </div>
+                <div>
+                    <b>Санкт-Петербург и ЛО: </b>{{getSelectedGood.delivery.spb}}
+                </div>
+                <div>
+                    <b> Регионы: </b>{{getSelectedGood.delivery.region}}
+                </div>
+                <div>
+                   Стоимость доставки рассчитывается индивидуально
+                </div>
+            </div>
+
      </div>
     </v-card>
 </template>
 
 <script>
-    import {mapMutations} from 'vuex';
+    import {mapMutations, mapGetters, mapActions} from 'vuex';
 
     export default {
-        props: {
-            specifications: Array,
-            stocks: Array
-        },
-
         data() {
             return {
-                selectedStockIndex: null,
-                details: [
-                    'Оригинальная продукция',
-                    'Натуральные материалы',
-                    'Проверенное качество (ГОСТ)',
-                    'Гарантия 1 год',
-                    'Обмен/возврат 14 дней'
-                ],
-                specificationsValues: {
-                    'manufacturing_method': 'Способ изготовления',
-                    'quality': 'Качество1',
-                    'material': 'Материал',
-                    'collection': 'Коллекция',
-                    'form': 'Форма',
-                    'color_code': 'Код цвета',
-                    'design_code': 'Код дизайна',
-                    'country_of_manufacture': 'Страна производства',
-                    'quality2': 'Качество',
-                    'composition_code': 'Код состава',
-                    'density': 'Плотность',
-                    'weight': 'Вес',
-                    'pile_height': 'Высота ворса',
-                    'colour': 'Цвет',
-                    'style': 'Стиль'
-                }
+                selectedStockIndex: 0,
             }
         },
 
         computed: {
+            ...mapGetters(['getGoodsInTheCart', 'getSelectedGood']),
+            stocks() {
+                return this.getSelectedGood.product.stocks
+            },
+            selectedStock() {
+                return this.stocks[this.selectedStockIndex]
+            },
+
+            productForCart() {
+                return {
+                    good: this.getSelectedGood.product,
+                    stock: this.selectedStock
+                }
+            },
+
+            productFromCart() {
+                const id = `${this.getSelectedGood.product.id}_${this.selectedStock?.id}`
+                return this.getGoodsInTheCart[id]
+            },
+            stocksInCart() {
+                return this.productFromCart?.count || 0
+            },
+
             smallWidth() {
                 return this.$vuetify.breakpoint.width < 760 && this.$vuetify.breakpoint.width > 459;
             },
@@ -272,8 +285,7 @@
             },
 
             cardWidth() {
-                return this.xSmallWidth ? this.$vuetify.breakpoint.width - 50
-                : this.smallWidth ? '400' : '689'
+                return this.$vuetify.breakpoint.width < 1480 ? '' : '689'
             },
 
             cardHeight() {
@@ -289,7 +301,10 @@
 
         methods: {
             ...mapMutations(['setCartFlag']),
-
+            ...mapActions([
+                'addGoodToTheCart',
+                'decreasNumberOfGoodsInCart'
+            ]),
             addToCart() {
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
@@ -304,11 +319,7 @@
                     }
                 });
                 window.ym(88691177,'reachGoal','add_to_cart',window.dataLayer)
-                this.$emit('addToCart', this.stocks[this.selectedStockIndex])
-            },
-            addAndOrder() {
-                this.addToCart();
-                this.setCartFlag(true);
+                this.addGoodToTheCart(this.productForCart)
             }
         }
     }

@@ -12,8 +12,10 @@
             <v-icon color="cyan darken-1" >
                 mdi-map-marker-outline
             </v-icon>
-            <span>
-                Москва и МО
+            <span
+              style="max-width: 178px; white-space: nowrap;"
+            >
+                {{getLocation}}
             </span>
             <v-icon>
                 mdi-chevron-down
@@ -23,19 +25,44 @@
 
       <v-card
         width="300"
-        height="200"
+        height="120"
       >
-          select location
+          <v-list>
+            <v-list-item
+              @click="selectLocation('Москва и МО')"
+              link
+            >
+                Москва и МО
+            </v-list-item>
+            <v-list-item
+              link
+              @click="selectLocation('Санкт-Петербург и ЛО')"
+            >
+              Санкт-Петербург и ЛО
+            </v-list-item>
+          </v-list>
       </v-card>
     </v-dialog>
 </template>
 <script>
+  import {mapMutations, mapGetters} from 'vuex';
   export default {
     data () {
       return {
         dialog: false,
       }
     },
+    computed: {
+      ...mapGetters(['getLocation'])
+    },
+    methods: {
+      ...mapMutations(['setLocation']),
+
+      selectLocation(location) {
+        this.setLocation(location);
+        this.dialog = false
+      }
+    }
   }
 </script>
 

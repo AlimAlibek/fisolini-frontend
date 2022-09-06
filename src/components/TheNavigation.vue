@@ -48,7 +48,16 @@
         methods: {
           toPage(index) {
             this.currentTab = index;
-            this.$router.push(this.tabs[index].path);
+            const to = this.tabs[index].path
+            if (to === '/catalog') {
+              console.log(window.location)
+              window.location.href = `${window.location.origin}/catalog`
+              return;
+            }
+            if (this.$route.path === to) {
+              return;
+            }
+            this.$router.push(to);
             window.scrollTo(0, top);
           }
         },

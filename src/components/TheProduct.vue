@@ -2,21 +2,10 @@
 <div>
     <v-row
         no-gutters
-        class="pt-5"
-    >
-        <div
-            class="font-weight-bold"
-            :class="titleClass"
-        >
-            {{getSelectedGood.product.title}}
-        </div>
-    </v-row>
-    <v-row
-        no-gutters
     >
         <v-col
             :cols="imagesCols"
-            class="pa-6"
+            class="pa-6 pb-0"
         >
           <v-row
             no-gutters
@@ -28,38 +17,46 @@
           </v-row>
         </v-col>
         <v-col
-            class="pa-6"
+            :class="$vuetify.breakpoint.width < 760 ? 'pa-2 pt-1 pb-1' : 'pa-6'"
             :cols="detailsCols"
         >
           <v-row
             no-gutters
             :justify="detailsJustify"
           >
-            <ProductDetails
-                :specifications="getSelectedGood.product.specifications"
-                :stocks="getSelectedGood.product.stocks"
-                @addToCart="addToCart"
-            />
-          </v-row>
-        </v-col>
-        <v-col
-            :cols="reviewsCols"
-            class="pa-6"
-        >
-          <v-row
-            no-gutters
-          >
-            <h3 class="pb-2">Описание</h3>
-            {{getSelectedGood.product.description}}
+            <ProductDetails />
           </v-row>
         </v-col>
     </v-row>
-    <v-row
-        no-gutters
-        class="pb-4"
+    <v-container
+        style="max-width: 1490px"
     >
-        <TheReviews />
-    </v-row>
+
+        <v-row
+           no-gutters
+           class="mt-6"
+           :class="descriptionClass"
+        >
+           <div class="pb-2">
+              <b>Описание</b>
+           </div>
+           {{getSelectedGood.product.description}}
+        </v-row>
+        <v-row
+            no-gutters
+            class="mt-6"
+            :class="descriptionClass"
+        >
+            <ProductCharacteristics />
+        </v-row>
+        <v-row
+            no-gutters
+            class="mt-8 pb-4"
+            :class="descriptionClass"
+        >
+            <TheReviews />
+        </v-row>
+    </v-container>
     <v-row
         no-gutters
     >
@@ -88,6 +85,7 @@
     import ProductDetails from '@/components/ProductDetails.vue'
     import TheReviews from '@/components/TheReviews.vue'
     import ProductGroup from '@/components/ProductGroup.vue';
+    import ProductCharacteristics from '@/components/ProductCharacteristics.vue';
 
     export default {
         metaInfo() {
@@ -113,7 +111,8 @@
             ProductImages,
             ProductDetails,
             TheReviews,
-            ProductGroup
+            ProductGroup,
+            ProductCharacteristics
         },
 
         data() {
@@ -124,6 +123,12 @@
             ...mapGetters([
                 'getSelectedGood'
             ]),
+            smallWidth() {
+                return this.$vuetify.breakpoint.width < 760 && this.$vuetify.breakpoint.width > 459;
+            },
+            xSmallWidth() {
+                return this.$vuetify.breakpoint.width < 460;
+            },
 
             middleWidth() {
                 return this.$vuetify.breakpoint.width < 1480
@@ -133,29 +138,31 @@
             },
 
             titleClass() {
-                return this.largeWidth ? 'text-h3'
-                : this.$vuetify.breakpoint.width < 760 ? 'text-h6' : 'text-h4'
+                return this.$vuetify.breakpoint.width < 760 ? 'text-subtitle' : 'text-h5'
             },
 
             imagesCols() {
                 return this.$vuetify.breakpoint.width < 1480 ? '12' : '6'
             },
             detailsCols() {
-                return this.middleWidth && this.$vuetify.breakpoint.width > 1264 ? '8'
+                return this.middleWidth && this.$vuetify.breakpoint.width > 1264 ? '12'
                 : this.largeWidth ? '5' : '12'
             },
             detailsJustify () {
-                return this.middleWidth && this.$vuetify.breakpoint.width > 1264 ? 'end'
-                :  this.$vuetify.breakpoint.width > 1479 ? 'start' : 'center'
+                return  this.$vuetify.breakpoint.width > 1479 ? 'start' : 'center'
             },
             reviewsCols() {
-                return this.middleWidth && this.$vuetify.breakpoint.width > 1264 ? '4' : '12'
+                return this.middleWidth && this.$vuetify.breakpoint.width > 1479 ? '4' : '12'
             },
 
             similarGoods() {
                 return this.getSelectedGood.similar.slice(0,
                   this.$vuetify.breakpoint.width < 1264 ? 6 : this.$vuetify.breakpoint.width < 1904 ? 6 : 8
                 )
+            },
+
+            descriptionClass() {
+                return this.xSmallWidth ? 'text-caption' : this.smallWidth ? 'text-body' : 'text-h5'
             }
         },
 

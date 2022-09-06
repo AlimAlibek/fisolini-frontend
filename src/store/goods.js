@@ -268,7 +268,7 @@ export const goods = {
                     ...payload, count, price
                 })
             } else {
-                ctx.commit('removeGoodFromCart', payload)
+                ctx.commit('removeGoodFromTheCart', payload)
             }
         },
 

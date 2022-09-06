@@ -281,34 +281,6 @@
                     path: '/reviews'
                 },
             ],
-
-            filters: [
-              {
-                title: 'Цвет',
-                value: 'color',
-                items: ['green', 'yellow']
-              },
-              {
-                title: 'Модель',
-                value: 'model',
-                items: ['large', 'middle', 'small']
-              },
-              {
-                title: 'Модель',
-                value: 'model',
-                items: ['large', 'middle', 'small']
-              },
-              {
-                title: 'Модель',
-                value: 'model',
-                items: ['large', 'middle', 'small']
-              },
-              {
-                title: 'Модель',
-                value: 'model',
-                items: ['large', 'middle', 'small']
-              },
-            ]
           }
         },
 
