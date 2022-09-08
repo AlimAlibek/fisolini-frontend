@@ -14,6 +14,7 @@
     elevate-on-scroll
     height="190"
     color="#F8F8F8"
+    hide-on-scroll
   >
   <div
     class="header-wrapper"

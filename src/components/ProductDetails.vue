@@ -132,19 +132,19 @@
                     >
                         <span
                          class="font-weight-bold"
-                         :class="xSmallWidth ? 'text-body' : smallWidth ? 'text-h5' : 'text-h4'"
+                         :class="$vuetify.breakpoint.width < 620 ? 'text-body' : smallWidth ? 'text-h5' : 'text-h4'"
                         >
                          {{ Number(selectedStock.price).toLocaleString()}}&#8381;
                         </span>
-                        <span
-                          :class="xSmallWidth ? 'text-caption pl-2' : smallWidth ? 'text-subtitle-2 pl-2' : 'text-h6 pl-4'"
-                        >за {{selectedStock.size.split('x').map(size => (+size + 0).toFixed(1)).join('x')}}</span>
+                        <!-- <span
+                          :class="$vuetify.breakpoint.width < 620  ? 'text-caption pl-2' : smallWidth ? 'text-subtitle-2 pl-2' : 'text-h6 pl-4'"
+                        >за {{selectedStock.size.split('x').map(size => (+size + 0).toFixed(1)).join('x')}}</span> -->
                     </v-row>
                     <v-row
                         v-else
                         no-gutters
                         class="fill-height"
-                        :class="$vuetify.breakpoint.width < 414 ? 'pb-2' : ''"
+                        :class="$vuetify.breakpoint.width < 360 ? 'pb-2' : ''"
                         align="center"
                     >
                         <div
@@ -190,7 +190,7 @@
 
                 </v-row>
                 <v-col
-                    :cols="$vuetify.breakpoint.width < 414 ? 11 : 7"
+                    :cols="$vuetify.breakpoint.width < 360 ? 11 : 7"
                 >
                     <v-row
                         no-gutters
