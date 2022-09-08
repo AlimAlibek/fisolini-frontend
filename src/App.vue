@@ -1,6 +1,9 @@
 <template>
   <v-app>
     <TheHeader />
+    <CartDrawer
+      v-if="desktopCart"
+    />
 
     <v-main :style="mainPadding">
       <router-view></router-view>
@@ -15,13 +18,15 @@ import {mapActions} from 'vuex';
 
 import TheHeader from '@/components/TheHeader';
 import TheFooter from '@/components/TheFooter';
+import CartDrawer from '@/components/CartDrawer';
 
 export default {
   name: 'App',
 
   components: {
     TheHeader,
-    TheFooter
+    TheFooter,
+    CartDrawer
   },
 
         data() {
@@ -53,6 +58,9 @@ export default {
         computed: {
           mainPadding() {
             return this.$vuetify.breakpoint.width < 1195 ? 'padding-top: 40px' : 'padding-top: 175px'
+          },
+          desktopCart() {
+            return this.$vuetify.breakpoint.width > 1195
           }
         },
 

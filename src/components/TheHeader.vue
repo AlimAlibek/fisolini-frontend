@@ -204,25 +204,6 @@
         />
       </v-row>
     </v-navigation-drawer>
-    <v-navigation-drawer
-      v-model="isCartShown"
-      app
-      width="650"
-      right
-      absolute
-      temporary
-      @input="cartMenuChange"
-    >
-      <v-row
-        class="pa-7"
-        justify="space-between"
-        align="center"
-      >
-        <h1>Корзина</h1>
-      </v-row>
-      <v-divider></v-divider>
-      <TheCart />
-    </v-navigation-drawer>
   </v-app-bar>
 </v-card>
 <OrderConfirm />
@@ -239,7 +220,6 @@
     import TheNavigation from '@/components/TheNavigation.vue';
 
     import TheAccount from '@/components/TheAccount.vue';
-    import TheCart from '@/components/TheCart.vue';
     import OrderConfirm from '@/components/OrderConfirm.vue';
 
     import TheFilters from '@/components/TheFilters.vue';
@@ -254,7 +234,6 @@
           TheNavigation,
 
           TheAccount,
-          TheCart,
           OrderConfirm,
 
           TheFilters
@@ -288,7 +267,6 @@
         computed: {
           ...mapGetters([
             'getAmountOfGoodsInTheCart',
-            'isCartShown'
           ]),
 
           screenWidth() {
@@ -341,10 +319,6 @@
         methods: {
           ...mapActions(['loadFilterEntities']),
           ...mapMutations(['setCartFlag']),
-
-          cartMenuChange(boolean) {
-            this.setCartFlag(boolean)
-          }
         },
 
         mounted() {

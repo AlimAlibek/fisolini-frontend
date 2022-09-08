@@ -364,7 +364,7 @@
         return this.$route.path === '/' || this.$route.path === '/product' || this.$route.path === '/catalog'
       },
       bottomDrawerHeight() {
-        return this.$vuetify.breakpoint.height - 100;
+        return this.$vuetify.breakpoint.height
       },
 
       filtersButtonWidth() {

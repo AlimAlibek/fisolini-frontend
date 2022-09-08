@@ -132,7 +132,7 @@
                     >
                         <span
                          class="font-weight-bold"
-                         :class="$vuetify.breakpoint.width < 620 ? 'text-body' : smallWidth ? 'text-h5' : 'text-h4'"
+                         :class="$vuetify.breakpoint.width < 620 ? 'text-h5' : 'text-h4'"
                         >
                          {{ Number(selectedStock.price).toLocaleString()}}&#8381;
                         </span>
@@ -155,8 +155,7 @@
                                 tile
                                 class="rounded-lg"
                                 elevation="1"
-                                :large="!smallWidth && !xSmallWidth"
-                                :small="smallWidth || xSmallWidth"
+                                :x-large="$vuetify.breakpoint.width > 620"
                                 @click="decreasNumberOfGoodsInCart(productFromCart)"
                             >
                                 <v-icon
@@ -165,8 +164,9 @@
                                 </v-icon>
                             </v-btn>
                             <span
-                                class="pa-2"
-                                :class="(smallWidth || xSmallWidth) ? 'pr-4 pl-4' : 'pr-6 pl-6'"
+                                class="pa-2 font-weight-bold"
+
+                                :class="$vuetify.breakpoint.width < 620 ? 'pr-4 pl-4' : 'text-h5 pr-6 pl-6'"
                             >{{stocksInCart}}</span>
 
                             <v-btn
@@ -174,10 +174,8 @@
                                 tile
                                 class="rounded-lg"
                                 elevation="1"
-                                :large="!smallWidth && !xSmallWidth"
-                                :small="smallWidth || xSmallWidth"
-
-                                @click="addToCart(product)"
+                                :x-large="$vuetify.breakpoint.width > 620"
+                                @click="addToCart()"
                             >
                                 <v-icon
                                 >
