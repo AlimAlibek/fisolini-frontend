@@ -139,7 +139,10 @@ export default {
                     "ecommerce": {
                         "currencyCode": "RUB",
                         "purchase": {
-                            "_name": "purchase",
+                            "actionField": {
+                                "id" :"purcash",
+                                "goal_id" : 235732855
+                            },
                             "products":products //тут нужно передать в массиве (id Товара, имя, цену и количество)
                         }
                     }
