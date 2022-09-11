@@ -2,6 +2,7 @@
     <v-dialog
         v-if="currentOrder"
         :value="currentOrder"
+        persistent
         max-width="500"
     >
         <v-card

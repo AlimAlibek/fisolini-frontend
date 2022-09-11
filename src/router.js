@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-//import store from './store/store.js';
+import store from './store/index.js';
 
 Vue.use(Router);
 
@@ -87,6 +87,13 @@ let router = new Router({
             }
         },
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.query.InvId && to.query.OutSum && to.query.SignatureValue) {
+        store.commit('setCurrentOrder', to.query.InvId);
+    }
+    next()
 })
 
 // router.beforeEach((to, from, next) => {

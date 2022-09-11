@@ -126,17 +126,19 @@ export const goods = {
             localStorage.removeItem('goodsInTheCart')
         },
 
-        addOrder(state, data) {
-            const orders = {...state.orders, [data.number]: data.goods}
-            state.orders = orders;
-            localStorage.setItem('orders', JSON.stringify(orders));
-        },
+        // addOrder(state, data) {
+        //     const orders = {...state.orders, [data.number]: data.goods}
+        //     state.orders = orders;
+        //     localStorage.setItem('orders', JSON.stringify(orders));
+        // },
 
         setCurrentOrder(state, number) {
             state.currentOrder = number
         },
         confirmOrder(state) {
             state.currentOrder = null
+            this.commit('clearCart');
+            router.push(router.history.current.path);
         },
 
         setFilters(state, {category, value, show}) {
@@ -286,21 +288,22 @@ export const goods = {
                 products[good.stock.id] = good.count;
             })
             try {
-                const res = await axios.post('order/create', {
+                const orderInfo = await axios.post('order/create', {
                     name: payload.name,
                     phone: payload.phone,
                     products
                 },{
                     headers: requestHeaders
                 });
-                await ctx.commit('addOrder', {
-                    number: res.data.data.id,
-                    goods: ctx.getters.getGoodsInTheCart
-                });
-                ctx.commit('setCurrentOrder', res.data.data.id)
-                await ctx.commit('clearCart');
+
+                const paymentInfo = await axios.get(`order/${orderInfo.data.data.id}`);
+
+                if (paymentInfo) {
+                    window.location.replace(paymentInfo.data.data.url);
+                }
 
             } catch(err) {
+                ctx.commit('setError', 'Что то пошло не так, попробуйте снова')
                 console.log({err})
             }
         },

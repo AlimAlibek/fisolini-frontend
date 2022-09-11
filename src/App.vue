@@ -4,6 +4,7 @@
     <CartDrawer
       v-if="desktopCart"
     />
+    <ErrorMessage />
 
     <v-main :style="mainPadding">
       <router-view></router-view>
@@ -19,6 +20,7 @@ import {mapActions} from 'vuex';
 import TheHeader from '@/components/TheHeader';
 import TheFooter from '@/components/TheFooter';
 import CartDrawer from '@/components/CartDrawer';
+import ErrorMessage from '@/components/ErrorMessage.vue';
 
 export default {
   name: 'App',
@@ -26,7 +28,8 @@ export default {
   components: {
     TheHeader,
     TheFooter,
-    CartDrawer
+    CartDrawer,
+    ErrorMessage
   },
 
         data() {

@@ -120,9 +120,9 @@ export default {
                 return;
             }
 
-            var products = []         
+            var products = []
 
-            Object.values(this.$store.getters['getGoodsInTheCart']).forEach(good => { 
+            Object.values(this.$store.getters['getGoodsInTheCart']).forEach(good => {
                 var productsW = {}
                 productsW["id"] ='' + good.stock.id;
                 productsW["price"] = '' + good.stock.price;
@@ -133,7 +133,7 @@ export default {
                 products.push(productsW);
                 console.log(good)
             })
-            
+
              window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     "ecommerce": {
