@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import store from './store/index.js';
+// import store from './store/index.js';
 
 Vue.use(Router);
 
@@ -86,15 +86,23 @@ let router = new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/pay/:id',
+            name: 'pay',
+            component: () => import('./views/Pay.vue'),
+            meta: {
+                requiresAuth: true
+            },
+        },
     ]
 })
 
-router.beforeEach((to, from, next) => {
-    if (to.query.InvId && to.query.OutSum && to.query.SignatureValue) {
-        store.commit('setCurrentOrder', to.query.InvId);
-    }
-    next()
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.query.InvId && to.query.OutSum && to.query.SignatureValue) {
+//         store.commit('setCurrentOrder', to.query.InvId);
+//     }
+//     next()
+// })
 
 // router.beforeEach((to, from, next) => {
 //     if (to.matched.some(record => record.meta.requiresAuth)) {

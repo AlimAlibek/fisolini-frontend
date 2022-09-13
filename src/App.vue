@@ -5,6 +5,7 @@
       v-if="desktopCart"
     />
     <ErrorMessage />
+    <MainLoading />
 
     <v-main :style="mainPadding">
       <router-view></router-view>
@@ -21,6 +22,7 @@ import TheHeader from '@/components/TheHeader';
 import TheFooter from '@/components/TheFooter';
 import CartDrawer from '@/components/CartDrawer';
 import ErrorMessage from '@/components/ErrorMessage.vue';
+import MainLoading from '@/components/MainLoading.vue';
 
 export default {
   name: 'App',
@@ -29,7 +31,8 @@ export default {
     TheHeader,
     TheFooter,
     CartDrawer,
-    ErrorMessage
+    ErrorMessage,
+    MainLoading
   },
 
         data() {

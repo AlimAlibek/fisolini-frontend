@@ -3,6 +3,7 @@ export const app = {
         cart: false,
         location: localStorage.getItem('location') || 'Москва и МО',
         error: "",
+        mainLoading: false,
     }),
 
     mutations: {
@@ -21,11 +22,16 @@ export const app = {
                 state.error = ""
             }, 7000)
         },
+
+        setMainLoadingFlag(state, boolean) {
+            state.mainLoading = boolean
+        },
     },
 
     getters: {
         isCartShown: state => state.cart,
         getLocation: state => state.location,
-        getError: state => state.error
+        getError: state => state.error,
+        isMainLoading: state => state.mainLoading
     }
 }

@@ -138,7 +138,7 @@ export const goods = {
         confirmOrder(state) {
             state.currentOrder = null
             this.commit('clearCart');
-            router.push(router.history.current.path);
+            // router.push(router.history.current.path);
         },
 
         setFilters(state, {category, value, show}) {
@@ -283,6 +283,8 @@ export const goods = {
         },
 
         async createOrder(ctx, payload) {
+
+            ctx.commit('setMainLoadingFlag', true)
             const products = {}
             Object.values(ctx.getters.getGoodsInTheCart).forEach(good => {
                 products[good.stock.id] = good.count;
@@ -296,16 +298,19 @@ export const goods = {
                     headers: requestHeaders
                 });
 
-                const paymentInfo = await axios.get(`order/${orderInfo.data.data.id}`);
+                // const paymentInfo = await axios.get(`order/${orderInfo.data.data.id}`);
 
-                if (paymentInfo) {
-                    window.location.replace(paymentInfo.data.data.url);
-                }
+                // if (paymentInfo) {
+                //     window.location.replace(paymentInfo.data.data.url);
+                // }
+                ctx.commit('setCurrentOrder', orderInfo.data.data.id)
 
             } catch(err) {
                 ctx.commit('setError', 'Что то пошло не так, попробуйте снова')
                 console.log({err})
             }
+
+            ctx.commit('setMainLoadingFlag', false);
         },
 
         async resetFilters(ctx) {
