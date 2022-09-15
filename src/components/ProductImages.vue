@@ -45,7 +45,6 @@
         >
             <v-carousel
                 v-model="currentImageIndex"
-                :show-arrows="false"
                 :height="xSmallWidth ? '400' : '519'"
             >
                 <v-carousel-item

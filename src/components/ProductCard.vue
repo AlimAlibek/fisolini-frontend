@@ -19,30 +19,42 @@
       >
         <v-carousel
           v-model="currentImage"
-          :show-arrows="!small"
+          :show-arrows="images.length > 1"
           :show-arrows-on-hover="!small"
           :height="horizontal ? cardHeight : cardWidth"
           hide-delimiters
         >
             <template v-slot:prev="{ on, attrs }">
-              <v-btn
-                icon
-                v-bind="attrs"
-                v-on="on"
-                :small="small"
+              <span
+                :style="small ? 'width: 0px; height: 0px; position: relative' : ''"
               >
-                <v-icon :large="!small">mdi-chevron-left</v-icon>
-              </v-btn>
+                <v-btn
+                  icon
+                  v-bind="attrs"
+                  v-on="on"
+                  :small="small"
+                  :style="small ? 'position: absolute; left: -20px' : ''"
+                >
+                  <v-icon :large="!small">mdi-chevron-left</v-icon>
+                </v-btn>
+              </span>
             </template>
-            <template v-slot:next="{ on, attrs }">
-              <v-btn
-                icon
-                v-bind="attrs"
-                v-on.stop="on"
-                :small="small"
+            <template
+              v-slot:next="{ on, attrs }"
+            >
+              <span
+                :style="small ? 'width: 0px; height: 0px; position: relative' : ''"
               >
-                <v-icon :large="!small">mdi-chevron-right</v-icon>
-              </v-btn>
+                <v-btn
+                  icon
+                  v-bind="attrs"
+                  v-on.stop="on"
+                  :small="small"
+                  :style="small ? 'position: absolute; right: -20px' : ''"
+                >
+                  <v-icon :large="!small">mdi-chevron-right</v-icon>
+                </v-btn>
+              </span>
             </template>
           <v-carousel-item
             v-for="(item,i) in images"
@@ -256,4 +268,5 @@
     align-items: flex-start;
     justify-content: center;
   }
+
 </style>
