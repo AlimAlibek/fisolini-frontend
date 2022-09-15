@@ -12,9 +12,10 @@
     app
     clipped-left
     elevate-on-scroll
-    height="190"
+    height="180"
     color="#F8F8F8"
     hide-on-scroll
+    class="pt-3"
   >
   <div
     class="header-wrapper"
@@ -330,7 +331,6 @@
 <style scoped>
   .header-wrapper {
     margin: 0 auto;
-    padding-top: 20px;
   }
   .header-nav {
     display: flex;

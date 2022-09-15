@@ -49,7 +49,7 @@
               flat
             >
               <v-list-item-group
-                v-model="selectedValues"
+                :value="selectedValues"
                 multiple
                 @change="selectValue"
               >
@@ -80,14 +80,15 @@
       </v-row>
     </div>
     <v-row
+      no-gutters
       v-else
       align="end"
+      class="pt-6"
     >
       <v-sheet
         max-width="1480"
         :width="width"
-        height="50"
-        class="mt-6"
+        height="40"
         color="#f8f8f8"
       >
         <v-slide-group
@@ -99,30 +100,76 @@
             :key="category"
             class="filter"
           >
-            <v-select
-              v-model="getFilters[category]"
-              :label="filterValues[category]"
-              :items="values.map(v => v[category])"
-              multiple
-              color="black"
-              item-color="#1FAFAB"
-              hide-details
-              class="mt-3 mb-1"
-              @focus="selectCategory(i)"
-              @change="selectValue"
+            <v-menu
+              offset-y
+              :close-on-content-click="false"
             >
-              <template v-slot:selection="{item, index}">
-                <v-badge
-                  :value="index === 1"
-                  :content="`+${getFilters[category].length - 1}`"
-                  color="#009688"
-                >
-                  <v-chip v-if="index === 0">
-                    <span>{{ item }}</span>
-                  </v-chip>
-                </v-badge>
+              <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    depressed
+                    color="#f8f8f8"
+                    height="40"
+                    class="pr-1 pt-1 mr-1"
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="selectCategory(i)"
+                  >
+                      <v-badge
+                        offset-x="12"
+                        offset-y="10"
+                        :value="getFilters[category].length > 0"
+                        :content="getFilters[category].length"
+                        color="#1FAFAB"
+                      >
+                        {{filterValues[category]}}
+                        <span
+                          style="margin-left: -7px"
+                        >
+                          <v-icon>
+                            mdi-chevron-{{attrs['aria-expanded'] === 'true' ? 'up' : 'down'}}
+                          </v-icon>
+                        </span>
+                      </v-badge>
+                  </v-btn>
               </template>
-            </v-select>
+                <v-card
+                  v-if="categoryIndex === i"
+                  width="240"
+                  height="300"
+                >
+                  <v-list
+                    elevation="0"
+                    flat
+                  >
+                    <v-list-item-group
+                      :value="selectedValues"
+                      multiple
+                      @change="selectValue"
+                    >
+                      <v-list-item
+                        v-for="item in values"
+                        :key="item[category]"
+                        :value="item[category]"
+                      >
+                        <template v-slot:default="{ active }">
+                          <v-list-item-action
+                            class="mr-2"
+                          >
+                            <v-checkbox
+                              :input-value="active"
+                              color="#1FAFAB"
+                            ></v-checkbox>
+                          </v-list-item-action>
+
+                          <v-list-item-content>
+                            <v-list-item-title>{{ item[category] }}</v-list-item-title>
+                          </v-list-item-content>
+                        </template>
+                      </v-list-item>
+                    </v-list-item-group>
+                  </v-list>
+                </v-card>
+            </v-menu>
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
