@@ -159,7 +159,7 @@
 
             similarGoods() {
                 return this.getSelectedGood.similar.slice(0,
-                  this.$vuetify.breakpoint.width < 1264 ? 6 : this.$vuetify.breakpoint.width < 1904 ? 6 : 8
+                  this.$vuetify.breakpoint.width < 1264 ? 20 : this.$vuetify.breakpoint.width < 1904 ? 20 : 20
                 )
             },
 
