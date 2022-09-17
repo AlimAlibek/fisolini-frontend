@@ -11,30 +11,57 @@
         <div class="feedback-title"> ОБРАТНАЯ СВЯЗЬ </div>
 
         <div class="feedback-number" >
-          
-          <template v-if="mobile">
-              <v-btn icon x-large>
-                <a v-bind:href="'https://wa.me/79964183776'" target="_blank" style="color: #000000;text-decoration: none;">
-                <v-icon
-                color="#277A0E"
-                :size="mobile ? 50 : 24"
-            >
-                mdi-whatsapp
-            </v-icon>
-                </a>
-              </v-btn> 
-              
-              <v-btn icon x-large>
-                <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">
-                <img :src="callIcon"/>
-                </a>
-              </v-btn>
 
-              <v-btn icon x-large>
-                  <a v-bind:href="'mailto:info@fisolini.ru'" target="_blank" style="color: #000000;text-decoration: none;">
-                  <img :src="messageIcon"/>
-                  </a>
-              </v-btn>
+          <template v-if="mobile">
+
+            <v-list
+                class="pa-0"
+                color="rgba(0, 0, 0, 0)"
+                :max-width="$vuetify.breakpoint.width*0.9"
+            >
+                <div
+                    class="text-subtitle-1 text-left font-weight-medium"
+                >
+                    Если у вас есть вопросы, можете связаться с нами через:
+                </div>
+                <v-list-item
+                    v-for="(contact, i) in contacts"
+                    :key="i"
+                    link
+                    class="pl-0"
+                    :href="contact.href"
+                    target="_blank"
+                >
+                    <v-list-item-avatar
+                        :size="contact.icon.mdi ? 45 : 38"
+                        :class="contact.icon.mdi ? 'mr-1' : 'mr-2 ml-1'"
+                    >
+                        <v-icon
+                            v-if="contact.icon.mdi"
+                            :color="contact.icon.color"
+                            size="40"
+                        >
+                            {{contact.icon.mdi}}
+                        </v-icon>
+                        <img
+                            v-else
+                            :src="contact.icon.src"
+                        />
+                    </v-list-item-avatar>
+                    <v-list-item-content
+                        class="text-left"
+                    >
+                        <v-list-item-title>
+                            {{contact.number}}
+                        </v-list-item-title>
+                        <v-list-item-subtitle
+                            class="text-wrap"
+                        >
+                            {{contact.responseTime}}
+                        </v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
           </template>
 
           <span v-else>
@@ -47,7 +74,6 @@
             </a>
           </v-btn>
             <a v-bind:href="'tel:+74951515705'" target="_blank" style="color: #000000;text-decoration: none;">+7(495)151-57-05 </a>
-             
           </span>
         </div>
 
@@ -57,7 +83,7 @@
         </div>
 
 
-        <div class="feedback-social" >
+        <!-- <div class="feedback-social" >
             <span
                 v-for="(item, i) in socialMedia"
                 :key="i"
@@ -71,15 +97,16 @@
                     <img  :src="item.icon()" />
                 </v-btn>
             </span>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
-import vkontakteIcon from '@/assets/icons/vkontakte.svg'
-import telegramIcon from '@/assets/icons/telegram.svg'
-import youtubeIcon from '@/assets/icons/youtube.svg'
-import odnoklassnikiIcon from '@/assets/icons/odnoklassniki.svg'
+// import vkontakteIcon from '@/assets/icons/vkontakte.svg'
+// import telegramIcon from '@/assets/icons/telegram.svg'
+import telegramBlueIcon from '@/assets/icons/telegram_blue.png'
+// import youtubeIcon from '@/assets/icons/youtube.svg'
+// import odnoklassnikiIcon from '@/assets/icons/odnoklassniki.svg'
 import messageIcon from '@/assets/icons/message.png'
 import callIcon from '@/assets/icons/call.png'
 import phoneIcon from '@/assets/icons/phone.png'
@@ -91,7 +118,7 @@ export default {
     props: {
         phoneNumber: {
             type: String,
-            default: '+7(888)-888-37-76'
+            default: '+7(495)151-57-05'
         },
         VKontakteUrl: String,
         TelegramUrl: String,
@@ -106,28 +133,55 @@ export default {
 
     data() {
       return {
-        socialMedia: [
+        contacts: [
             {
-                title: 'ВКонтакте',
-                icon: () => vkontakteIcon,
-                path: this.VKontakteUrl || '#'
+                number: '8-996-418-37-76',
+                responseTime: '(Ответим в течении 5 минут)',
+                icon: {mdi: 'mdi-whatsapp', color: '#277A0E'},
+                href: 'https://wa.me/79964183776'
             },
             {
-                title: 'Телеграм',
-                icon: () => telegramIcon,
-                path: this.TelegramUrl || '#'
+                number: '8-993-338-37-76',
+                responseTime: '(Ответим в течении 5 минут)',
+                icon: {src: telegramBlueIcon},
+                href: 'https://t.me/trell_way'
             },
             {
-                title: 'Youtube',
-                icon: () => youtubeIcon,
-                path: this.YoutubeUrl || '#'
+                number: '8-495-15-15-705',
+                responseTime: '(Ответим в течении 3 минут)',
+                icon: {src: callIcon},
+                href: 'tel:+74951515705'
             },
             {
-                title: 'Одноклассники',
-                icon: () => odnoklassnikiIcon,
-                path: this.OdnoklassnikiUrl || '#'
+                number: 'info@fisolini.ru',
+                responseTime: '(Отдел продаж ответят в течении 1 часа)',
+                icon: {src: messageIcon},
+                href: 'mailto:info@fisolini.ru'
             },
+
         ],
+        // socialMedia: [
+        //     {
+        //         title: 'ВКонтакте',
+        //         icon: () => vkontakteIcon,
+        //         path: this.VKontakteUrl || '#'
+        //     },
+        //     {
+        //         title: 'Телеграм',
+        //         icon: () => telegramIcon,
+        //         path: this.TelegramUrl || '#'
+        //     },
+        //     {
+        //         title: 'Youtube',
+        //         icon: () => youtubeIcon,
+        //         path: this.YoutubeUrl || '#'
+        //     },
+        //     {
+        //         title: 'Одноклассники',
+        //         icon: () => odnoklassnikiIcon,
+        //         path: this.OdnoklassnikiUrl || '#'
+        //     },
+        // ],
       }
     },
 
@@ -160,7 +214,7 @@ export default {
         font-weight: 400;
         font-size: 20px;
         line-height: 23px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         display: flex;
     }
 

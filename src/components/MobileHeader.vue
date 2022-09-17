@@ -140,13 +140,16 @@
       <template
         v-slot:append
       >
-        <v-row
-          class="pl-7 pr-5 pb-12 mb-12"
-        >
-          <FeedbackInfo
-            mobile
-          />
-        </v-row>
+         <v-card
+           elevation="0"
+           :max-height="$vuetify.breakpoint.height/2.2"
+           class="overflow-auto pa-2"
+         >
+            <FeedbackInfo
+              mobile
+            />
+            <v-sheet height="120"></v-sheet>
+         </v-card>
       </template>
     </v-navigation-drawer>
 
