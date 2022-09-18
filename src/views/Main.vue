@@ -13,13 +13,23 @@
             title="Скидки от производителей ковров"
             subtitle="Акции от мировых брендов"
         />
-        <v-progress-linear
-          v-if="isPopularLoading"
-          color="rgb(31 175 170)"
-          indeterminate
-          rounded
-          height="4"
-        ></v-progress-linear>
+        <v-sheet
+           v-if="isPopularLoading"
+           height="500"
+        >
+          <v-row
+            no-gutters
+            class="fill-height"
+            align="center"
+          >
+            <v-progress-linear
+              color="rgb(31 175 170)"
+              indeterminate
+              rounded
+              height="4"
+            ></v-progress-linear>
+          </v-row>
+        </v-sheet>
         <ProductGroup
             v-else
             :products="getPromo"
@@ -31,13 +41,23 @@
             title="Популярные товары"
             subtitle="Ковры которые покупают чаще всего"
         />
-        <v-progress-linear
-          v-if="isPopularLoading"
-          color="rgb(31 175 170)"
-          indeterminate
-          rounded
-          height="4"
-        ></v-progress-linear>
+        <v-sheet
+           v-if="isPopularLoading"
+           height="500"
+        >
+          <v-row
+            no-gutters
+            class="fill-height"
+            align="center"
+          >
+            <v-progress-linear
+              color="rgb(31 175 170)"
+              indeterminate
+              rounded
+              height="4"
+            ></v-progress-linear>
+          </v-row>
+        </v-sheet>
         <ProductGroup
             v-else
             :products="getPopular"
@@ -49,13 +69,23 @@
             title="Новинки"
             subtitle="Самые новые предложения"
         />
-        <v-progress-linear
-          v-if="isPopularLoading"
-          color="rgb(31 175 170)"
-          indeterminate
-          rounded
-          height="4"
-        ></v-progress-linear>
+        <v-sheet
+           v-if="isPopularLoading"
+           height="500"
+        >
+          <v-row
+            no-gutters
+            class="fill-height"
+            align="center"
+          >
+            <v-progress-linear
+              color="rgb(31 175 170)"
+              indeterminate
+              rounded
+              height="4"
+            ></v-progress-linear>
+          </v-row>
+        </v-sheet>
         <ProductGroup
             v-else
             :products="getNovelties"
@@ -129,10 +159,13 @@ import PlacementTips from '@/components/PlacementTips.vue';
     },
 
     async mounted() {
-        await this.loadPopularGoods();
-        this.loadMorePopular();
-        this.loadMorePromo();
-        this.loadMoreNovelties();
+        if (!this.getPopular.length) {
+            scrollTo(0, 0)
+            await this.loadPopularGoods();
+            this.loadMorePopular();
+            this.loadMorePromo();
+            this.loadMoreNovelties();
+        }
     }
  }
 </script>
