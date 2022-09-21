@@ -1,229 +1,155 @@
 <template>
-  <v-footer>
-    <v-container
-      fluid
-      style="max-width: 1800px"
-      class="pl-5 pr-5 pb-12 mb-6"
-    >
-      <v-row
-        class="pt-6"
-      >
-        <v-col
-          order-lg="1"
-          order-md="3"
-          order-sm="4"
-          order="4"
-
-          lg="3"
-          md="6"
-          sm="12"
-          cols="12"
+    <v-footer>
+        <v-container
+            class="mb-12"
         >
-          <v-row
-            justify-lg="center"
-            justify-md="start"
-            justify-sm="center"
-            justify="center"
-            :class="{'mb-6': !smallWidth, 'mb-3': smallWidth}"
-          >
-            <div class="footer-logo">
-              <a v-bind:href="'/'" >
-                <v-img
-                  :src="require('../assets/Fisolini_Logo.svg')"
-                  contain
-                />
-              </a>
-            </div>
-          </v-row>
-          <v-row
-            justify-lg="center"
-            justify-md="start"
-            justify-sm="center"
-            justify="center"
-          >
-            <div class="font-weight-bold text-h6">
-              <v-icon class="mb-1">mdi-alpha-c-circle-outline</v-icon>
-              Все права защищены. fisolini.ru
-            </div>
-          </v-row>
-        </v-col>
-
-        <v-col
-          order-lg="2"
-          order-md="1"
-          order-sm="1"
-          order="1"
-
-          lg="4"
-          md="8"
-          sm="12"
-          cols="12"
-        >
-          <v-row
-            justify-md="start"
-            justify-sm="center"
-            justify="center"
-            :class="{'mb-1': !smallWidth}"
-            class="pl-3"
-          >
             <div
-              class="font-weight-bold text-h6"
-            >ИНТЕРНЕТ МАГАЗИН</div>
-          </v-row>
-          <v-row
-            justify-md="start"
-            justify-sm="center"
-            justify="center"
-          >
-            <v-col
-              order="2"
-              order-sm="1"
-              xl="5"
-              lg="7"
-              md="5"
-              sm="5"
-              cols="8"
-              :class="{'pt-0': xSmallWidth}"
+                class="wrapper"
+                :class="wrapperStyle"
             >
-             <v-row
-              justify-md="start"
-              justify-sm="end"
-              justify="center"
-              no-gutters
-             >
-             <a v-bind:href="'/publicoffer'" >
-              <div
-                class="font-weight-medium text-h6 pb-2 link"
-              > Публичная оферта</div>
-              </a>
-              <a v-bind:href="'/payment'">
                 <div
-                  class="font-weight-medium text-h6 pb-2 link"
-                > Доставка и оплата</div>
-              </a>
-              <a v-bind:href="'/guarantee'">
+                    class="box1"
+                    :class="$vuetify.breakpoint.width < 940 ? 'd-flex flex-column align-center' : ''"
+                >
+                    <v-list
+                        color="#00000000"
+                        max-width="290"
+                    >
+                        <v-list-item
+                            class="pa-0"
+                            href="/"
+                        >
+                            <v-img
+                                max-width="290"
+                                :src="require('../assets/Fisolini_Logo.svg')"
+                                contain
+                            />
+                        </v-list-item>
+                    </v-list>
+                    <div class="text-subtitle-1 font-weight-bold">
+                        © Все права защищены. fisolini.ru
+                    </div>
+
+                </div>
                 <div
-                  class="font-weight-medium text-h6 pb-2 link"
-                > Гарантия и возврат</div>
-              </a>
-             </v-row>
-            </v-col>
+                    class="box2"
+                >
+                    <v-row
+                        no-gutters
+                    >
+                        <div
+                            class="text-h6 text-uppercase font-weight-bold pl-4 mb-3"
+                        >
+                           Интернет магазин
+                        </div>
+                    </v-row>
+                    <v-row
+                        no-gutters
+                    >
+                        <v-col>
+                            <v-list
+                                color="rgba(0, 0, 0, 0)"
+                                dense
+                                class="pa-0"
+                                min-width="200"
+                            >
+                                <v-list-item
+                                    link
+                                    href="/publicoffer"
+                                >
+                                    <v-list-item-content>
+                                        Публичная оферта
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item
+                                    link
+                                    href="/payment"
+                                >
+                                    <v-list-item-content>
+                                        Доставка и оплата
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item
+                                    link
+                                    href="/guarantee"
+                                >
+                                    <v-list-item-content>
+                                        Гарантия и возврат
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list>
+                        </v-col>
+                        <v-col>
+                            <v-list
+                                color="rgba(0, 0, 0, 0)"
+                                dense
+                                class="pa-0"
+                                min-width="200"
 
-            <v-col
-              order="1"
-              order-sm="2"
-              sm="4"
-              cols="7"
-              class="pb-0"
-            >
-              <v-row
-                align-sm="start"
-                align="center"
-                no-gutters
-                class="flex-column"
-              >
+                            >
+                                <v-list-item
+                                    link
+                                    href="/about"
+                                >
+                                    <v-list-item-content>
+                                        О нас
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item
+                                    link
+                                    href="/reviews"
+                                >
+                                    <v-list-item-content>
+                                        Отзывы
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item
+                                    link
+                                    href="/contacts"
+                                >
+                                    <v-list-item-content>
+                                        Контакты
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list>
+                        </v-col>
+                    </v-row>
+                </div>
+                <div
+                    class="box3"
+                    :class="$vuetify.breakpoint.width < 940 ? 'd-flex flex-column align-center' : ''"
+                >
+                    <v-row no-gutters>
+                        <div
+                            class="text-h6 text-uppercase font-weight-bold mb-3"
+                        >
+                           Способы оплаты
+                        </div>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-img
+                            :src="visaIcon"
+                            max-width="60"
+                            class="mr-4"
+                        />
+                        <v-img
+                            :src="mastercardIcon"
+                            max-width="60"
+                            class="mr-4"
+                        />
+                        <v-img
+                            :src="moneyIcon"
+                            max-width="41"
+                        />
+                    </v-row>
+                </div>
+                <div class="box4">
 
-                <a v-bind:href="'/about'" >
-                  <div
-                    class="font-weight-medium text-h6 pb-2 link"
-                  > О нас</div>
-                </a>
-                <a v-bind:href="'/reviews'" >
-                  <div
-                    class="font-weight-medium text-h6 pb-2 link"
-                  > Отзывы</div>
-                </a>
-                <a v-bind:href="'/contacts'" >
-                  <div
-                    v-if="!smallWidth"
-                    class="font-weight-medium text-h6 link"
-                  > Контакты</div>
-                </a>
-              </v-row>
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col
-          order-lg="3"
-          order-md="4"
-          order-sm="3"
-          order="3"
-          lg="3"
-          md="6"
-          sm="12"
-          cols="12"
-          :class="{'mt-4 mb-5': smallWidth}"
-        >
-          <v-row
-            justify-lg="start"
-            justify-md="end"
-            justify-sm="center"
-            justify="center"
-            class="mb-4"
-          >
-            <div
-              class="font-weight-bold text-h6 pr-1"
-            > СПОСОБ ОПЛАТЫ</div>
-          </v-row>
-          <v-row
-            justify-lg="start"
-            justify-md="end"
-            justify-sm="center"
-            justify="center"
-          >
-              <v-btn
-                icon
-                x-large
-                class="mr-5"
-                tile
-              >
-                <img :src="visaIcon"/>
-              </v-btn>
-              <v-btn
-                icon
-                x-large
-                class="mr-5"
-                tile
-              >
-                <img :src="mastercardIcon"/>
-              </v-btn>
-              <v-btn
-                icon
-                x-large
-                tile
-              >
-                <img :src="moneyIcon"/>
-              </v-btn>
-          </v-row>
-        </v-col>
-
-        <v-col
-          order-lg="4"
-          order-md="2"
-          order-sm="2"
-          order="2"
-
-          lg="2"
-          md="4"
-          sm="12"
-          cols="12"
-        >
-          <v-row
-            justify-md="end"
-            justify-sm="center"
-            justify="center"
-          >
-            <FeedbackInfo
-              :desktop="!smallWidth"
-              footer
-              :mobile="smallWidth"
-            />
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-footer>
+                    <FeedbackInfo />
+                </div>
+            </div>
+        </v-container>
+    </v-footer>
 </template>
 
 <script>
@@ -234,43 +160,70 @@
 
 
   export default {
-  components: { FeedbackInfo },
-
-
+    components: { FeedbackInfo },
     computed: {
+      screenwidth() {
+        console.log(this.$vuetify.breakpoint);
+        return this.$vuetify.breakpoint.width
+      },
+      breakpoint() {
+        return this.$vuetify.breakpoint.width < 700 ? 'xs'
+        : this.$vuetify.breakpoint.width < 1264 ? 'sm'
+        :  this.$vuetify.breakpoint.width < 1904 ? 'md'
+        : 'lg'
+      },
+
+      wrapperStyle() {
+        return this.$vuetify.breakpoint.width < 940
+            ? 'wrapper_xs' : this.$vuetify.breakpoint.width < 1904
+            ? 'wrapper_md' : 'wrapper_lg'
+
+      },
+
       visaIcon: () => visaIcon,
       mastercardIcon: () => mastercardIcon,
       moneyIcon: () => moneyIcon,
-
-      smallWidth() {
-        return (
-          this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
-        )
-      },
-      xSmallWidth() {
-        return (
-          this.$vuetify.breakpoint.xs
-        )
-      }
     }
   }
 </script>
 
-
 <style scoped>
-  .footer-logo {
-    width: 280px;
-    height: 110px;
-  }
-  .link {
-    color: black;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .link:hover {
-    color: rgb(31, 175, 170);
-  }
-  a {
-    text-decoration: none;
-  }
+    .wrapper {
+        display: grid;
+        row-gap: 20px;
+        column-gap: 10px;
+    }
+    .wrapper_xs {
+        grid-template-areas:
+            "B"
+            "D"
+            "C"
+            "A"
+        ;
+    }
+    .wrapper_md {
+        grid-template-areas:
+            "B   D"
+            "A   D"
+            "A   C"
+        ;
+    }
+    .wrapper_lg {
+        grid-template-areas:
+            "A A A   A B C  C C C   C C D"
+        ;
+    }
+
+    .box1 {
+        grid-area: A;
+    }
+    .box2 {
+        grid-area: B;
+    }
+    .box3 {
+        grid-area: C;
+    }
+    .box4 {
+        grid-area: D;
+    }
 </style>

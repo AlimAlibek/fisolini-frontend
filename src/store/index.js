@@ -5,6 +5,7 @@ import {assets} from '@/store/assets';
 import { auth } from '@/store/auth';
 import { goods } from '@/store/goods';
 import { app } from '@/store/app';
+import { contacts } from '@/store/contacts';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
         assets,
         auth,
         goods,
-        app
+        app,
+        contacts
     }
 });

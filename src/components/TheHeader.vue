@@ -164,10 +164,39 @@
             <span
               :class="{'float-right': middleScreen || mLargeScreen}"
             >
-              <FeedbackInfo
-                desktop
-                :laptop="mLargeScreen || middleScreen"
-              />
+              <v-sheet
+                color="#00000000"
+              >
+                <v-list
+                  rounded
+                  class="pa-0 ma-0"
+                  color="#00000000"
+                  width="170"
+                >
+                <v-list-item
+                  dense
+                  class="pa-0 rounded-xl"
+                  style="height: 10px"
+                  :href="contacts.callNumber.href"
+                >
+                  <v-list-item-avatar
+                    size="23"
+                    class="mr-2 ml-1"
+                  >
+                    <v-img
+                       max-width="23"
+                      :src="callIcon"
+                    />
+                  </v-list-item-avatar>
+                  <v-list-item-title
+                    class="text-body-1"
+                  >
+                    {{contacts.callNumber.number}}
+                  </v-list-item-title>
+                </v-list-item>
+                </v-list>
+                <div style="margin-top: -5px" class="text-caption pl-3">с 9:00 до 22:00</div>
+              </v-sheet>
             </span>
           </v-col>
         </v-row>
@@ -216,7 +245,6 @@
     import {mapGetters, mapActions, mapMutations} from 'vuex';
 
     import MobileHeader from '@/components/MobileHeader.vue';
-    import FeedbackInfo from '@/components/FeedbackInfo.vue'
     import TheLocation from  '@/components/TheLocation.vue';
     import TheNavigation from '@/components/TheNavigation.vue';
 
@@ -224,13 +252,13 @@
     import OrderConfirm from '@/components/OrderConfirm.vue';
 
     import TheFilters from '@/components/TheFilters.vue';
+    import callIcon from '@/assets/icons/call.png'
 
     export default {
         name: 'TheHeader',
 
         components: {
           MobileHeader,
-          FeedbackInfo,
           TheLocation,
           TheNavigation,
 
@@ -268,6 +296,7 @@
         computed: {
           ...mapGetters([
             'getAmountOfGoodsInTheCart',
+            'contacts'
           ]),
 
           screenWidth() {
@@ -304,10 +333,10 @@
             return this.largeScreen ? '4' : '6'
           },
           userCols() {
-              return this.largeScreen ? '7' : '12'
+              return this.largeScreen ? '8' : '12'
           },
           feedbackCols () {
-            return this.largeScreen ? '5' : '12'
+            return this.largeScreen ? '4' : '12'
           },
           feedbackOrder() {
             return this.largeScreen ? '2' : '1'
@@ -315,6 +344,8 @@
           userOrder() {
             return this.largeScreen ? '1' : '2'
           },
+
+          callIcon: () => callIcon,
         },
 
         methods: {
