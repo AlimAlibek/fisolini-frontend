@@ -3,16 +3,15 @@ import axios from "axios"
 import router from '@/router'
 
 const initialFilters = {
+    form: [],
+    size: [],
     style: [],
     colour: [],
-    manufacturing_method: [],
+    country_of_manufacture: [],
     material: [],
     collection: [],
-    form: [],
-    country_of_manufacture: [],
-    density: [],
-    weight: [],
-    pile_height: []
+    manufacturing_method: [],
+    pile_height: [],
 }
 
 const requestHeaders = {

@@ -20,17 +20,17 @@
               v-model="categoryIndex"
             >
               <v-list-item
-                v-for="([category]) in Object.entries(getFilterEntities)"
-                :key="category"
+                v-for="category in filterValues"
+                :key="category.value"
                 dense
               >
                 <v-list-item-content>
-                  {{filterValues[category]}}
+                  {{category.label}}
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-badge
-                    v-if="getFilters[category].length"
-                    :content="getFilters[category].length"
+                    v-if="getFilters[category.value].length"
+                    :content="getFilters[category.value].length"
                     color="#1FAFAB"
                   ></v-badge>
                 </v-list-item-action>
@@ -96,8 +96,8 @@
           center-active
         >
           <v-slide-item
-            v-for="([category, values], i) in Object.entries(getFilterEntities)"
-            :key="category"
+            v-for="(filter, i) in filterValues"
+            :key="filter.value"
             class="filter"
           >
             <v-menu
@@ -117,11 +117,11 @@
                       <v-badge
                         offset-x="12"
                         offset-y="10"
-                        :value="getFilters[category].length > 0"
-                        :content="getFilters[category].length"
+                        :value="getFilters[filter.value].length > 0"
+                        :content="getFilters[filter.value].length"
                         color="#1FAFAB"
                       >
-                        {{filterValues[category]}}
+                        {{filter.label}}
                         <span
                           style="margin-left: -7px"
                         >
@@ -147,9 +147,9 @@
                       @change="selectValue"
                     >
                       <v-list-item
-                        v-for="item in values"
-                        :key="item[category]"
-                        :value="item[category]"
+                        v-for="item in getFilterEntities[filter.value]"
+                        :key="item[filter.value]"
+                        :value="item[filter.value]"
                       >
                         <template v-slot:default="{ active }">
                           <v-list-item-action
@@ -162,7 +162,7 @@
                           </v-list-item-action>
 
                           <v-list-item-content>
-                            <v-list-item-title>{{ item[category] }}</v-list-item-title>
+                            <v-list-item-title>{{ item[filter.value] }}</v-list-item-title>
                           </v-list-item-content>
                         </template>
                       </v-list-item>
@@ -188,18 +188,40 @@
         data() {
             return {
                 categoryIndex: 0,
-                filterValues: {
-                    style: 'Стиль',
-                    colour: 'Цвет',
-                    manufacturing_method: 'Способ изготовления',
-                    material: 'Материал',
-                    collection: 'Коллекция',
-                    form: 'Форма',
-                    country_of_manufacture: 'Страна производства',
-                    density: 'Плотность',
-                    weight: 'Вес',
-                    pile_height: 'Высота ворса'
-                },
+                filterValues: [
+                  {
+                    value: 'form',
+                    label: 'Форма'
+                  },
+                  {
+                    value: 'size',
+                    label: 'Размеры'
+                  },
+                  {
+                    value: 'style',
+                    label: 'Стиль'
+                  },
+                  {
+                    value: 'colour',
+                    label: 'Цвет'
+                  },
+                  {
+                    value: 'country_of_manufacture',
+                    label: 'Страна производства'
+                  },
+                  {
+                    value: 'material',
+                    label: 'Материал'
+                  },
+                  {
+                    value: 'collection',
+                    label: 'Коллекция'
+                  },
+                  {
+                    value: 'pile_height',
+                    label: 'Высота ворса'
+                  },
+                ]
             }
         },
         computed: {
@@ -216,7 +238,7 @@
             },
 
             selectedCategory() {
-              return Object.keys(this.getFilters)[this.categoryIndex];
+              return this.filterValues[this.categoryIndex].value;
             },
             selectedValues: {
               get() {

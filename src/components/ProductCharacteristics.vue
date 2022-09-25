@@ -38,62 +38,59 @@ export default {
     data() {
         return {
             specificationsValues: {
-                    'manufacturing_method': {
-                        label: 'Способ изготовления',
-                        isFilter: true
-                    },
-                    'quality': {
-                        label: 'Качество1',
-                    },
-                    'material': {
-                        label: 'Материал',
-                        isFilter: true
-                    },
-                    'collection': {
-                        label: 'Коллекция',
-                        isFilter: true
-                    },
-                    'form': {
-                        label: 'Форма',
-                        isFilter: true
-                    },
-                    'color_code': {
-                        label: 'Код цвета',
-                    },
-                    'design_code': {
-                        label: 'Код дизайна',
-                    },
-                    'country_of_manufacture': {
-                        label: 'Страна производства',
-                        isFilter: true
-                    },
-                    'quality2': {
-                        label: 'Качество',
-                    },
-                    'composition_code': {
-                        label: 'Код состава',
-                    },
-                    'density': {
-                        label: 'Плотность',
-                        isFilter: true
-                    },
-                    'weight': {
-                        label: 'Вес',
-                        isFilter: true
-                    },
-                    'pile_height': {
-                        label: 'Высота ворса',
-                        isFilter: true
-                    },
-                    'colour': {
-                        label: 'Цвет',
-                        isFilter: true
-                    },
-                    'style': {
-                        label: 'Стиль',
-                        isFilter: true
-                    },
-                }
+                'manufacturing_method': {
+                    label: 'Способ изготовления',
+                },
+                'quality': {
+                    label: 'Качество1',
+                },
+                'material': {
+                    label: 'Материал',
+                    isFilter: true
+                },
+                'collection': {
+                    label: 'Коллекция',
+                    isFilter: true
+                },
+                'form': {
+                    label: 'Форма',
+                    isFilter: true
+                },
+                'color_code': {
+                    label: 'Код цвета',
+                },
+                'design_code': {
+                    label: 'Код дизайна',
+                },
+                'country_of_manufacture': {
+                    label: 'Страна производства',
+                    isFilter: true
+                },
+                'quality2': {
+                    label: 'Качество',
+                },
+                'composition_code': {
+                    label: 'Код состава',
+                },
+                'density': {
+                    label: 'Плотность',
+                },
+                'weight': {
+                    label: 'Вес',
+                },
+                'pile_height': {
+                    label: 'Высота ворса',
+                    isFilter: true
+                },
+                'colour': {
+                    label: 'Цвет',
+                    isFilter: true
+                },
+                'style': {
+                    label: 'Стиль',
+                    isFilter: true
+                },
+            }
         }
     },
     computed: {
