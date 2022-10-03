@@ -322,6 +322,7 @@
                 });
                 window.ym(88691177,'reachGoal','add_to_cart',window.dataLayer)
                 this.addGoodToTheCart(this.productForCart)
+                this.setCartFlag(true);
             }
         }
     }
