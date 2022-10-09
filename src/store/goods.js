@@ -26,6 +26,7 @@ export const goods = {
         areGoodsLoading: false,
 
         selectedGood: null,
+        giftGood: null,
         isSelectedGoodLoading: false,
 
         novelties: [],
@@ -61,6 +62,9 @@ export const goods = {
 
         setSelectedGood(state, data) {
             state.selectedGood = data;
+        },
+        setGiftGood(state, data) {
+            state.giftGood = data;
         },
 
         setPopular(state, data) {
@@ -236,18 +240,42 @@ export const goods = {
 
             const good = await axios.get('/product/' + payload.id);
             ctx.commit('setSelectedGood', good.data.data);
+            //Подарок
+            const goods = await axios.get('/product/3792');
+            ctx.commit('setGiftGood', goods.data.data);
 
             ctx.commit('setLoadingSelectedGoodFlag', false);
         },
-
+        
         addGoodToTheCart(ctx, payload) {
             let id = `${payload.good.id}_${payload.stock.id}`
             let goodInTheCart = ctx.state.goodsInTheCart[id];
             let count;
-            let price;
+            let price;      
             if (goodInTheCart) {
                 count = goodInTheCart.count + 1;
                 price = +goodInTheCart.price + +payload.stock.price;
+            } else {
+                count = 1;
+                price = payload.stock.price;
+            }
+            ctx.commit('setGoodToTheCart', {
+                good: payload.good,
+                stock: payload.stock,
+                id,
+                count,
+                price
+            })
+        },
+
+        addGiftToTheCart(ctx, payload) {
+            let id = `${payload.good.id}_${payload.stock.id}`
+            let goodInTheCart = ctx.state.goodsInTheCart[id];
+            let count;
+            let price;      
+            if (goodInTheCart) {
+                count = 1;
+                price = payload.stock.price;
             } else {
                 count = 1;
                 price = payload.stock.price;
@@ -368,6 +396,7 @@ export const goods = {
         getAmountOfGoods: state => state.goods.length,
         getAmountOfFilteredGoods: state => state.filteredGoods.length,
         getSelectedGood: state => state.selectedGood,
+        getGiftGood: state => state.giftGood,
 
         getPopular: state => state.shownPopular,
         getPromo: state => state.shownPromo,

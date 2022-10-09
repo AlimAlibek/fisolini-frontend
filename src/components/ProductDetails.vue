@@ -248,7 +248,7 @@
         },
 
         computed: {
-            ...mapGetters(['getGoodsInTheCart', 'getSelectedGood']),
+            ...mapGetters(['getGoodsInTheCart', 'getSelectedGood', 'getGiftGood']),
             stocks() {
                 return this.getSelectedGood.product.stocks
             },
@@ -260,6 +260,12 @@
                 return {
                     good: this.getSelectedGood.product,
                     stock: this.selectedStock
+                }
+            },
+            giftForCart() {
+                return {
+                    good: this.getGiftGood.product,
+                    stock: this.getGiftGood.product.stocks[0]
                 }
             },
 
@@ -301,6 +307,7 @@
             ...mapMutations(['setCartFlag']),
             ...mapActions([
                 'addGoodToTheCart',
+                'addGiftToTheCart',
                 'decreasNumberOfGoodsInCart'
             ]),
             addToCart() {
@@ -321,6 +328,7 @@
                     }
                 });
                 window.ym(88691177,'reachGoal','add_to_cart',window.dataLayer)
+                this.addGiftToTheCart(this.giftForCart)
                 this.addGoodToTheCart(this.productForCart)
                 this.setCartFlag(true);
             }
