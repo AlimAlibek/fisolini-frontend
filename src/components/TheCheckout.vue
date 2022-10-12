@@ -40,7 +40,7 @@
                 v-model="agree"
                 class="ma-0 pa-0"
                 :rules="[v => !!v || 'Обязательное поле']"
-                label="Я прочитал и согласен с правилами покупки"
+                label="Сохранить скидки после оформления заказа"
                 color="#1FAFAA"
                 required
                 :class="`text-${dense ? 'caption' : 'body'}`"
@@ -49,8 +49,8 @@
                 class="gray--text pa-0 ma-0"
                 :class="`text-${dense ? 'caption' : 'body'}`"
             >
-                После оформления заказа, менеджер свяжется с Вами и уточнит детали доставки
-            </div>
+             После оформления заказа, менеджер свяжется с Вами и уточнит детали доставки
+        </div>
             <v-row
                 no-gutters
                 justify="center"

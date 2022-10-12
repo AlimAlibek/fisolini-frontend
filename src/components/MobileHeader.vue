@@ -331,20 +331,32 @@
               path: '/'
           },
           {
-              name: 'Каталог',
+              name: 'Все товары',
               path: '/catalog'
           },
           {
-              name: 'Доставка и оплата',
-              path: '/payment'
+              name: 'Овальные ковры',
+              path: '/catalog?form=Овал'
           },
           {
-              name: 'Контакты',
-              path: '/contacts'
+              name: 'Прямоугольные ковры',
+              path: '/catalog?form=Прямоугольник'
           },
           {
-              name: 'Отзывы',
-              path: '/reviews'
+              name: 'Иранские ковры',
+              path: '/catalog?country_of_manufacture=Иран'
+          },
+          {
+              name: 'Турецкие ковры',
+              path: '/catalog?country_of_manufacture=Турция'
+          },
+          {
+              name: 'Бельгийские ковры',
+              path: '/catalog?country_of_manufacture=Бельгия'
+          },
+          {
+              name: 'Ковры Genova',
+              path: '/catalog?collection=GENOVA'
           },
       ],
     }),

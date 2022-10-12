@@ -27,6 +27,8 @@
 </template>
 
 <script>
+  import {mapActions} from 'vuex';
+
     export default {
         props: {
             tabs: Array,
@@ -46,7 +48,12 @@
         },
 
         methods: {
+          ...mapActions([
+            'resetFilters'
+          ]),
+
           toPage(index) {
+            this.resetFilters();
             this.currentTab = index;
             const to = this.tabs[index].path
             if (to === '/catalog') {
