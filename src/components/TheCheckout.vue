@@ -36,7 +36,7 @@
               :rules="phoneRules"
               :dense="dense"
             />
-            <v-checkbox
+            <!-- <v-checkbox
                 v-model="agree"
                 class="ma-0 pa-0"
                 :rules="[v => !!v || 'Обязательное поле']"
@@ -44,7 +44,7 @@
                 color="#1FAFAA"
                 required
                 :class="`text-${dense ? 'caption' : 'body'}`"
-            ></v-checkbox>
+            ></v-checkbox> -->
             <div
                 class="gray--text pa-0 ma-0"
                 :class="`text-${dense ? 'caption' : 'body'}`"
@@ -84,7 +84,6 @@ export default {
     data() {
         return {
             valid: true,
-
             agree: true,
             userName: '',
             userPhoneNumber: '',
