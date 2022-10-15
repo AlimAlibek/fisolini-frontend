@@ -35,8 +35,13 @@
             <span class="font-weight-medium">{{size}} м</span>
           </div>
           <div :class="titleClass ? 'text-subtitle-2' : 'text-h6'" class="deep-orange--text">
-               Акция до: {{dateTimeEnd}} 
-               <!-- {{ timerCount }} -->
+            <span v-if="days == 0">
+                {{("0"+hours).slice(-2)}}:{{("0"+minutes).slice(-2)}}:{{("0"+timerCount).slice(-2)}}
+            </span>
+            <span v-else>
+                Акция до {{dateTimeEnd}}
+            </span>
+               
             </div>
         </v-list-item-content>
           <v-list-item-action
@@ -131,8 +136,12 @@
             product: Object
         },
         data(){
+            var days = this.getDifTime()
             return{
-                timerCount: 30
+                timerCount: 59,
+                days:days,
+                hours:23,
+                minutes:59
             }
         },
 
@@ -142,7 +151,7 @@
 
                 if (value > 0) {
                     setTimeout(() => {
-                        this.timerCount--;
+                        this.getDifTime()
                     }, 1000);
                 }
 
@@ -163,9 +172,11 @@
             },
             dateTimeEnd() {
                 var d = new Date();
+                var date_now = new Date();
+                var date_product = new Date(this.product.stock.date_time_end);
                 d.setHours(d.getHours() + 48);
                 var datestring =  ("0" + d.getDate()).slice(-2) + "." + ("0"+(d.getMonth()+1)).slice(-2);
-                if (this.product.stock.date_time_end){
+                if (this.product.stock.date_time_end && (date_product >  date_now)){
                     d = new Date(this.product.stock.date_time_end)
                     datestring = ("0" + d.getDate()).slice(-2) + "." + ("0"+(d.getMonth()+1)).slice(-2);
                 }
@@ -204,6 +215,23 @@
                 'addGoodToTheCart',
                 'decreasNumberOfGoodsInCart'
             ]),
+            getDifTime(){
+                var date_product = new Date(this.product.stock.date_time_end)
+                if (date_product < new Date()){
+                    this.days = 2 ;
+                    return (2);
+                }
+                const diff = date_product - new Date();
+                const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
+                const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
+                const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+                const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 59;
+                this.timerCount= seconds;
+                this.days = days ;
+                this.hours = hours ;
+                this.minutes = minutes ;
+                return (days);
+            },
             removeGoodFromTheCartfun(product)
             {
                  window.dataLayer = window.dataLayer || [];
