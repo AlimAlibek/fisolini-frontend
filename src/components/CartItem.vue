@@ -147,13 +147,10 @@
 
         watch: {
         timerCount: {
-            handler(value) {
-
-                if (value > 0) {
+            handler() {
                     setTimeout(() => {
                         this.getDifTime()
                     }, 1000);
-                }
 
             },
             immediate: true 
@@ -165,7 +162,9 @@
                 return this.product.good.title;
             },
             image() {
-                return this.product.good.images[0].path
+                var image = this.product.good.images
+                image.sort((prev, next) => prev.sort - next.sort)
+                return image[0].path
             },
             size() {
                 return this.product.stock.size

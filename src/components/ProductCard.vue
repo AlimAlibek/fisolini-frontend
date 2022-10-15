@@ -173,10 +173,13 @@
           return this.product.title
         },
         image() {
-          return this.product.images[0]?.path || require('../assets/images/replace.png')
+          var image = this.product.images
+          image.sort((prev, next) => prev.sort - next.sort)
+          return image.path || require('../assets/images/replace.png')
         },
         images() {
-          const images = this.product.images;
+          var images = this.product.images;
+          images.sort((prev, next) => prev.sort - next.sort);
           return  images?.length ? images : [{path: require('../assets/images/replace.png')}]
         },
         country() {
@@ -217,11 +220,11 @@
         },
 
         cardWidth() {
-          return this.horizontal ? this.$vuetify.breakpoint.width - 90 : this.small ? 160 : 350
+          return this.horizontal ? this.$vuetify.breakpoint.width - 90 : this.small ? 350 : 350
         },
 
         cardHeight() {
-          return this.horizontal ? ((this.$vuetify.breakpoint.width - 90) / 2) : this.small ? 257 : 527
+          return this.horizontal ? ((this.$vuetify.breakpoint.width - 90) / 2) : this.small ? 450 : 527
         },
 
         titleClass() {
