@@ -318,7 +318,7 @@
                         "add": {
                             "_name": "add_to_cart",
                             "products": [{
-                                "id":'' + (this.stocks[this.selectedStockIndex]['id']),
+                                "id":'' + (this.stocks[this.selectedStockIndex]['barcode']),
                                 "price":'' +(this.stocks[this.selectedStockIndex]['price']),
                                 "quantity":'' +1,
                                 "category":"",
