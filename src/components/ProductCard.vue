@@ -8,11 +8,12 @@
     :class="cardClass"
     :width="cardWidth"
     :height="cardHeight"
-    link
-    @click="toProduct"
+    
   >
     <v-row
       no-gutters
+      link
+    @click="toProduct"
     >
       <v-col
         :cols="horizontal ? '6' : '12'"
@@ -23,6 +24,7 @@
           :show-arrows-on-hover="!small"
           :height="horizontal ? cardHeight : cardWidth"
           hide-delimiters
+          hide-delimiter-background
         >
             <template v-slot:prev="{ on, attrs }">
               <span
@@ -32,8 +34,9 @@
                   icon
                   v-bind="attrs"
                   v-on="on"
+                  style="background : gray"
                   :small="small"
-                  :style="small ? 'position: absolute; left: -20px' : ''"
+                  :style="small ? 'position: absolute; left: -10px' : ''"
                 >
                   <v-icon :large="!small">mdi-chevron-left</v-icon>
                 </v-btn>
@@ -48,9 +51,10 @@
                 <v-btn
                   icon
                   v-bind="attrs"
+                  style="background : gray"
                   v-on.stop="on"
                   :small="small"
-                  :style="small ? 'position: absolute; right: -20px' : ''"
+                  :style="small ? 'position: absolute; right: -10px' : ''"
                 >
                   <v-icon :large="!small">mdi-chevron-right</v-icon>
                 </v-btn>
@@ -130,28 +134,122 @@
             </div>
           </v-row>
 
-          <v-card-subtitle
+          <!-- <v-card-subtitle
             class="pb-0 text-decoration-underline"
             :class="sizeClass"
           >
             <div :style="small ? 'font-size: 10px;' : ''">
               Размеры - {{sizes}}
             </div>
-          </v-card-subtitle>
+          </v-card-subtitle> -->
         </v-card-text>
         <v-card-title :class="titleClass">
-          <span class="pa-0 col-12 text-truncate">
+          <!-- <span class="pa-0 col-12 text-truncate">
             {{price}} &#8381;
-          </span>
+          </span> -->
+          
         </v-card-title>
       </v-col>
     </v-row>
+    <div
+                :class="xSmallWidth ? 'pa-0' : 'pa-2'"
+            >
+                <v-slide-group
+                  v-model="selectedStockIndex"
+                  mandatory
+                  show-arrows
+                  center-active
+                >
+                  <v-slide-item
+                    v-for="stock in stocks"
+                    :key="stock.id"
+                    v-slot="{ active, toggle }"
+                    :class="''"
+                  >
+                    <v-card
+                        elevation="0"
+                        style="position: relative"
+                        :style="active ? 'border: 2px solid #1FAFAA' : 'border: 1px solid gray'"
+                        class="ma-2 rounded-lg"
+                        :height="sizeSize"
+                        :width="sizeSize"
+                        @click="toggle"
+                    >
+                           <v-row
+                                no-gutters
+                                justify="center"
+                                class="font-weight-bold"
+                                :class="'text-subtitle-2 pt-1'"
+                            >
+                                {{stock.size}}
+                            </v-row>
+                            <v-row
+                                no-gutters
+                                justify="center"
+                                class="font-weight-bold"
+                                :class="'text-subtitle pt-1'"
+                                :style="`height: ${sizeSize/3.3}px`"
+                            >
+                                <span
+                                    v-if="!stock.oldPrice"
+                                    class="deep-orange--text"
+                                >
+                                    {{ Number(stock.price).toLocaleString()}}&#8381;
+                                </span>
+                                <v-row
+                                    v-else
+                                    no-gutters
+                                    align="center"
+                                >
+                                  <v-col cols="12">
+                                    <v-row
+                                        no-gutters
+                                        justify="end"
+                                        class="deep-orange--text text-decoration-line-through pr-1"
+                                        :class="'text-caption'"
+                                        :style="`transform: translate(0, -${sizeSize/12}px)`"
+                                    >
+                                        {{ Number(stock.oldPrice).toLocaleString()}}&#8381;
+                                    </v-row>
+                                  </v-col>
+                                    <v-row
+                                        no-gutters
+                                        justify="center"
+                                        class="green--text text--darken-3"
+                                        :style="`transform: translate(0, -${sizeSize/6}px)`"
+                                    >
+                                        {{ Number(stock.price).toLocaleString()}}&#8381;
+                                    </v-row>
+                                </v-row>
+                            </v-row>
+                            <v-row
+                                no-gutters
+                                justify="center"
+                                :class="'text-caption text-truncate pt-2'"
+                            >
+                                {{stock.stock ? `Осталось: ${stock.stock}` : 'Нет в наличии'}}
+                            </v-row>
+                    </v-card>
+                  </v-slide-item>
+                </v-slide-group>
+                <v-btn
+                    class="rounded-xl font-weight-bold"
+                    :class="!smallWidth && !xSmallWidth ? 'pl-12 pr-12' : ''"
+                    color="#FED42B"
+                    :disabled="selectedStockIndex === null"
+                    block
+                    @click="stocksInCart ? setCartFlag(true) : addToCart()"
+                >
+                {{ stocksInCart ? 'Оформить заказ' : 'Добавить в корзину'}}
+                </v-btn>
+            </div>
   </v-card>
 </v-hover>
 </template>
 
 <script>
   import DiscountBadge from './DiscountBadge.vue'
+  import {mapMutations,mapGetters, mapActions} from 'vuex';
 
   export default {
     components: { DiscountBadge },
@@ -160,27 +258,30 @@
       horizontal: Boolean,
       product: Object
     },
-
     data() {
       return {
-        currentImage: 0
+        currentImage: 0,
+        selectedStockIndex: 0
       }
     },
 
     computed: {
-
+      ...mapGetters(['getGoodsInTheCart', 'getGiftGood']),
         productTitle() {
           return this.product.title
         },
-        image() {
-          var image = this.product.images
-          image.sort((prev, next) => prev.sort - next.sort)
-          return image.path || require('../assets/images/replace.png')
-        },
         images() {
-          var images = this.product.images;
-          images.sort((prev, next) => prev.sort - next.sort);
-          return  images?.length ? images : [{path: require('../assets/images/replace.png')}]
+          var data = this.product.images;
+          var output = [];
+          for (var key in this.product.images) {
+              data[key].key = key; 
+              output.push(data[key]);
+          }    
+
+          output.sort(function(a,b) {
+              return(a.sort - b.sort);
+          });
+          return  this.product.images?.length ? output : [{path: require('../assets/images/replace.png')}]
         },
         country() {
           return this.product.specifications[0]?.country_of_manufacture || '-'
@@ -194,6 +295,19 @@
         },
         sizes() {
           return this.product.stocks.length;
+        },
+        smallWidth() {
+            return this.$vuetify.breakpoint.width < 760 && this.$vuetify.breakpoint.width > 459;
+        },
+        xSmallWidth() {
+            return this.$vuetify.breakpoint.width < 460;
+        },
+        sizeSize() {
+            return this.xSmallWidth ? '85'
+            : this.smallWidth ? '85' : '85'
+        },
+        stocks() {
+          return this.product.stocks;
         },
         price() {
           if (!this.product.stocks?.length) {
@@ -224,7 +338,7 @@
         },
 
         cardHeight() {
-          return this.horizontal ? ((this.$vuetify.breakpoint.width - 90) / 2) : this.small ? 450 : 527
+          return this.horizontal ? ((this.$vuetify.breakpoint.width - 90) / 2) : this.small ? 550 : 630
         },
 
         titleClass() {
@@ -247,9 +361,59 @@
           return this.small ? 'pl-1 pr-2' : ''
         },
 
+      productForCart() {
+          return {
+              good: this.product,
+              stock: this.product.stocks[this.selectedStockIndex]
+          }
+        },
+        giftForCart() {
+          return {
+              good: this.getGiftGood.product,
+              stock: this.getGiftGood.product.stocks[0]
+          }
+        },
+        productFromCart() {
+          const id = `${this.product.id}_${this.selectedStock?.id}`
+          return this.getGoodsInTheCart[id]
+        },  
+        stocksInCart() {
+          return this.productFromCart?.count || 0
+        },
+
+
     },
 
     methods: {
+      ...mapMutations(['setCartFlag']),
+            ...mapActions([
+                'addGoodToTheCart',
+                'addGiftToTheCart',
+                'decreasNumberOfGoodsInCart'
+            ]),
+            addToCart() {
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    "ecommerce": {
+                        "currencyCode": "RUB",
+                        "add": {
+                            "_name": "add_to_cart",
+                            "products": [{
+                                "id":'' + (this.stocks[this.selectedStockIndex]['barcode']),
+                                "price":'' +(this.stocks[this.selectedStockIndex]['price']),
+                                "quantity":'' +1,
+                                "category":"",
+                                "name":'' + (this.stocks[this.selectedStockIndex]['product_id'])
+                            }]
+                        }
+                    }
+                });
+                window.ym(88691177,'reachGoal','add_to_cart',window.dataLayer)
+                this.addGiftToTheCart(this.giftForCart)
+                this.addGoodToTheCart(this.productForCart)
+                this.setCartFlag(true);
+            },
       toProduct() {
         this.$router.push({
           path: 'product',
@@ -271,5 +435,15 @@
     align-items: flex-start;
     justify-content: center;
   }
+    .discount_badge {
+        position: absolute;
+        top: -6%;
+        right: -16%;
+        transform: rotate(20deg);
+        padding: 0px 8px;
+        border-radius: 8px;
+        background: #FF5252;
+        color: #fff;
+    }
 
 </style>
