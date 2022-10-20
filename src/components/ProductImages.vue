@@ -46,6 +46,8 @@
             <v-carousel
                 v-model="currentImageIndex"
                 :height="xSmallWidth ? '400' : '519'"
+                hide-delimiter-background
+                show-arrows-on-hover
             >
                 <v-carousel-item
                   v-for="(image, i) in innerImages"
@@ -65,6 +67,7 @@
             v-model="currentImageIndex"
             :height="fullSizeImageHeight"
             hide-delimiter-background
+            show-arrows-on-hover
         >
             <v-carousel-item
                 v-for="(image, i) in innerImages"

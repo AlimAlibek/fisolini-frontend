@@ -38,6 +38,9 @@
             <span v-if="days == 0">
                 {{("0"+hours).slice(-2)}}:{{("0"+minutes).slice(-2)}}:{{("0"+timerCount).slice(-2)}}
             </span>
+            <span v-else-if="days < 0" >
+                <!-- {{this.product.good.specifications[0].country_of_manufacture}} -->
+            </span> 
             <span v-else>
                 Акция до {{dateTimeEnd}}
             </span>
@@ -164,7 +167,7 @@
             image() {
                 var image = this.product.good.images
                 image.sort((prev, next) => prev.sort - next.sort)
-                return image[0].path
+                return image?.length ? image[0].path  : require('../assets/images/replace.png')
             },
             size() {
                 return this.product.stock.size
@@ -215,6 +218,10 @@
                 'decreasNumberOfGoodsInCart'
             ]),
             getDifTime(){
+                if (this.product.stock.date_time_end == null){
+                    this.days =-1 ;
+                    return (-1);
+                }
                 var date_product = new Date(this.product.stock.date_time_end)
                 if (date_product < new Date()){
                     this.days = 2 ;
