@@ -82,7 +82,6 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
-
     import ProductImages from '@/components/ProductImages.vue'
     import ProductDetails from '@/components/ProductDetails.vue'
     import TheReviews from '@/components/TheReviews.vue'
