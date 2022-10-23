@@ -164,6 +164,9 @@ export const goods = {
     actions: {
         async loadGoods(ctx, show) {
             ctx.commit('setLoadingGoodsFlag', true);
+            //Подарок
+            const goods = await axios.get('/product/3792');
+            ctx.commit('setGiftGood', goods.data.data);
             if (ctx.getters.numberOfAppliedFilters > 0) {
                 try {
                     const goodsWithFilters = await axios.post('/catalog/filter', {
@@ -205,6 +208,9 @@ export const goods = {
                 ctx.commit('setPromo', goods.data.data.promo);
                 ctx.commit('setNovelties', goods.data.data.new);
             }
+            //Подарок
+            const good = await axios.get('/product/3792');
+            ctx.commit('setGiftGood', good.data.data);
             ctx.commit('setLoadingPopularFlag', false);
         },
 
@@ -308,6 +314,17 @@ export const goods = {
                 ctx.commit('setGoodsToTheCart', goods)
             }
         },
+        async searchProducts(ctx, payload) {
+            ctx.commit('setLoadingGoodsFlag', true);
+            const products = await axios.post('catalog/search', {
+                text: payload
+            },{
+                headers: requestHeaders
+            });
+            ctx.commit('setGoods', products.data.data);
+            ctx.commit('setShownGoods', products.data.data.slice(0, 20));
+            ctx.commit('setLoadingGoodsFlag', false);
+        },
 
         async createOrder(ctx, payload) {
 
@@ -397,6 +414,8 @@ export const goods = {
         getAmountOfFilteredGoods: state => state.filteredGoods.length,
         getSelectedGood: state => state.selectedGood,
         getGiftGood: state => state.giftGood,
+
+        // getSearchGoods: state => state.shownGoods,
 
         getPopular: state => state.shownPopular,
         getPromo: state => state.shownPromo,
