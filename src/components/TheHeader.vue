@@ -66,6 +66,7 @@
             class="pb-0 pt-4"
           >
             <v-text-field
+                v-model="searchText"
                 filled
                 dense
                 solo
@@ -74,7 +75,7 @@
                 type="text"
                 hide-details
                 color="#EBEBEB"
-
+                v-on:keyup.enter="toSearch"
             >
                 <template v-slot:append>
                   <v-fade-transition leave-absolute>
@@ -88,7 +89,10 @@
                         icon
                         large
                       >
-                        <v-icon> mdi-magnify </v-icon>
+                        <v-icon
+                        @click="toSearch"
+
+                        > mdi-magnify </v-icon>
                       </v-btn>
                     </span>
                   </v-fade-transition>
@@ -271,6 +275,7 @@
         data() {
           return {
             signin: false,
+            searchText:"",
             currentPage: {},
             pages: [
                 {
@@ -349,8 +354,17 @@
         },
 
         methods: {
-          ...mapActions(['loadFilterEntities']),
+          ...mapActions([
+            'loadFilterEntities',
+            'searchProducts'
+        ]),
           ...mapMutations(['setCartFlag']),
+        toSearch() {
+                this.searchProducts(this.searchText);
+                if (this.$route.path != '/search') {
+                    this.$router.push("/search");
+                }
+            }
         },
 
         mounted() {

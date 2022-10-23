@@ -71,6 +71,14 @@ let router = new Router({
             }
         },
         {
+            path: '/search',
+            name: 'search',
+            component: () => import('./views/Search.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/contacts',
             name: 'contacts',
             component: () => import('./views/Contacts.vue'),
