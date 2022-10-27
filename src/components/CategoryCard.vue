@@ -1,7 +1,7 @@
 <template>
     <v-card
         :width="'100%'"
-        :height="cardHeight"
+        :height="'100%'"
         @click="toCategory"
     >
         <v-img
@@ -65,9 +65,7 @@
             ]),
 
             toCategory() {
-                console.log(this.category);
-                this.setFilters({category: 'style', value: [this.category.style], show: true});
-                this.$router.push('/catalog');
+                this.$router.push(this.category.url);
             }
         }
     }
