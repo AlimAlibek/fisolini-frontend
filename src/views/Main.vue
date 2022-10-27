@@ -1,8 +1,6 @@
 <template>
     <v-container>
         <TheBanners />
-        <TheServices />
-
         <SectionHeader
             title="Категории"
             subtitle=""
@@ -103,9 +101,7 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
-
 import TheBanners from '@/components/TheBanners.vue'
-import TheServices from '@/components/TheServices.vue'
 import TheCategories from '@/components/TheCategories.vue';
 import ProductGroup from '@/components/ProductGroup.vue';
 import SectionHeader from '@/components/SectionHeader.vue';
@@ -114,7 +110,6 @@ import PlacementTips from '@/components/PlacementTips.vue';
  export default {
     components: {
         TheBanners,
-        TheServices,
         TheCategories,
         ProductGroup,
         SectionHeader,
