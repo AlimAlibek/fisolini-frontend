@@ -120,10 +120,14 @@
                         :value="getFilters[filter.value].length > 0"
                         :content="getFilters[filter.value].length"
                         color="#1FAFAB"
+                        style="
+                        font-size: 1.3em;
+                        font-weight: bold;"
                       >
+                      
                         {{filter.label}}
                         <span
-                          style="margin-left: -7px"
+                          style="margin-left: -7px;"
                         >
                           <v-icon>
                             mdi-chevron-{{attrs['aria-expanded'] === 'true' ? 'up' : 'down'}}
