@@ -331,7 +331,7 @@ export const goods = {
             ctx.commit('setMainLoadingFlag', true)
             const products = {}
             Object.values(ctx.getters.getGoodsInTheCart).forEach(good => {
-                products[good.stock.id] = good.count;
+                products[good.stock.barcode] = good.count;
             })
             try {
                 const orderInfo = await axios.post('order/create', {
