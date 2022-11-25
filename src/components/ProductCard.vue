@@ -35,7 +35,6 @@
                   v-bind="attrs"
                   v-on="on"
                   style="background : gray"
-                  :small="small"
                   :style="small ? 'position: absolute; left: -10px' : ''"
                 >
                   <v-icon :large="!small">mdi-chevron-left</v-icon>
@@ -53,7 +52,6 @@
                   v-bind="attrs"
                   style="background : gray"
                   v-on.stop="on"
-                  :small="small"
                   :style="small ? 'position: absolute; right: -10px' : ''"
                 >
                   <v-icon :large="!small">mdi-chevron-right</v-icon>

@@ -44,6 +44,9 @@
            </div>
            {{getSelectedGood.product.description}}
         </v-row>
+        <v-img
+        :src="require('../assets/images/packaging.png')"
+        :style="'margin-bottom:10px'"/>
         <v-row
             no-gutters
             class="mt-6"
@@ -58,6 +61,12 @@
         >
             <TheReviews />
         </v-row>
+        <v-img
+            :src="require('../assets/images/payment.png')"
+            :style="'margin-bottom:10px'"/>
+        <v-img
+            :src="require('../assets/images/gift.png')"
+            :style="'margin-bottom:10px'"/>
     </v-container>
     <v-row
         no-gutters
@@ -87,6 +96,7 @@
     import TheReviews from '@/components/TheReviews.vue'
     import ProductGroup from '@/components/ProductGroup.vue';
     import ProductCharacteristics from '@/components/ProductCharacteristics.vue';
+    // import TheServices from '@/components/TheServices.vue'
 
     export default {
         metaInfo() {
@@ -109,6 +119,7 @@
           }
         },
         components: {
+            // TheServices,
             ProductImages,
             ProductDetails,
             TheReviews,

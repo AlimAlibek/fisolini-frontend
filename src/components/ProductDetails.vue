@@ -220,7 +220,7 @@
                     <b>Доставка</b>
                 </div>
                 <div>
-                    <b>Москва и МО: </b>{{getSelectedGood.delivery.moscow}}
+                    <b>Москва: </b>{{getSelectedGood.delivery.moscow}}
                 </div>
                 <div>
                     <b>Санкт-Петербург и ЛО: </b>{{getSelectedGood.delivery.spb}}
@@ -232,6 +232,10 @@
                    Стоимость доставки рассчитывается индивидуально
                 </div>
             </div>
+            <v-img
+                style="max-width: 1000px"
+                :src="require('../assets/images/by.png')"
+                :style="'margin-bottom:10px'"/>
 
      </div>
     </v-card>

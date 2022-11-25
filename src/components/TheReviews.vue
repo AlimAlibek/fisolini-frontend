@@ -51,9 +51,8 @@
       v-else
       no-gutters
       justify="center"
-      class="pt-12 pb-12 mt-12 mb-12"
     >
-      <h2>Отзывов к этому товару ещё нет</h2>
+      <!-- <h2>Отзывов к этому товару ещё нет</h2> -->
     </v-row>
 
     <ReviewDialog
