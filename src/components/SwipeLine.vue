@@ -1,7 +1,22 @@
 <template>
-    <v-row
+    <v-col>
+        <v-row
+        class="pa-3">
+            <v-btn
+            :style="'position:absolute; right:20px'"
+            icon
+            @click.stop="$emit('swipeDown')"
+            >
+                <v-icon
+                    large>
+                    mdi-close-circle-outline
+                </v-icon>
+            </v-btn>
+        </v-row>
+        
+        <v-row
         no-gutters
-        class="pa-6"
+        class="pa-3"
         justify="center"
         v-touch="{
           down: () => $emit('swipeDown')
@@ -9,9 +24,10 @@
         @mouseup="() => {
             !isMobile &&  $emit('swipeDown')
         }"
-    >
-        <div class="swipe-line"></div>
-    </v-row>
+        >
+            <div class="swipe-line"></div>   
+        </v-row>
+    </v-col>
 </template>
 
 <script>
