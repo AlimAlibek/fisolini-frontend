@@ -214,6 +214,10 @@
                 <div v-if="!smallWidth && !xSmallWidth"></div>
             </v-row>
             <div
+            :class="xSmallWidth ? 'text-body pl-2' : smallWidth ? 'text-body pl-4' : 'text-h5 pl-4'">
+                <b>Добавьте в корзину, чтоб не потерять!</b>
+            </div>
+            <div
                :class="xSmallWidth ? 'text-caption pl-2' : smallWidth ? 'text-body pl-4' : 'text-h5 pl-4'"
             >
                 <div class="pt-4 pb-3">
@@ -223,7 +227,7 @@
                     <b>Москва: </b>{{getSelectedGood.delivery.moscow}}
                 </div>
                 <div>
-                    <b>Санкт-Петербург и ЛО: </b>{{getSelectedGood.delivery.spb}}
+                    <b>Санкт-Петербург: </b>{{getSelectedGood.delivery.spb}}
                 </div>
                 <div>
                     <b> Регионы: </b>{{getSelectedGood.delivery.region}}
