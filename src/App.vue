@@ -1,9 +1,6 @@
 <template>
   <v-app>
     <TheHeader />
-    <CartDrawer
-      v-if="desktopCart"
-    />
     <ErrorMessage />
     <MainLoading />
 
@@ -20,7 +17,6 @@ import {mapActions} from 'vuex';
 
 import TheHeader from '@/components/TheHeader';
 import TheFooter from '@/components/TheFooter';
-import CartDrawer from '@/components/CartDrawer';
 import ErrorMessage from '@/components/ErrorMessage.vue';
 import MainLoading from '@/components/MainLoading.vue';
 
@@ -30,7 +26,6 @@ export default {
   components: {
     TheHeader,
     TheFooter,
-    CartDrawer,
     ErrorMessage,
     MainLoading
   },
@@ -65,9 +60,6 @@ export default {
           mainPadding() {
             return this.$vuetify.breakpoint.width < 1195 ? 'padding-top: 40px' : 'padding-top: 175px'
           },
-          desktopCart() {
-            return this.$vuetify.breakpoint.width > 1195
-          }
         },
 
         methods: {

@@ -177,36 +177,6 @@
       <TheAccount mobile />
 
     </v-navigation-drawer>
-
-    <v-bottom-sheet
-      v-model="isCartShown"
-      class="rounded-t-xl"
-    >
-      <v-sheet
-        class="rounded-t-xl"
-        :height="bottomDrawerHeight"
-      >
-        <SwipeLine
-          @swipeDown="setCartFlag(false)"
-        />
-
-        <v-row
-          no-gutters
-          class="pl-4"
-        >
-          <div class="text-subtitle font-weight-bold">
-            КОРЗИНА
-          </div>
-        </v-row>
-        <div
-          style="overflow: auto"
-          :style="`height: ${this.bottomDrawerHeight - 100}px`"
-        >
-          <TheCart />
-        </div>
-
-      </v-sheet>
-    </v-bottom-sheet>
     <v-bottom-sheet
       v-model="filters"
       class="rounded-t-xl"
@@ -302,22 +272,18 @@
 <script>
   import {mapActions, mapGetters, mapMutations} from 'vuex';
 
-  // import TheLocation from '@/components/TheLocation.vue';
   import TheNavigation from '@/components/TheNavigation.vue';
   import FeedbackInfo from '@/components/FeedbackInfo.vue';
   import TheAccount from '@/components/TheAccount.vue';
-  import TheCart from '@/components/TheCart.vue';
   import SwipeLine from '@/components/SwipeLine.vue';
   import TheFilters from '@/components/TheFilters.vue';
 
 
   export default {
     components: {
-      // TheLocation,
       TheNavigation,
       FeedbackInfo,
       TheAccount,
-      TheCart,
       SwipeLine,
       TheFilters
     },

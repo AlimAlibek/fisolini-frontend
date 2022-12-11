@@ -95,6 +95,14 @@ let router = new Router({
             }
         },
         {
+            path: '/cart',
+            name: 'cart',
+            component: () => import('./views/Cart.vue'),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: '/pay/:id',
             name: 'pay',
             component: () => import('./views/Pay.vue'),
