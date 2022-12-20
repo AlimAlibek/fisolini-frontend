@@ -1,3 +1,5 @@
+
+import router from '@/router'
 export const app = {
     state: () => ({
         cart: false,
@@ -8,7 +10,17 @@ export const app = {
 
     mutations: {
         setCartFlag(state, boolean) {
-            state.cart = boolean
+            if (boolean) {
+               router.push('/cart')
+               setTimeout(() => {
+                    state.cart = boolean
+               })
+            } else {
+                state.cart = false
+                setTimeout(() => {
+                   router.back()
+                }, 100)
+            }
         },
         setLocation(state, location) {
             localStorage.setItem('location', location);

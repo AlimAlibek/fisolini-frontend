@@ -332,22 +332,18 @@
 <script>
   import {mapActions, mapGetters, mapMutations} from 'vuex';
 
-  // import TheLocation from '@/components/TheLocation.vue';
   import TheNavigation from '@/components/TheNavigation.vue';
   import FeedbackInfo from '@/components/FeedbackInfo.vue';
   import TheAccount from '@/components/TheAccount.vue';
-  import TheCart from '@/components/TheCart.vue';
   import SwipeLine from '@/components/SwipeLine.vue';
   import TheFilters from '@/components/TheFilters.vue';
 
 
   export default {
     components: {
-      // TheLocation,
       TheNavigation,
       FeedbackInfo,
       TheAccount,
-      TheCart,
       SwipeLine,
       TheFilters
     },
