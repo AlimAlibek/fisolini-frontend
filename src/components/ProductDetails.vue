@@ -201,7 +201,7 @@
 
                             class="rounded-xl font-weight-bold"
                             :class="!smallWidth && !xSmallWidth ? 'pl-12 pr-12' : ''"
-                            color="#FED42B"
+                            :color= "stocksInCart ? '#2BFE99' : '#FED42B'"
                             :disabled="selectedStockIndex === null"
                             block
                             @click="stocksInCart ? setCartFlag(true) : addToCart()"
