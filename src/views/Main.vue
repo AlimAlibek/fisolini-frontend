@@ -1,5 +1,47 @@
 <template>
     <v-container>
+      <template v-if="screenWidth<=960">
+      <v-col
+            color="#EBEBEB"
+            :cols="searchCols"
+            class="pb-0 pt-4"
+          >
+            <v-text-field
+                v-model="searchText"
+                filled
+                dense
+                solo
+                flat
+                label="Поиск по товарам"
+                type="text"
+                hide-details
+                color="#EBEBEB"
+                v-on:keyup.enter="toSearch"
+            >
+                <template v-slot:append
+                >
+                  <v-fade-transition leave-absolute>
+                    <span >
+                      <v-divider vertical></v-divider>
+                      <v-btn
+                        height="25"
+                        width="25"
+                        style="margin-top: -4px"
+                        class="ml-2"
+                        icon
+                        large
+                      >
+                        <v-icon
+                        @click="toSearch"
+
+                        > mdi-magnify </v-icon>
+                      </v-btn>
+                    </span>
+                  </v-fade-transition>
+                </template>
+            </v-text-field>
+          </v-col>
+          </template>
         <TheBanners />
         <SectionHeader
             title="Категории"
@@ -115,7 +157,12 @@ import PlacementTips from '@/components/PlacementTips.vue';
         SectionHeader,
         PlacementTips,
     },
+    data() {
+      return {
+        searchText:"",
 
+      }
+    },
     computed: {
         ...mapGetters([
             'getPopular',
@@ -127,7 +174,9 @@ import PlacementTips from '@/components/PlacementTips.vue';
 
             'isPopularLoading'
         ]),
-
+        screenWidth() {
+                return this.$vuetify.breakpoint.width;
+            },
         defaultAmount() {
             return (this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm) ? 24
                 : (this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg) ? 24 : 24
@@ -140,6 +189,7 @@ import PlacementTips from '@/components/PlacementTips.vue';
             'showMorePopular',
             'showMorePromo',
             'showMoreNovelties',
+            'searchProducts'
         ]),
 
         loadMorePopular() {
@@ -150,7 +200,16 @@ import PlacementTips from '@/components/PlacementTips.vue';
         },
         loadMorePromo() {
             this.showMorePromo(this.defaultAmount)
-        }
+        },
+        searchCols() {
+            return this.largeScreen ? '4' : '6'
+          },
+        toSearch() {
+                this.searchProducts(this.searchText);
+                if (this.$route.path != '/search') {
+                    this.$router.push("/search");
+                }
+            }
     },
 
     async mounted() {
