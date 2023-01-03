@@ -177,66 +177,6 @@
       <TheAccount mobile />
 
     </v-navigation-drawer>
-
-    <v-bottom-sheet
-      v-model="isAddCartGift"
-      class="rounded-t-xl"
-    >
-      <v-sheet
-        class="rounded-t-xl"
-        :height="bottomDrawerHeight"
-      >
-        <SwipeLine
-          @swipeDown="setCartFlag(false)"
-        />
-
-        <v-row
-          no-gutters
-          class="pl-4"
-        >
-          <div class="text-subtitle font-weight-bold">
-            КОРЗИНА
-          </div>
-        </v-row>
-        <div
-          style="overflow: auto"
-          :style="`height: ${this.bottomDrawerHeight - 100}px`"
-        >
-          <TheCart />
-        </div>
-
-      </v-sheet>
-    </v-bottom-sheet>
-
-    <v-bottom-sheet
-      v-model="isCartShown"
-      class="rounded-t-xl"
-    >
-      <v-sheet
-        class="rounded-t-xl"
-        :height="bottomDrawerHeight"
-      >
-        <SwipeLine
-          @swipeDown="setCartFlag(false)"
-        />
-
-        <v-row
-          no-gutters
-          class="pl-4"
-        >
-          <div class="text-subtitle font-weight-bold">
-            КОРЗИНА
-          </div>
-        </v-row>
-        <div
-          style="overflow: auto"
-          :style="`height: ${this.bottomDrawerHeight - 100}px`"
-        >
-          <TheCart />
-        </div>
-
-      </v-sheet>
-    </v-bottom-sheet>
     <v-bottom-sheet
       v-model="filters"
       class="rounded-t-xl"

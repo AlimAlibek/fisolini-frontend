@@ -180,7 +180,10 @@ import PlacementTips from '@/components/PlacementTips.vue';
         defaultAmount() {
             return (this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm) ? 24
                 : (this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg) ? 24 : 24
-        }
+        },
+        searchCols() {
+          return this.largeScreen ? '4' : '6'
+        },
     },
 
     methods: {
@@ -201,9 +204,6 @@ import PlacementTips from '@/components/PlacementTips.vue';
         loadMorePromo() {
             this.showMorePromo(this.defaultAmount)
         },
-        searchCols() {
-            return this.largeScreen ? '4' : '6'
-          },
         toSearch() {
                 this.searchProducts(this.searchText);
                 if (this.$route.path != '/search') {

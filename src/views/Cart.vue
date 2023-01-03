@@ -13,7 +13,6 @@
             <SwipeLine
               @swipeDown="setCartFlag(false)"
             />
-
             <v-row
               no-gutters
               class="pl-4"
@@ -24,7 +23,7 @@
             </v-row>
             <div
               style="overflow: auto"
-              :style="`height: ${this.bottomDrawerHeight - 100}px`"
+              :style="`height: ${this.bottomDrawerHeight - 170}px`"
             >
               <TheCart />
             </div>
@@ -70,8 +69,8 @@ export default {
             return this.$vuetify.breakpoint.width < 1195
         },
         bottomDrawerHeight() {
-        return this.$vuetify.breakpoint.height
-      },
+          return this.$vuetify.breakpoint.height
+        },
     },
     methods: {
         ...mapMutations(['setCartFlag']),
@@ -82,6 +81,12 @@ export default {
               this.setCartFlag(boolean)
             }
         }
+    },
+
+    mounted() {
+      if (this.$route.name !== 'cart') {
+        this.setCartFlag(true)
+      }
     }
 }
 </script>
