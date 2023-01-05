@@ -64,9 +64,6 @@
         <v-img
             :src="require('../assets/images/payment.png')"
             :style="'margin-bottom:10px'"/>
-        <v-img
-            :src="require('../assets/images/gift.png')"
-            :style="'margin-bottom:10px'"/>
     </v-container>
     <v-row
         no-gutters
